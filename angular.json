@@ -24,12 +24,29 @@
             "tsConfig": "tsconfig.app.json",
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/web.config"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/fonts/fonts.css",
+              "src/assets/fonts/font-icons.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/swiper-bundle.min.css",
+              "src/assets/css/animate.css",
+              "src/assets/css/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/swiper-bundle.min.js",
+              "src/assets/js/carousel.js",
+              "src/assets/js/bootstrap-select.min.js",
+              "src/assets/js/lazysize.min.js",
+              "src/assets/js/count-down.js",
+              "src/assets/js/wow.min.js",
+              "src/assets/js/multiple-modal.js",
+              "src/assets/js/main.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -94,9 +111,25 @@
               "src/assets"
             ],
             "styles": [
-              "src/styles.css"
+              "src/assets/fonts/fonts.css",
+              "src/assets/fonts/font-icons.css",
+              "src/assets/css/bootstrap.min.css",
+              "src/assets/css/swiper-bundle.min.css",
+              "src/assets/css/animate.css",
+              "src/assets/css/styles.css"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/bootstrap.min.js",
+              "src/assets/js/jquery.min.js",
+              "src/assets/js/swiper-bundle.min.js",
+              "src/assets/js/carousel.js",
+              "src/assets/js/bootstrap-select.min.js",
+              "src/assets/js/lazysize.min.js",
+              "src/assets/js/count-down.js",
+              "src/assets/js/wow.min.js",
+              "src/assets/js/multiple-modal.js",
+              "src/assets/js/main.js"
+            ]
           }
         }
       }
