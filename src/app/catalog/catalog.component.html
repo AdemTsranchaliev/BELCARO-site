@@ -11,7 +11,6 @@
     <div class="container">
         <div class="tf-shop-control grid-3 align-items-center">
             <div class="tf-control-filter">
-                <a href="#filterShop" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="tf-btn-filter"><span class="icon icon-filter"></span><span class="text">Filter</span></a>
             </div>
             <ul class="tf-control-layout d-flex justify-content-center">
                 <li class="tf-view-layout-switch sw-layout-list list-layout" data-value-layout="list">
@@ -43,45 +42,20 @@
                 <button id="remove-all" class="remove-all-filters" style="display: none;">Remove All <i class="icon icon-close"></i></button>
             </div>
             <div class="tf-list-layout wrapper-shop" id="listLayout">
-                <!-- card product 1 -->
-                <div class="card-product list-layout" data-availability="In stock" data-brand="Ecomus">
-                    <div class="card-product-wrapper">
+                <!-- card product 1 Единични продукти-->
+                <div class="card-product list-layout" data-availability="In stock" data-brand="Ecomus" *ngFor="let product of fitleredProducts">
+                    <div class="card-product-wrapper" style="    aspect-ratio: 0 !important;">
                         <a href="#" class="product-img">
-                            <img class="lazyload img-product" data-src="assets/images/products/orange-1.jpg" src="assets/images/products/orange-1.jpg" alt="image-product">
-                            <img class="lazyload img-hover" data-src="assets/images/products/white-1.jpg" src="assets/images/products/white-1.jpg" alt="image-product">
+                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image }}.1.jpg" src="assets/images/products/{{ product.Image }}.1.jpg" alt="image-product">
+                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image }}.1.jpg" src="assets/images/products/{{ product.Image }}.1.jpg" alt="image-product">
                         </a>
                     </div>
                     <div class="card-product-info">
-                        <a href="#" class="title link">Ribbed Tank Top</a>
-                        <span class="price current-price">$16.95</span>
+                        <a href="#" class="title link">{{ product.Name }}</a>
                         <p class="description">Button-up shirt sleeves and a relaxed silhouette. It’s tailored with drapey, crinkle-texture fabric that’s made from LENZING™ ECOVERO™ Viscose — responsibly sourced wood-based fibres produced through a process that reduces...</p>
-                        <ul class="list-color-product">
-                            <li class="list-color-item hover-tooltip color-swatch active">
-                                <span class="tooltip tooltip-bottom">Orange</span>
-                                <span class="swatch-value bg_orange-3"></span>
-                                <img class="lazyload" data-src="assets/images/products/orange-1.jpg" src="assets/images/products/orange-1.jpg" alt="image-product">
-                            </li>
-                            <li class="list-color-item color-swatch">
-                                <span class="tooltip">Black</span>
-                                <span class="swatch-value bg_dark"></span>
-                                <img class="lazyload" data-src="assets/images/products/black-1.jpg" src="assets/images/products/black-1.jpg" alt="image-product">
-                            </li>
-                            <li class="list-color-item color-swatch">
-                                <span class="tooltip">White</span>
-                                <span class="swatch-value bg_white"></span>
-                                <img class="lazyload" data-src="assets/images/products/white-1.jpg" src="assets/images/products/white-1.jpg" alt="image-product">
-                            </li>
-                        </ul>
-                        <div class="size-list">
-                            <span class="size-item">S</span>
-                            <span class="size-item">M</span>
-                            <span class="size-item">L</span>
-                            <span class="size-item">XL</span>
-                        </div>
+
                         <div class="list-product-btn">
-                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon quick-add style-3 hover-tooltip"><span class="icon icon-bag"></span><span class="tooltip">Quick add</span></a>
                             <a href="#" class="box-icon wishlist style-3 hover-tooltip"><span class="icon icon-heart"></span> <span class="tooltip">Add to Wishlist</span></a>
-                            <a href="#compare" data-bs-toggle="offcanvas" class="box-icon compare style-3 hover-tooltip"><span class="icon icon-compare"></span> <span class="tooltip">Add to Compare</span></a>
                             <a href="#quick_view" data-bs-toggle="modal" class="box-icon quickview style-3 hover-tooltip"><span class="icon icon-view"></span><span class="tooltip">Quick view</span></a>
                         </div>
                     </div>
@@ -106,54 +80,27 @@
                 </ul>
             </div>
             <div class="tf-grid-layout wrapper-shop tf-col-4" id="gridLayout">
-                <!-- card product 1 -->
-                <div class="card-product grid" data-availability="In stock" data-brand="Ecomus">
-                    <div class="card-product-wrapper">
-                        <a href="product-detail.html" class="product-img">
-                            <img class="lazyload img-product" data-src="assets/images/products/orange-1.jpg" src="assets/images/products/orange-1.jpg" alt="image-product">
-                            <img class="lazyload img-hover" data-src="assets/images/products/white-1.jpg" src="assets/images/products/white-1.jpg" alt="image-product">
+                <!-- card product 1 грид -->
+                <div class="card-product grid" data-availability="In stock" data-brand="Ecomus" *ngFor="let product of fitleredProducts">
+                    <div class="card-product-wrapper" style="aspect-ratio: 0;">
+                        <a routerLink="/details/{{product.Id}}" class="product-img">
+                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image }}.1.jpg" src="assets/images/products/{{ product.Image }}.1.jpg" alt="image-product">
+                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image }}.1.jpg" src="assets/images/products/{{ product.Image }}.1.jpg" alt="image-product">
                         </a>
                         <div class="list-product-btn absolute-2">
-                            <a href="#quick_add" data-bs-toggle="modal" class="box-icon bg_white quick-add tf-btn-loading">
-                                <span class="icon icon-bag"></span>
-                                <span class="tooltip">Quick Add</span>
-                            </a>
                             <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
                                 <span class="icon icon-heart"></span>
                                 <span class="tooltip">Add to Wishlist</span>
                                 <span class="icon icon-delete"></span>
                             </a>
-                            <a href="#compare" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" class="box-icon bg_white compare btn-icon-action">
-                                <span class="icon icon-compare"></span>
-                                <span class="tooltip">Add to Compare</span>
-                                <span class="icon icon-check"></span>
-                            </a>
-                            <a href="#quick_view" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
+                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
                                 <span class="icon icon-view"></span>
                                 <span class="tooltip">Quick View</span>
                             </a>
                         </div>
                     </div>
                     <div class="card-product-info">
-                        <a href="product-detail.html" class="title link">Ribbed Tank Top</a>
-                        <span class="price current-price">$16.95</span>
-                        <ul class="list-color-product">
-                            <li class="list-color-item color-swatch active">
-                                <span class="tooltip">Orange</span>
-                                <span class="swatch-value bg_orange-3"></span>
-                                <img class="lazyload" data-src="assets/images/products/orange-1.jpg" src="assets/images/products/orange-1.jpg" alt="image-product">
-                            </li>
-                            <li class="list-color-item color-swatch">
-                                <span class="tooltip">Black</span>
-                                <span class="swatch-value bg_dark"></span>
-                                <img class="lazyload" data-src="assets/images/products/black-1.jpg" src="assets/images/products/black-1.jpg" alt="image-product">
-                            </li>
-                            <li class="list-color-item color-swatch">
-                                <span class="tooltip">White</span>
-                                <span class="swatch-value bg_white"></span>
-                                <img class="lazyload" data-src="assets/images/products/white-1.jpg" src="assets/images/products/white-1.jpg" alt="image-product">
-                            </li>
-                        </ul>
+                        <a routerLink="/details/{{product.Id}}"class="title link">{{ product.Name }}</a>
                     </div>
                 </div>
 
@@ -204,12 +151,7 @@
             </a>
         </div>
         <div class="toolbar-item">
-            <a href="#filterShop" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft">
-                <div class="toolbar-icon">
-                    <i class="icon-fill"></i>
-                </div>
-                <div class="toolbar-label">Filter</div>
-            </a>
+           
         </div>
         <div class="toolbar-item">
             <a href="#canvasSearch" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft">
@@ -1275,7 +1217,7 @@
                                 <div class="tf-loop-item">
                                     <div class="image">
                                         <a href="product-detail.html">
-                                            <img src="images/products/white-1.jpg" alt="">
+                                           
                                         </a>
                                     </div>
                                     <div class="content">

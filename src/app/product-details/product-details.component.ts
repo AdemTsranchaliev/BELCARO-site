@@ -1,4 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-product-details',
@@ -23,10 +24,14 @@ export class ProductDetailsComponent implements OnInit, OnDestroy {
   ];
 
   private scriptElements: HTMLScriptElement[] = [];
+  constructor(private route: ActivatedRoute) { }
 
   ngOnInit() {
     this.loadScripts();
-  }
+    this.route.paramMap.subscribe(params => {
+      console.log(params.get('id'));
+    });
+  } 
 
   ngOnDestroy() {
     this.removeScripts();
