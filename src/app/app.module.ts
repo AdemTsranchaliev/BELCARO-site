@@ -9,6 +9,7 @@ import { ContactComponent } from './contact/contact.component';
 import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
+import { CommonserviceService } from './commonservice.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ProductDetailsComponent } from './product-details/product-details.compo
     BrowserModule,
     AppRoutingModule
   ],
-  providers: [],
+  providers: [CommonserviceService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

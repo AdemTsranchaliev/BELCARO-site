@@ -1,5 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Product } from '../product.model';
+import { CommonserviceService } from '../commonservice.service';
 
 @Component({
   selector: 'app-catalog',
@@ -25,29 +27,16 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
 
 
-  public products: Product[] = [
-    new Product('1', 'Galisia', 'Sofas', '1', 3, 'Това е диван със страхотна индивидуалност и изискан, съвременен дизайн. Неговата модулност го прави подходящ за пространства с всякакви размери, където добавя високо ниво на комфорт. Той разполага с достатъчно седалки и ниска облегалка, която обещава дълбоко релаксиращо изживяване при сядане. Възглавниците поддържат дизайна домашен, но и много стилен.'),
-    new Product('2', 'Odineze', 'Sofas', '2', 3, 'Стилният дизайн на този продукт го прави да се откроява във всеки модерен дом и е изработен с мисъл за дълголетие и издръжливост. Издръжливата лека материя придава на дивана модерно усещане, което със сигурност ще впечатли. Специфичните форми на подлакътниците и задните седалки придават върховно модерно излъчване, което отговаря едновременно на лукса и уюта. Той е идеален за осигуряване на място както за коктейлни партита, така и за филмови вечери, също така задава тона на целия ви ансамбъл – било то непринудена дневна, официална визия на всекидневна или дори основен апартамент.'),
-    new Product('3', 'Hermes', 'Sofas', '3', 3, 'Това майсторско преоткриване на класическия стил предизвиква лукс и вечна елегантност. Този уникален дизайн би паснал идеално както на традиционни, така и на съвременни схеми. Има подвижни възглавници за сядане за голям комфорт. Ъгловата облегалка осигурява идеалния ъгъл на седене.'),
-    new Product('4', 'Saragosa', 'Sofas', '4', 3, 'Метрополитната съвременност навлиза във всекидневната, повишавайки нейната стойност и елегантност. Изключително универсален официален диван, който е подходящ за всяка среда. Можете лесно да използвате вашето въображение и чувство за естетика, за да комбинирате различни тъкани, дизайни или просто линии във възглавниците, така че да внесете малко уникалност в стаята или да ги поддържате прави и чисти за гарантирана елегантност - зависи от вас. Едно е сигурно, приятното прекарване вечер с най-близките ви хора е сигурно.'),
-    new Product('5', 'Nik', 'Sofas', '5', 3, 'Скандинавската визия и ултра модерната комбинация от метал, дърво и дамаска правят този диван предпочитан, защото едно е сигурно - той ще добави усещане за мекота във вашата всекидневна и ще създаде гостоприемна атмосфера. С достатъчно място за цялото семейство, този ъглов диван ще бъде героят на вашия хол. Отвореният край ще създаде динамична, приветлива атмосфера - истинска благословия за интегрираните зони на живот с отворен план.'),
-    new Product('6', 'Bonaldo', 'UPHOLSTERED_CHAIRS', '6', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('7', 'Kiss', 'UPHOLSTERED_CHAIRS', '7', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('8', '304M', 'Tables', '8', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('9', '406M', 'Tables', '9', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('10', '303M', 'Tables', '10', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('11', 'Amore', 'Beds', '11', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('12', 'Delfi', 'Beds', '12', 3, 'Описание на продукта ТЕКСТ.....'),
-    new Product('13', 'Sunrise', 'Beds', '13', 3, 'Описание на продукта ТЕКСТ.....'),
-  ];
+  public products: Product[] = [];
 
   public fitleredProducts: Product[] = [];
 
   private scriptElements: HTMLScriptElement[] = [];
-  constructor(private route: ActivatedRoute) { }
+  constructor(private route: ActivatedRoute, private service: CommonserviceService) { }
 
   ngOnInit() {
     this.loadScripts();
+    this.products = this.service.GetProducts();
     this.route.paramMap.subscribe(params => {
       var cat = params.get('category');
       console.log(cat)
@@ -86,20 +75,3 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
 }
 
-export class Product {
-  Id: string;
-  Name: string;
-  Category: string;
-  Image: string;
-  ImageCount: number;
-  Description: string; // changed from number to string
-
-  constructor(id: string, name: string, category: string = '', image: string = '', imageCount: number = 0, description: string = '') {
-    this.Id = id;
-    this.Name = name;
-    this.Category = category;
-    this.Image = image;
-    this.ImageCount = imageCount;
-    this.Description = description;
-  }
-}
