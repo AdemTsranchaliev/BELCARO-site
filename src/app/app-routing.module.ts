@@ -5,6 +5,7 @@ import { CatalogComponent } from './catalog/catalog.component';
 import { ContactComponent } from './contact/contact.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
+import { AboutComponent } from './about/about.component';
 
 const routes: Routes = [
   {
@@ -22,6 +23,10 @@ const routes: Routes = [
   {
     path: "details",
     component: ProductDetailsComponent,
+  },
+  {
+    path: "about",
+    component: AboutComponent,
   },
   { path: "**", redirectTo: "" },
 ];

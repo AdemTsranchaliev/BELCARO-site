@@ -28,25 +28,25 @@
               "src/web.config"
             ],
             "styles": [
-              "src/assets/fonts/fonts.css",
-              "src/assets/fonts/font-icons.css",
-              "src/assets/css/bootstrap.min.css",
-              "src/assets/css/swiper-bundle.min.css",
-              "src/assets/css/animate.css",
-              "src/assets/css/styles.css"
-            ],
-            "scripts": [
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/jquery.min.js",
-              "src/assets/js/swiper-bundle.min.js",
-              "src/assets/js/carousel.js",
-              "src/assets/js/bootstrap-select.min.js",
-              "src/assets/js/lazysize.min.js",
-              "src/assets/js/count-down.js",
-              "src/assets/js/wow.min.js",
-              "src/assets/js/multiple-modal.js",
-              "src/assets/js/main.js"
-            ]
+  "node_modules/bootstrap/dist/css/bootstrap.min.css",
+  "node_modules/swiper/swiper-bundle.min.css",
+  "node_modules/animate.css/animate.min.css",
+  "src/assets/fonts/fonts.css",
+  "src/assets/fonts/font-icons.css",
+  "src/assets/css/styles.css"
+],
+"scripts": [
+  "node_modules/jquery/dist/jquery.min.js",
+  "node_modules/swiper/swiper-bundle.min.js",
+  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+  "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
+  "node_modules/lazysizes/lazysizes.min.js",
+  "node_modules/wow.js/dist/wow.min.js",
+  "src/assets/js/carousel.js",
+  "src/assets/js/count-down.js",
+  "src/assets/js/multiple-modal.js",
+  "src/assets/js/main.js"
+]
           },
           "configurations": {
             "production": {
@@ -119,16 +119,7 @@
               "src/assets/css/styles.css"
             ],
             "scripts": [
-              "src/assets/js/bootstrap.min.js",
-              "src/assets/js/jquery.min.js",
-              "src/assets/js/swiper-bundle.min.js",
-              "src/assets/js/carousel.js",
-              "src/assets/js/bootstrap-select.min.js",
-              "src/assets/js/lazysize.min.js",
-              "src/assets/js/count-down.js",
-              "src/assets/js/wow.min.js",
-              "src/assets/js/multiple-modal.js",
-              "src/assets/js/main.js"
+          
             ]
           }
         }
