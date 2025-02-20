@@ -28,7 +28,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
 
 
   public products: Product[] = [];
-
+  public category: string = "";
   public fitleredProducts: Product[] = [];
 
   private scriptElements: HTMLScriptElement[] = [];
@@ -39,12 +39,26 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.products = this.service.GetProducts();
     this.route.paramMap.subscribe(params => {
       var cat = params.get('category');
-      console.log(cat)
+
+
       if(cat)
       {
+        if(cat?.toLowerCase()=="sofas"){
+          this.category = "Дивани"
+        }else if(cat?.toLowerCase()=="table"){
+          this.category = "Маси"
+  
+        }else if(cat?.toLowerCase()=="beds"){
+          this.category = "Спални"
+          
+        }else if(cat?.toLowerCase()=="UPHOLSTERED_CHAIRS".toLowerCase()){
+          this.category = "Столове"
+          
+        }
         this.fitleredProducts =  this.products.filter(product => product.Category?.toLowerCase() === cat?.toLowerCase());
       }
       else{
+        this.category = "Продукти"
         this.fitleredProducts = this.products;
       }
     });

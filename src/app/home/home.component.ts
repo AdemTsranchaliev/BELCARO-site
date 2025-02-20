@@ -1,4 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
+import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
+import { filter } from 'rxjs/operators';
 
 @Component({
   selector: 'app-home',
@@ -25,7 +27,15 @@ export class HomeComponent implements OnInit, OnDestroy {
   private scriptElements: HTMLScriptElement[] = [];
 
   ngOnInit() {
+
+    window.scroll(0, 0);
     this.loadScripts();
+    this.router.events
+    .pipe(filter((event) => event instanceof NavigationEnd))
+    .subscribe(() => {
+      window.scroll(0, 0);
+
+    });
   }
 
   ngOnDestroy() {
@@ -51,6 +61,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.scriptElements = [];
   }
 
-  constructor() { }
+  constructor(private router: Router) { }
 
 }

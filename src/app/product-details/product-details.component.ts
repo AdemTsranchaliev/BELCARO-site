@@ -43,6 +43,7 @@ export class ProductDetailsComponent
   ];
 
   ngAfterViewInit() {
+    window.scroll(0, 0);
     const thumbsSwiper = new Swiper(".tf-product-media-thumbs", {
       direction: "vertical",
       spaceBetween: 10,
