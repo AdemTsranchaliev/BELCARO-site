@@ -13,7 +13,7 @@ export class AppComponent implements OnInit {
     if (environment.production) {
       console.log('Running in production mode');
     }
-    else{
+    else {
       console.log("dev")
     }
   }

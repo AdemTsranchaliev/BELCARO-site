@@ -17,8 +17,7 @@ import { filter } from "rxjs/operators";
   styleUrls: ["./product-details.component.css"],
 })
 export class ProductDetailsComponent
-  implements OnInit, OnDestroy, AfterViewInit
-{
+  implements OnInit, OnDestroy, AfterViewInit {
   public mainSwiper: any = null;
   public currentImage: number = 0;
   public products: Product[] = [];
@@ -98,7 +97,7 @@ export class ProductDetailsComponent
     private route: ActivatedRoute,
     private router: Router,
     private service: CommonserviceService
-  ) {}
+  ) { }
 
   getRandomProducts(products: Product[], count: number): Product[] {
     const shuffled = [...products].sort(() => 0.5 - Math.random());

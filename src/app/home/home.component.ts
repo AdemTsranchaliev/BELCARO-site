@@ -31,11 +31,11 @@ export class HomeComponent implements OnInit, OnDestroy {
     window.scroll(0, 0);
     this.loadScripts();
     this.router.events
-    .pipe(filter((event) => event instanceof NavigationEnd))
-    .subscribe(() => {
-      window.scroll(0, 0);
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => {
+        window.scroll(0, 0);
 
-    });
+      });
   }
 
   ngOnDestroy() {
