@@ -29,7 +29,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
   public category: string = "";
   public filteredProducts: Product[] = [];
   public currentPage: number = 1;
-  public pageSize: number = 10;
+  public pageSize: number = 8;
   
   private scriptElements: HTMLScriptElement[] = [];
   
