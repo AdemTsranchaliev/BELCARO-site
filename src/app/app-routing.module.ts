@@ -6,6 +6,7 @@ import { ContactComponent } from './contact/contact.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { HashLocationStrategy, LocationStrategy } from '@angular/common';
 import { AboutComponent } from './about/about.component';
+import { ProjectsComponent } from './projects/projects.component';
 
 const routes: Routes = [
   {
@@ -27,6 +28,10 @@ const routes: Routes = [
   {
     path: "details/:id",
     component: ProductDetailsComponent,
+  },
+  {
+    path: "projects",
+    component: ProjectsComponent,
   },
   {
     path: "about",

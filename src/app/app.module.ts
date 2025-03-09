@@ -10,6 +10,7 @@ import { AboutComponent } from './about/about.component';
 import { ServicesComponent } from './services/services.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CommonserviceService } from './commonservice.service';
+import { ProjectsComponent } from './projects/projects.component';
 
 @NgModule({
   declarations: [
@@ -19,7 +20,8 @@ import { CommonserviceService } from './commonservice.service';
     ContactComponent,
     AboutComponent,
     ServicesComponent,
-    ProductDetailsComponent
+    ProductDetailsComponent,
+    ProjectsComponent
   ],
   imports: [
     BrowserModule,
