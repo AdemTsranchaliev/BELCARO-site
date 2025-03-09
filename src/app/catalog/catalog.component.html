@@ -1,8 +1,7 @@
 <div class="tf-page-title">
     <div class="container-full">
         <div class="heading text-center">{{category}}</div>
-        <p class="text-center text-2 text_black-2 mt_5">Разгледайте нашата последна колекция мебели и открийте
-            вдъхновение за интериорен стил!</p>
+        <p class="text-center text-2 text_black-2 mt_5">Разгледайте нашата последна колекция мебели и открийте вдъхновение за интериорен стил!</p>
     </div>
 </div>
 <!-- /page-title -->
@@ -11,8 +10,7 @@
 <section class="flat-spacing-2">
     <div class="container">
         <div class="tf-shop-control grid-3 align-items-center">
-            <div class="tf-control-filter">
-            </div>
+            <div class="tf-control-filter"></div>
             <ul class="tf-control-layout d-flex justify-content-center">
                 <li class="tf-view-layout-switch sw-layout-list list-layout" data-value-layout="list">
                     <div class="item"><span class="icon icon-list"></span></div>
@@ -33,21 +31,19 @@
                     <div class="item"><span class="icon icon-grid-6"></span></div>
                 </li>
             </ul>
-
         </div>
+        
         <div class="wrapper-control-shop">
             <div class="meta-filter-shop">
                 <div id="product-count-grid" class="count-text"></div>
                 <div id="product-count-list" class="count-text"></div>
                 <div id="applied-filters"></div>
-                <button id="remove-all" class="remove-all-filters" style="display: none;">Remove All <i
-                        class="icon icon-close"></i></button>
+                <button id="remove-all" class="remove-all-filters" style="display: none;">Remove All <i class="icon icon-close"></i></button>
             </div>
+            <!-- list layout -->
             <div class="tf-list-layout wrapper-shop" id="listLayout">
-                <!-- card product 1 Единични продукти-->
-                <div class="card-product list-layout" data-availability="In stock" data-brand="Ecomus"
-                    *ngFor="let product of paginatedProducts">
-                    <div class="card-product-wrapper" style="    aspect-ratio: 0 !important;">
+                <div class="card-product list-layout"  data-availability="In stock" data-brand="Ecomus" *ngFor="let product of paginatedProducts">
+                    <div class="card-product-wrapper" style="aspect-ratio: 0;">
                         <a href="#" class="product-img">
                             <img class="lazyload img-product"
                                 data-src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.jpg"
@@ -59,33 +55,30 @@
                     <div class="card-product-info">
                         <a routerLink="/details/{{product.Id}}" class="title link">{{ product.Name }}</a>
                         <p class="description">{{product.Description}}</p>
-
                         <div class="list-product-btn">
-                            <a href="#" class="box-icon wishlist style-3 hover-tooltip"><span
-                                    class="icon icon-heart"></span> <span class="tooltip">Add to Wishlist</span></a>
-                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal"
-                                class="box-icon quickview style-3 hover-tooltip"><span
-                                    class="icon icon-view"></span><span class="tooltip">Quick view</span></a>
+                            <a href="#" class="box-icon wishlist style-3 hover-tooltip"><span class="icon icon-heart"></span> <span class="tooltip">Add to Wishlist</span></a>
+                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal" class="box-icon quickview style-3 hover-tooltip">
+                                <span class="icon icon-view"></span><span class="tooltip">Quick view</span>
+                            </a>
                         </div>
                     </div>
                 </div>
-
                 <!-- pagination -->
                 <ul class="wg-pagination tf-pagination-list justify-content-start">
                     <li class="active">
-                        <a href="#" class="pagination-link">1</a>
+                        <a href="javascript:void(0)" class="pagination-link">1</a>
                     </li>
                     <li>
-                        <a href="#" class="pagination-link animate-hover-btn">
+                        <a href="javascript:void(0)" class="pagination-link animate-hover-btn">
                             <span class="icon icon-arrow-right"></span>
                         </a>
                     </li>
                 </ul>
             </div>
+
+            <!-- grid layout -->
             <div class="tf-grid-layout wrapper-shop tf-col-4" id="gridLayout">
-                <!-- card product 1 грид -->
-                <div class="card-product grid" data-availability="In stock" data-brand="Ecomus"
-                    *ngFor="let product of paginatedProducts">
+                <div class="card-product grid" data-availability="In stock" data-brand="Ecomus" *ngFor="let product of paginatedProducts">
                     <div class="card-product-wrapper" style="aspect-ratio: 0;">
                         <a routerLink="/details/{{product.Id}}" class="product-img">
                             <img class="lazyload img-product"
@@ -100,8 +93,7 @@
                                 <span class="tooltip">Add to Wishlist</span>
                                 <span class="icon icon-delete"></span>
                             </a>
-                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal"
-                                class="box-icon bg_white quickview tf-btn-loading">
+                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
                                 <span class="icon icon-view"></span>
                                 <span class="tooltip">Quick View</span>
                             </a>
@@ -111,34 +103,30 @@
                         <a routerLink="/details/{{product.Id}}" class="title link">{{ product.Name }}</a>
                     </div>
                 </div>
-
-
             </div>
-            <nav >
+            
+            <!-- Pagination -->
+            <nav>
                 <ul class="pagination justify-content-center">
-                  <li class="page-item" [class.disabled]="currentPage === 1" (click)="prevPage()">
-                    <a class="page-link" href="javascript:void(0)" aria-label="Previous" style="color: black;">
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-                  <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
-                    <a class="page-link" href="javascript:void(0)" (click)="currentPage = i + 1" style="color: black;">{{ i + 1 }}</a>
-                  </li>
-                  <li class="page-item" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
-                    <a class="page-link" href="javascript:void(0)" aria-label="Next" style="color: black;">
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
+                    <li class="page-item" [class.disabled]="currentPage === 1" (click)="prevPage()">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Previous">
+                            <span aria-hidden="true">&laquo;</span>
+                        </a>
+                    </li>
+                    <li class="page-item" *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
+                        <a class="page-link" href="javascript:void(0)" (click)="currentPage = i + 1">{{ i + 1 }}</a>
+                    </li>
+                    <li class="page-item" [class.disabled]="currentPage === totalPages" (click)="nextPage()">
+                        <a class="page-link" href="javascript:void(0)" aria-label="Next">
+                            <span aria-hidden="true">&raquo;</span>
+                        </a>
+                    </li>
                 </ul>
-              </nav>
-              
-                  
+            </nav>
         </div>
     </div>
 </section>
 <!-- /Section Product -->
-
-
 
 <!-- Filter -->
 <div class="offcanvas offcanvas-start canvas-filter" id="filterShop">
@@ -153,8 +141,7 @@
         <div class="canvas-body">
             <form action="#" id="facet-filter-form" class="facet-filter-form">
                 <div class="widget-facet">
-                    <div class="facet-title" data-bs-target="#price" data-bs-toggle="collapse" aria-expanded="true"
-                        aria-controls="price">
+                    <div class="facet-title" data-bs-target="#price" data-bs-toggle="collapse" aria-expanded="true" aria-controls="price">
                         <span>Price</span>
                         <span class="icon icon-arrow-up"></span>
                     </div>
@@ -170,7 +157,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </div>
                 </div>
             </form>

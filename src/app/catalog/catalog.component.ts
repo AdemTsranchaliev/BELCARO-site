@@ -80,6 +80,8 @@ export class CatalogComponent implements OnInit, OnDestroy {
     return this.filteredProducts.slice(startIndex, startIndex + this.pageSize);
   }
 
+  
+
   nextPage() {
     if (this.currentPage < this.totalPages) {
       this.currentPage++;
