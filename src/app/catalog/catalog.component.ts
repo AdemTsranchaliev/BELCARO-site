@@ -25,41 +25,30 @@ export class CatalogComponent implements OnInit, OnDestroy {
     'assets/js/main.js'
   ];
 
-
-
   public products: Product[] = [];
   public category: string = "";
-  public fitleredProducts: Product[] = [];
-
+  public filteredProducts: Product[] = [];
+  public currentPage: number = 1;
+  public pageSize: number = 10;
+  
   private scriptElements: HTMLScriptElement[] = [];
+  
   constructor(private route: ActivatedRoute, private service: CommonserviceService) { }
 
   ngOnInit() {
     this.loadScripts();
     this.products = this.service.GetProducts();
     this.route.paramMap.subscribe(params => {
-      var cat = params.get('category');
-
-
+      const cat = params.get('category');
+      
       if (cat) {
-        if (cat?.toLowerCase() == "sofas") {
-          this.category = "Дивани"
-        } else if (cat?.toLowerCase() == "table") {
-          this.category = "Маси"
-
-        } else if (cat?.toLowerCase() == "beds") {
-          this.category = "Спални"
-
-        } else if (cat?.toLowerCase() == "UPHOLSTERED_CHAIRS".toLowerCase()) {
-          this.category = "Столове"
-
-        }
-        this.fitleredProducts = this.products.filter(product => product.Category?.toLowerCase() === cat?.toLowerCase());
+        this.category = this.getCategoryName(cat);
+        this.filteredProducts = this.products.filter(product => product.Category?.toLowerCase() === cat?.toLowerCase());
+      } else {
+        this.category = "Продукти";
+        this.filteredProducts = this.products;
       }
-      else {
-        this.category = "Продукти"
-        this.fitleredProducts = this.products;
-      }
+      this.currentPage = 1;
     });
   }
 
@@ -76,6 +65,7 @@ export class CatalogComponent implements OnInit, OnDestroy {
       this.scriptElements.push(script);
     });
   }
+
   private removeScripts() {
     this.scriptElements.forEach(script => {
       if (script.parentNode) {
@@ -85,6 +75,34 @@ export class CatalogComponent implements OnInit, OnDestroy {
     this.scriptElements = [];
   }
 
+  get paginatedProducts(): Product[] {
+    const startIndex = (this.currentPage - 1) * this.pageSize;
+    return this.filteredProducts.slice(startIndex, startIndex + this.pageSize);
+  }
 
+  nextPage() {
+    if (this.currentPage < this.totalPages) {
+      this.currentPage++;
+    }
+  }
+
+  prevPage() {
+    if (this.currentPage > 1) {
+      this.currentPage--;
+    }
+  }
+
+  get totalPages(): number {
+    return Math.ceil(this.filteredProducts.length / this.pageSize);
+  }
+
+  private getCategoryName(cat: string): string {
+    switch (cat.toLowerCase()) {
+      case 'sofas': return 'Дивани';
+      case 'table': return 'Маси';
+      case 'beds': return 'Спални';
+      case 'upholstered_chairs': return 'Столове';
+      default: return 'Продукти';
+    }
+  }
 }
-
