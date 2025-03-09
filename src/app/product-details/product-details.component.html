@@ -36,8 +36,8 @@
                                       <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
                                         <div class="item" (click)="openImage(index)">
                                           <img class="lazyload" 
-                                            [attr.data-src]="'assets/images/products/' + productDetails.Image + '.' + (index + 1) + '.jpg'"
-                                            [src]="'assets/images/products/' + productDetails.Image + '.' + (index + 1) + '.jpg'"
+                                            [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
+                                            [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
                                             alt="img-product">
                                         </div>
                                       </div>
@@ -48,14 +48,14 @@
                                   <div dir="ltr" class="swiper tf-product-media-main">
                                     <div class="swiper-wrapper">
                                       <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
-                                        <a [href]="'assets/images/products/' + productDetails.Image + '.' + (index + 1) + '.jpg'"
+                                        <a [href]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
                                           target="_blank"
                                           class="item"
                                           data-pswp-width="770px"
                                           data-pswp-height="1075px">
                                           <img class="lazyload"
-                                            [attr.data-src]="'assets/images/products/' + productDetails.Image + '.' + (index + 1) + '.jpg'"
-                                            [src]="'assets/images/products/' + productDetails.Image + '.' + (index + 1) + '.jpg'"
+                                            [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
+                                            [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
                                             alt="">
                                         </a>
                                       </div>
@@ -243,8 +243,8 @@
                                 <div class="card-product">
                                     <div class="card-product-wrapper" style="aspect-ratio: 0;">
                                         <a routerLink="/details/{{product.Id}}" class="product-img">
-                                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image }}.1.jpg"  src="assets/images/products/{{ product.Image }}.1.jpg"  alt="image-product">
-                                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image }}.1.jpg"  src="assets/images/products/{{ product.Image }}.1.jpg"  alt="image-product">
+                                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  alt="image-product">
+                                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  alt="image-product">
                                         </a>
                                         <div class="list-product-btn">
                                             <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
