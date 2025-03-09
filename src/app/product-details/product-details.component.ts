@@ -18,12 +18,13 @@ import { filter } from "rxjs/operators";
 })
 export class ProductDetailsComponent
   implements OnInit, OnDestroy, AfterViewInit {
-  public mainSwiper: any = null;
+  public mainSwiper: Swiper | null = null;
   public currentImage: number = 0;
   public products: Product[] = [];
   public relatedProducts: Product[] = [];
+  public productDetails: Product = new Product("", "", "", "", 0, "");
 
-  private scriptUrls = [
+  private readonly scriptUrls = [
     "assets/js/jquery.min.js",
     "assets/js/bootstrap.min.js",
     "assets/js/swiper-bundle.min.js",
@@ -41,8 +42,39 @@ export class ProductDetailsComponent
     "assets/js/zoom.js",
   ];
 
-  ngAfterViewInit() {
+  private scriptElements: HTMLScriptElement[] = [];
+
+  constructor(
+    private route: ActivatedRoute,
+    private router: Router,
+    private service: CommonserviceService
+  ) {}
+
+  ngOnInit(): void {
+    this.router.events
+      .pipe(filter((event) => event instanceof NavigationEnd))
+      .subscribe(() => window.scroll(0, 0));
+
+    this.loadScripts();
+    this.products = this.service.GetProducts();
+    this.relatedProducts = this.getRandomProducts(this.products, 4);
+
+    this.route.paramMap.subscribe((params) => {
+      const cat = params.get("id");
+      if (cat) {
+        const prod = this.products.find(
+          (product) => product.Id?.toLowerCase() === cat?.toLowerCase()
+        );
+        if (prod) {
+          this.productDetails = prod;
+        }
+      }
+    });
+  }
+
+  ngAfterViewInit(): void {
     window.scroll(0, 0);
+
     const thumbsSwiper = new Swiper(".tf-product-media-thumbs", {
       direction: "vertical",
       spaceBetween: 10,
@@ -61,80 +93,19 @@ export class ProductDetailsComponent
         swiper: thumbsSwiper,
       },
     });
-    // Ensure Swiper updates after Angular renders
+
     setTimeout(() => {
-      this.mainSwiper.update();
+      this.mainSwiper?.update();
       thumbsSwiper.update();
-      this.mainSwiper.slideTo(this.currentImage); // Reset to first image on load
+      this.mainSwiper?.slideTo(this.currentImage);
     }, 500);
   }
 
-  public nextImage() {
-    this.currentImage++;
-    if (this.productDetails.ImageCount <= this.currentImage) {
-      this.currentImage = 0;
-    }
-    this.mainSwiper.slideTo(this.currentImage);
-  }
-
-  public prevImage() {
-    this.currentImage--;
-    if (0 > this.currentImage) {
-      this.currentImage = this.productDetails.ImageCount - 1;
-    }
-    this.mainSwiper.slideTo(this.currentImage);
-  }
-
-  public openImage(num: number) {
-    this.currentImage = num;
-    this.mainSwiper.slideTo(this.currentImage);
-  }
-
-  public productDetails: Product = new Product("", "", "", "", 0, "");
-
-  private scriptElements: HTMLScriptElement[] = [];
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router,
-    private service: CommonserviceService
-  ) { }
-
-  getRandomProducts(products: Product[], count: number): Product[] {
-    const shuffled = [...products].sort(() => 0.5 - Math.random());
-    return shuffled.slice(0, count);
-  }
-
-  ngOnInit() {
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        window.scroll(0, 0);
-      });
-
-    this.loadScripts();
-    this.products = this.service.GetProducts();
-
-    this.relatedProducts = this.getRandomProducts(this.products, 4);
-
-    this.route.paramMap.subscribe((params) => {
-      var cat = params.get("id");
-      if (cat) {
-        var prod = this.products.filter(
-          (product) => product.Id?.toLowerCase() === cat?.toLowerCase()
-        );
-        if (prod && prod.length > 0) {
-          this.productDetails = prod[0];
-        }
-      } else {
-      }
-    });
-  }
-
-  ngOnDestroy() {
+  ngOnDestroy(): void {
     this.removeScripts();
   }
 
-  private loadScripts() {
+  private loadScripts(): void {
     this.scriptUrls.forEach((url) => {
       const script = document.createElement("script");
       script.src = url;
@@ -144,13 +115,33 @@ export class ProductDetailsComponent
     });
   }
 
-  private removeScripts() {
+  private removeScripts(): void {
     this.scriptElements.forEach((script) => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
+      script.parentNode?.removeChild(script);
     });
     this.scriptElements = [];
+  }
+
+  getRandomProducts(products: Product[], count: number): Product[] {
+    return [...products].sort(() => 0.5 - Math.random()).slice(0, count);
+  }
+
+  public nextImage(): void {
+    this.currentImage = (this.currentImage + 1) % this.productDetails.ImageCount;
+    this.mainSwiper?.slideTo(this.currentImage);
+  }
+
+  public prevImage(): void {
+    this.currentImage =
+      this.currentImage === 0
+        ? this.productDetails.ImageCount - 1
+        : this.currentImage - 1;
+    this.mainSwiper?.slideTo(this.currentImage);
+  }
+
+  public openImage(num: number): void {
+    this.currentImage = num;
+    this.mainSwiper?.slideTo(this.currentImage);
   }
 
   generateArray(count: number): number[] {
