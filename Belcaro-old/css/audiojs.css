@@ -1,0 +1,24 @@
+/* Audio JS */
+.audiojs audio { position: absolute; left: -1px; }
+.audiojs { position: relative; height: 4em; background-color: #00a685; color: #fff; overflow: hidden; font-size: 0.75em; }
+.audiojs.dark { background-color: #222; }
+.audiojs.error { background-color: #ffcac2; color: #222; }
+.audiojs .play-pause { position: absolute; top: 0; left: 0; width: 4em; height: 4em; }
+.audiojs .play-pause span { display: none; cursor: pointer; width: 2em; height: 2em; line-height: 2.1em; font-size: 2em; text-align: center; }
+.audiojs .play-pause .play { display: block; cursor: pointer; }
+.audiojs .play-pause .loading { -webkit-animation: spin 0.8s ease-out; -webkit-animation-iteration-count: infinite; -moz-animation: spin 0.8s ease-out; -moz-animation-iteration-count: infinite; -o-animation: spin 0.8s ease-out; -o-animation-iteration-count: infinite; animation: spin 0.8s ease-out; animation-iteration-count: infinite; }
+.audiojs .scrubber { position: relative; margin: 1.5em 8em 0 4em; background-color: #ccc; background-color: rgba(255,255,255,0.25); height: 1em; overflow: hidden; }
+.audiojs .progress { position: absolute; top: 0px; left: 0px; height: 1em; width: 0; background-color: #fff; z-index: 1; }
+.audiojs .loaded { position: absolute; top: 0px; left: 0px; height: 1em; width: 0px; background-color: #ddd; background-color: rgba(255,255,255,0.25); }
+.audiojs .time { position: absolute; top: 0; right: 0; width: 8em; height: 4em; line-height: 4em; text-align: center; }
+.audiojs .time em { padding: 0 0.3em; color: #f9f9f9; font-style: normal; }
+.audiojs .time strong { padding: 0 0.3em; font-weight: normal; }
+.audiojs .error-message { display: none; padding: 0 1em 0 4em; height: 4em; line-height: 4em; white-space: nowrap; text-overflow: ellipsis; -o-text-overflow: ellipsis; -icab-text-overflow: ellipsis; -khtml-text-overflow: ellipsis; -moz-text-overflow: ellipsis; -webkit-text-overflow: ellipsis; }
+.audiojs .error-message a { color: #ccc; text-decoration: none; white-space: wrap; }
+.playing .play-pause .pause { display: block; }
+.playing .play-pause .play, .loading .play-pause .play { display: none; }
+.loading .play-pause .loading { display: block; }
+.error .time, .error .play-pause .play, .error .play-pause .pause, .error .scrubber, .error .loading { display: none; }
+.error .play-pause .error { display: block; }
+.error .play-pause p { cursor: auto; }
+.error .error-message { display: block; }

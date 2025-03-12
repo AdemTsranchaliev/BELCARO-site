@@ -1,0 +1,57 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="utf-8" />
+	<title>Cross - Minimal HTML5 Template</title>
+	<meta name="description" content="Cross is fully responsive corporate site template that looks great on any device." />
+	<meta name="keywords" content="HTML5, template, design, development" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="shortcut icon" href="favicon.png" />
+	<link rel="stylesheet" href="css/main.css" />
+	<!--[if lte IE 8 ]><script type="text/javascript" src="js/ie.js"></script><![endif]-->
+</head>
+<body>
+	<header id="header" class="container">
+		<div class="wrapper">
+			<div class="cell cell-middle textcenter">
+				<div id="logo">
+					<h1><a href="welcome.html"><img src="tmp/logo.png" width="104" alt="Cross"></a></h1>
+				</div>
+			</div>
+		</div>
+	</header>
+	<section id="content" class="container">
+		<div class="col grid12">
+			<div class="call-to-action box-503">
+				<h3>Hello, we are Mini!</h3>
+				<p class="no-bottom">Hang on, we're doing some maintenance and we'll be back ASAP.</p>
+			</div>
+			<p class="textcenter">
+				<a href="#" class="social-link"><em class="icon-facebook"></em></a>
+				<a href="#" class="social-link"><em class="icon-twitter"></em></a>
+				<a href="#" class="social-link"><em class="icon-googleplus"></em></a>
+				<a href="#" class="social-link"><em class="icon-pinterest"></em></a>
+				<a href="#" class="social-link"><em class="icon-dribbble"></em></a>
+			</p>
+		</div>
+	</section>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/plugins/countdown.min.js"></script>
+<script>
+	jQuery(function() {
+		// sample data: set final date to next day
+		var now = new Date();
+		var final_date = new Date(now.getFullYear(), now.getMonth(), now.getDate()+1);
+		jQuery('#content h3').countdown({
+			date: final_date,
+			render: function(data) {
+				var result = " " + data.days + "days " + data.hours + "hrs " + data.min + "min " + data.sec + "sec";
+				result = result.replace(" 0days ","").replace(" 0hrs "," ").replace(" 0min "," ");
+				jQuery(this.el).html(result);
+			}
+		});
+	});
+</script>
+</body>
+</html>

@@ -1,0 +1,155 @@
+<!doctype html>
+<html class="no-js">
+<head>
+	<meta charset="utf-8" />
+	<title>Belcaro | Contacts</title>
+	<meta name="description" content="Cross is fully responsive corporate site template that looks great on any device." />
+	<meta name="keywords" content="HTML5, template, design, development" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<link rel="shortcut icon" href="favicon.png" />
+	<link rel="stylesheet" href="css/main.css" />
+
+    <style type="text/css">
+		#map-canvas {
+		  height: 600px;
+		  margin: 0;
+		  padding: 0;
+		}
+    </style>
+
+    <!--[if lte IE 8 ]><script type="text/javascript" src="js/ie.js"></script><![endif]-->
+
+    <link href='http://fonts.googleapis.com/css?family=Exo+2:400,900italic&subset=latin,cyrillic,latin-ext' rel='stylesheet' type='text/css'>
+
+</head>
+<body>
+	<header id="header" class="container">
+		<div class="wrapper">
+			<div class="cell cell-left textleft">
+				<div id="menu">
+					<nav>
+						<ul>
+							<li><a href="home.html">HOME</a></li>
+							<li><a href="about.html">ABOUT US</a></li>
+							<li><a href="features.html">SERVICES</a></li>
+							<li><a href="shop.html">PRODUCTS</a></li>
+							<li><a href="contact.html">CONTACTS</a></li>
+						</ul>
+					</nav>
+					<span id="menu-toggle"><em></em></span>
+				</div>
+				<div id="search-panel">
+					<form role="search" method="get" class="searchform ajax" action="index.html" data-ajax-action="tmp/results.php">
+						<div class="fields clearfix">
+							<input type="text" name="s" autocomplete="off" placeholder="Search..." />
+							<input type="submit" value="Go" />
+						</div>
+						<ul class="ajax-results"></ul>
+					</form>
+					<span id="search-toggle"><em class="icon-search"></em><em class="icon-cross"></em></span>
+				</div>
+			</div>
+			<div class="cell cell-middle textcenter">
+				<div id="logo">
+					<h1><a href="../index.html"><img src="tmp/logor.png" width="110" alt="Belcaro"></a></h1>
+				</div>
+			</div>
+			<div class="cell cell-right textright">
+			</div>
+		</div>
+	</header>
+	<section id="content" class="container">
+    	<div id="google-maps" class="col grid12">
+			<h2 class="section-title"><span>Google Maps</span></h2>
+		  	<div id="map-canvas"></div>
+		</div>
+        <div class="clear"></div>
+		<form id="contact_form" class="col grid8 sep-margin-top" action="sendmail.php">
+			<h2 class="section-title no-top-padding"><span>WE'D LOVE TO HEAR FROM YOU!</span></h2>
+			<div class="message" style="display:none"><div id="contact_alert" class="alert notice"></div></div>
+			<div class="col grid4 alpha">
+				<label for="name">Name:</label>
+				<input type="text" name="name" id="name" class="full-width" />
+			</div>
+			<div class="col grid4 omega">
+				<label for="email">E-Mail:</label>
+				<input type="email" name="email" id="email" class="full-width" />
+			</div>
+			<div class="clear"></div>
+			<label for="message">Messageе:</label>
+			<textarea name="message" id="message" cols="30" rows="8" class="full-width"></textarea>
+			<input type="submit" value="Say Hello!" class="button dark" />
+		</form>
+        </div>
+        <div class="col grid4 sep-margin-top">
+			<h2 class="section-title no-top-padding"><span>Where you can find us?</span></h2>
+			<div>
+				<p>1532 Sofia,<br>Bulgaria<br>Kazichane, VSI Kazichane</p>
+            <div>
+				<p>E-Mail:<a href="mailto:office@belcaro.bg"> office@belcaro.bg</a><br />
+				MOBILE: (+359) 899 908 588 <br />
+				MOBILE: (+359) 899 906 946
+                </p>
+
+                <p>Working hours:<br />
+				Monday - Friday<br />
+				8:00 - 17:00hrs<br />
+                12:30 - 13:00 (lunch break)<br />
+                Saturday / Sunday - Days Off
+                </p>
+			</div>
+		</div>
+	</section>
+
+    <!-- Start Google Map JavaScript -->
+
+  	<script src="https://maps.googleapis.com/maps/api/js?v=3.exp&sensor=false"></script>
+    <script>
+
+		var map;
+		function initialize() {
+  		var mapOptions = {
+    		zoom: 15,
+    		center: new google.maps.LatLng(42.666470, 23.447485)
+  		};
+  		map = new google.maps.Map(document.getElementById('map-canvas'),
+			mapOptions);
+		}
+
+		google.maps.event.addDomListener(window, 'load', initialize);
+
+    </script>
+
+    <!-- End Google Map JavaScript -->
+
+	<footer id="footer">
+		<div class="container">
+			<div class="col grid12">
+				<div class="sep"></div>
+				<div class="col grid6 alpha">
+					<p class="small">&copy; 2013 Belcaro Ltd. Made by <a href="http://to2hov.com/">to2hov.com</a></p>
+				</div>
+				<div class="col grid6 omega">
+					<p class="small">
+						<a href="#" class="social-link"><em class="icon-facebook"></em></a>
+						<a href="#" class="social-link"><em class="icon-twitter"></em></a>
+						<a href="#" class="social-link"><em class="icon-googleplus"></em></a>
+						<a href="#header" id="top-link" class="social-link"><em class="icon-arrow-up"></em></a>
+					</p>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+	</footer>
+
+<script type="text/javascript" src="js/jquery.min.js"></script>
+<script type="text/javascript" src="js/site.js"></script>
+<script type="text/javascript" src="js/plugins/forms.min.js"></script>
+<script>
+	jQuery(function(){
+		// initialize ajax form plugin
+		jQuery('#contact_form').ajaxForm({ target: '#contact_alert' });
+	});
+</script>
+</body>
+</html>

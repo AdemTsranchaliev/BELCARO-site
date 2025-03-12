@@ -1,0 +1,48 @@
+/* supersized */
+#supersized { display: block; position: fixed; left: 0; top: 0; width: 100%; height: 100%; overflow: hidden; z-index: 0; margin: 0; list-style: none; visibility: visible; opacity: 1; }
+#supersized.loading { opacity: 0; visibility: hidden; }
+#supersized li { display: block; margin: 0; z-index: -30; position: fixed; overflow: hidden; top: 0; left: 0; width: 100%; height: 100%; }
+#supersized li.prevslide { z-index: -20; }
+#supersized li.activeslide { z-index: -10; }
+#supersized li.image-loading { position: relative; width: 100%; height: 100%; }
+#supersized li.image-loading img { visibility: hidden; }
+#supersized li.prevslide img, #supersized li.activeslide img { display: inline; }
+#supersized img { width: auto; height: auto; max-height: none; max-width: none; position: relative; display: none; outline: none; border: none; }
+#supersized.speed img { -ms-interpolation-mode: nearest-neighbor; image-rendering: -moz-crisp-edges; }
+#supersized.quality img { -ms-interpolation-mode: bicubic; image-rendering: optimizeQuality; }
+a.supersized-next, a.supersized-prev, .owl-theme .owl-prev, .owl-theme .owl-next { visibility: hidden; position: absolute; z-index: 2; top: 50%; margin-top: -5em; width: 9em; height: 10em; line-height: 11em; color: #fff; cursor: pointer; text-decoration: none; text-shadow: 0px 1px 1px rgba(0,0,0,.3); -webkit-user-select: none; -moz-user-select: none; -o-user-select: none; user-select: none; opacity: 0; }
+a.supersized-next em, a.supersized-prev em, .owl-theme .owl-prev em, .owl-theme .owl-next em { font-size: 8em; }
+a.supersized-next span, a.supersized-prev span, .owl-theme .owl-prev span, .owl-theme .owl-next span { position: absolute; font-size: 1.4em; font-family: 'Oswald'; font-weight: 300; text-transform: uppercase; top: 50%; margin-top: -3.9em; opacity: 0; filter: alpha(opacity=0); }
+x:-o-prefocus, a.supersized-next span, a.supersized-prev span, .owl-theme .owl-prev span, .owl-theme .owl-next span { margin-top: -4.65em; }
+a.supersized-prev, .owl-theme .owl-prev { left: 0; text-align: left; }
+a.supersized-prev span, .owl-theme .owl-prev span { left: 3.8em; }
+a.supersized-next, .owl-theme .owl-next { right: 0; text-align: right; }
+a.supersized-next span, .owl-theme .owl-next span, .owl-theme .owl-prev span, .owl-theme .owl-next span { right: 3.8em; }
+a.supersized-next.visible:hover, a.supersized-prev.visible:hover, .owl-theme .owl-prev:hover, .owl-theme .owl-next:hover { opacity: 1; }
+a.supersized-next:hover span, a.supersized-prev:hover span, .owl-theme .owl-prev:hover span, .owl-theme .owl-next:hover span { opacity: 1; filter: none; }
+a.supersized-prev:hover span, .owl-theme .owl-prev:hover span { left: 3em; }
+a.supersized-next:hover span, .owl-theme .owl-next:hover span { right: 3em; }
+#supersized-info { position: absolute; top: 0; left: 0; width: 100%; height: 100%; z-index: 1; text-align: center; display: table; float: left; }
+#supersized-info .wrapper { display: table-cell; vertical-align: bottom; padding: 0 2em 3em; visibility: hidden; opacity: 0; font-size: 1.1em; color: #fff; text-shadow: 0px 1px 1px rgba(0,0,0,.3); }
+#supersized-info.visible .wrapper { visibility: visible; opacity: 1; }
+#supersized-info .wrapper h2 { display: none; font-size: 3em; margin-bottom: 0.25em; }
+#supersized-info .wrapper hr { display: none; width: 100px; margin: 0 auto 1em; background-color: #fff; -webkit-box-shadow: 0px 1px 0px 0px rgba(0,0,0,.15); box-shadow: 0px 1px 0px 0px rgba(0, 0, 0, 0.15); }
+#supersized-info .wrapper p { text-transform: uppercase; font-weight: 300; margin-bottom: 1em; }
+#supersized-info .wrapper a.button { margin-bottom: 0; }
+#supersized-info .wrapper a.button:hover { margin-bottom: 0; text-shadow: none; }
+
+#supersized, a.supersized-next, a.supersized-prev, a.supersized-next span, a.supersized-prev span, #supersized-info .wrapper { -webkit-transition: all 0.3s ease; -moz-transition: all 0.3s ease; -ms-transition: all 0.3s ease; -o-transition: all 0.3s ease; transition: all 0.3s ease; }
+
+@media (min-width: 480px) {
+	#supersized-info .wrapper { padding-bottom: 4em; }
+}
+
+@media (min-width: 768px) {
+	#supersized-info .wrapper { vertical-align: middle; padding: 2em; }
+	#supersized-info .wrapper h2, #supersized-info .wrapper hr { display: block; }
+	a.supersized-next.visible, a.supersized-prev.visible, .owl-theme .owl-prev, .owl-theme .owl-next { visibility: visible; opacity: 0.5; }
+}
+
+@media (max-height: 680px) {
+	#supersized-info .wrapper { vertical-align: bottom; }
+}
