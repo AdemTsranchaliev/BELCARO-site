@@ -1,167 +1,142 @@
-<div class="tf-page-title">
-    <div class="container-full">
-        <div class="heading text-center">{{category}}</div>
-        <p class="text-center text-2 text_black-2 mt_5">Разгледайте нашата последна колекция мебели и открийте вдъхновение за интериорен стил!</p>
+<!-- Luxury Catalog Header -->
+<div class="luxury-catalog-header">
+    <div class="container">
+        <h1 class="category-title">{{category}}</h1>
+        <p class="category-description">Разгледайте нашата последна колекция мебели и открийте вдъхновение за интериорен стил!</p>
     </div>
 </div>
-<!-- /page-title -->
 
-<!-- Section Product -->
-<section class="flat-spacing-2">
+<!-- Catalog Section -->
+<section class="luxury-catalog">
     <div class="container">
-        <div class="tf-shop-control grid-3 align-items-center">
-            <div class="tf-control-filter"></div>
-            <ul class="tf-control-layout d-flex justify-content-center">
-                <li class="tf-view-layout-switch sw-layout-list list-layout" data-value-layout="list">
-                    <div class="item"><span class="icon icon-list"></span></div>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-2" data-value-layout="tf-col-2">
-                    <div class="item"><span class="icon icon-grid-2"></span></div>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-3" data-value-layout="tf-col-3">
-                    <div class="item"><span class="icon icon-grid-3"></span></div>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-4 active" data-value-layout="tf-col-4">
-                    <div class="item"><span class="icon icon-grid-4"></span></div>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-5" data-value-layout="tf-col-5">
-                    <div class="item"><span class="icon icon-grid-5"></span></div>
-                </li>
-                <li class="tf-view-layout-switch sw-layout-6" data-value-layout="tf-col-6">
-                    <div class="item"><span class="icon icon-grid-6"></span></div>
-                </li>
-            </ul>
-        </div>
-        
-        <div class="wrapper-control-shop">
-            <div class="meta-filter-shop">
-                <div id="product-count-grid" class="count-text"></div>
-                <div id="product-count-list" class="count-text"></div>
-                <div id="applied-filters"></div>
-                <button id="remove-all" class="remove-all-filters" style="display: none;">Remove All <i class="icon icon-close"></i></button>
-            </div>
-            <!-- list layout -->
-            <div class="tf-list-layout wrapper-shop" id="listLayout">
-                <div class="card-product list-layout"  data-availability="In stock" data-brand="Ecomus" *ngFor="let product of paginatedProducts">
-                    <div class="card-product-wrapper" style="aspect-ratio: 0;">
-                        <a href="#" class="product-img">
-                            <img class="lazyload img-product"
-                                data-src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp"
-                                src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp" alt="image-product">
-                            <img class="lazyload img-hover" data-src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp"
-                                src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp" alt="image-product">
-                        </a>
-                    </div>
-                    <div class="card-product-info">
-                        <a routerLink="/details/{{product.Id}}" class="title link">{{ product.Name }}</a>
-                        <p class="description">{{product.Description}}</p>
-                        <div class="list-product-btn">
-                            <a href="#" class="box-icon wishlist style-3 hover-tooltip"><span class="icon icon-heart"></span> <span class="tooltip">Add to Wishlist</span></a>
-                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal" class="box-icon quickview style-3 hover-tooltip">
-                                <span class="icon icon-view"></span><span class="tooltip">Quick view</span>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-                <!-- pagination -->
-                <ul class="wg-pagination tf-pagination-list justify-content-start">
-                    <li class="active">
-                        <a href="javascript:void(0)" class="pagination-link">1</a>
-                    </li>
-                    <li>
-                        <a href="javascript:void(0)" class="pagination-link animate-hover-btn">
-                            <span class="icon icon-arrow-right"></span>
-                        </a>
-                    </li>
-                </ul>
+        <!-- Filters and Controls -->
+        <div class="catalog-header">
+            <div class="filters-toggle" (click)="toggleFilters()">
+                <i class="fas fa-filter"></i>
+                <span>Филтри</span>
             </div>
 
-            <!-- grid layout -->
-            <div class="tf-grid-layout wrapper-shop tf-col-4" id="gridLayout">
-                <div class="card-product grid" data-availability="In stock" data-brand="Ecomus" *ngFor="let product of paginatedProducts">
-                    <div class="card-product-wrapper" style="aspect-ratio: 0;">
-                        <a routerLink="/details/{{product.Id}}" class="product-img">
-                            <img class="lazyload img-product"
-                                data-src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp"
-                                src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp" alt="image-product">
-                            <img class="lazyload img-hover" data-src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp"
-                                src="assets/images/products-thumb/{{ product.Image.toLowerCase() }}.1.webp" alt="image-product">
-                        </a>
-                        <div class="list-product-btn absolute-2">
-                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
-                                <span class="icon icon-heart"></span>
-                                <span class="tooltip">Add to Wishlist</span>
-                                <span class="icon icon-delete"></span>
-                            </a>
-                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
-                                <span class="icon icon-view"></span>
-                                <span class="tooltip">Quick View</span>
-                            </a>
+            <div class="view-controls">
+                <button [class.active]="viewMode === 'grid'" (click)="setViewMode('grid')" title="Grid View">
+                    <i class="fas fa-th-large"></i>
+                </button>
+                <button [class.active]="viewMode === 'list'" (click)="setViewMode('list')" title="List View">
+                    <i class="fas fa-list"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="catalog-content">
+            <!-- Filters sidebar -->
+            <div class="filters-sidebar" [class.active]="showFilters">
+                <div class="filters-header">
+                    <h3>Филтри</h3>
+                    <button class="close-filters" (click)="toggleFilters()">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+                
+                <div class="filters-content">
+                    <!-- Price Range -->
+
+
+                    <!-- Categories -->
+                    <div class="filter-group">
+                        <h4>Категории</h4>
+                        <div class="category-filters">
+                            <label *ngFor="let cat of categories">
+                                <input type="checkbox" 
+                                       [checked]="isFilterActive(cat)"
+                                       (change)="toggleCategoryFilter(cat)">
+                                {{cat}}
+                            </label>
                         </div>
                     </div>
-                    <div class="card-product-info">
-                        <a routerLink="/details/{{product.Id}}" class="title link">{{ product.Name }}</a>
+                </div>
+
+                <div class="filters-footer">
+                    <button class="apply-filters" (click)="applyFilters()">Приложи</button>
+                    <button class="clear-filters" (click)="clearFilters()">Изчисти</button>
+                </div>
+            </div>
+
+            <!-- Products grid -->
+            <div class="products-wrapper" [class.list-view]="viewMode === 'list'">
+                <div class="product-card" *ngFor="let product of paginatedProducts" [class.list-mode]="viewMode === 'list'">
+                    <div class="product-image">
+                        <a routerLink="/details/{{product.Id}}">
+                            <img [src]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1.webp'" 
+                                 [alt]="product.Name"
+                                 loading="lazy">
+                        </a>
+                        <div class="product-actions">
+                            <button class="action-btn" (click)="quickView(product)" title="Бърз преглед">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                            <button class="action-btn" (click)="addToFavorites(product)" title="Добави в любими">
+                                <i class="fas fa-heart"></i>
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="product-info">
+                        <h3 class="product-title">
+                            <a routerLink="/details/{{product.Id}}">{{product.Name}}</a>
+                        </h3>
+                        <p class="product-description" *ngIf="viewMode === 'list'">{{product.Description}}</p>
                     </div>
                 </div>
             </div>
-            <ul class="tf-pagination-wrap tf-pagination-list">
-                <!-- Previous Button -->
-                <li [class.disabled]="currentPage === 1" (click)="prevPage()">
-                    <a href="javascript:void(0)" class="pagination-link">
-                        <span class="icon icon-arrow-left"></span>
-                    </a>
-                </li>
-            
-                <!-- Page Numbers -->
-                <li *ngFor="let page of [].constructor(totalPages); let i = index" [class.active]="i + 1 === currentPage">
-                    <a href="javascript:void(0)" class="pagination-link" (click)="currentPage = i + 1">{{ i + 1 }}</a>
-                </li>
-            
-                <!-- Next Button -->
-                <li [class.disabled]="currentPage === totalPages" (click)="nextPage()">
-                    <a href="javascript:void(0)" class="pagination-link">
-                        <span class="icon icon-arrow-right"></span>
-                    </a>
-                </li>
-            </ul>
+
+            <!-- Pagination -->
+            <div class="pagination" *ngIf="totalPages > 1">
+                <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)" class="page-btn">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <ng-container *ngFor="let page of getPageNumbers()">
+                    <span *ngIf="page === -1" class="ellipsis">...</span>
+                    <button *ngIf="page !== -1" 
+                            [class.active]="page === currentPage"
+                            (click)="goToPage(page)" 
+                            class="page-btn">
+                        {{page}}
+                    </button>
+                </ng-container>
+                <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)" class="page-btn">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
         </div>
     </div>
 </section>
-<!-- /Section Product -->
 
-<!-- Filter -->
-<div class="offcanvas offcanvas-start canvas-filter" id="filterShop">
-    <div class="canvas-wrapper">
-        <header class="canvas-header">
-            <div class="filter-icon">
-                <span class="icon icon-filter"></span>
-                <span>Filter</span>
+<!-- Quick View Modal -->
+<div class="quick-view-modal" *ngIf="selectedProduct" (click)="closeQuickView()">
+    <div class="modal-content" (click)="$event.stopPropagation()">
+        <button class="close-modal" (click)="closeQuickView()">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="modal-body">
+            <div class="product-gallery">
+                <img [src]="'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1.webp'" 
+                     [alt]="selectedProduct.Name">
             </div>
-            <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
-        </header>
-        <div class="canvas-body">
-            <form action="#" id="facet-filter-form" class="facet-filter-form">
-                <div class="widget-facet">
-                    <div class="facet-title" data-bs-target="#price" data-bs-toggle="collapse" aria-expanded="true" aria-controls="price">
-                        <span>Price</span>
-                        <span class="icon icon-arrow-up"></span>
-                    </div>
-                    <div id="price" class="collapse show">
-                        <div class="widget-price filter-price">
-                            <div class="price-val-range" id="price-value-range" data-min="0" data-max="500"></div>
-                            <div class="box-title-price">
-                                <span class="title-price">Price :</span>
-                                <div class="caption-price">
-                                    <div class="price-val" id="price-min-value" data-currency="$"></div>
-                                    <span>-</span>
-                                    <div class="price-val" id="price-max-value" data-currency="$"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+            
+            <div class="product-details">
+                <h2>{{selectedProduct.Name}}</h2>
+                <p class="description">{{selectedProduct.Description}}</p>
+                
+                <div class="actions">
+                    <a [routerLink]="['/details', selectedProduct.Id]" class="view-details">
+                        Виж детайли
+                    </a>
+                    <button class="add-to-favorites" (click)="addToFavorites(selectedProduct)">
+                        <i class="fas fa-heart"></i>
+                        Добави в любими
+                    </button>
                 </div>
-            </form>
+            </div>
         </div>
     </div>
 </div>
-<!-- End Filter -->
