@@ -76,11 +76,17 @@ export class ProductDetailsComponent
     window.scroll(0, 0);
 
     const thumbsSwiper = new Swiper(".tf-product-media-thumbs", {
-      direction: "vertical",
+      direction: window.innerWidth >= 768 ? 'vertical' : 'horizontal',
       spaceBetween: 10,
-      slidesPerView: "auto",
+      slidesPerView: window.innerWidth >= 768 ? 'auto' : 4,
       freeMode: true,
       watchSlidesProgress: true,
+      breakpoints: {
+        768: {
+          direction: 'vertical',
+          slidesPerView: 'auto'
+        }
+      }
     });
 
     this.mainSwiper = new Swiper(".tf-product-media-main", {
@@ -92,6 +98,18 @@ export class ProductDetailsComponent
       thumbs: {
         swiper: thumbsSwiper,
       },
+      breakpoints: {
+        320: {
+          allowTouchMove: true,
+        }
+      }
+    });
+
+    // Handle window resize
+    window.addEventListener('resize', () => {
+      const isDesktop = window.innerWidth >= 768;
+      thumbsSwiper.params.direction = isDesktop ? 'vertical' : 'horizontal';
+      thumbsSwiper.update();
     });
 
     setTimeout(() => {

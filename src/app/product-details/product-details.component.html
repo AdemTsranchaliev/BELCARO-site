@@ -30,43 +30,44 @@
                         <div class="col-md-6">
                             <div class="tf-product-media-wrap sticky-top">
                                 <div class="thumbs-slider">
-                                  <!-- Thumbnails -->
-                                  <div dir="ltr" class="swiper tf-product-media-thumbs">
-                                    <div class="swiper-wrapper">
-                                      <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
-                                        <div class="item" (click)="openImage(index)">
-                                          <img class="lazyload" 
-                                            [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
-                                            [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
-                                            alt="img-product">
+                                    <!-- Main Image Swiper -->
+                                    <div dir="ltr" class="swiper tf-product-media-main">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
+                                                <a [href]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                    target="_blank"
+                                                    class="item"
+                                                    data-pswp-width="770px"
+                                                    data-pswp-height="1075px">
+                                                    <img class="lazyload"
+                                                        [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                        [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                        alt="Product image"
+                                                        style="width: 100%; height: auto; object-fit: contain;">
+                                                </a>
+                                            </div>
                                         </div>
-                                      </div>
+                                        <!-- Navigation Buttons -->
+                                        <div class="swiper-button-next button-style-arrow thumbs-next"></div>
+                                        <div class="swiper-button-prev button-style-arrow thumbs-prev"></div>
                                     </div>
-                                  </div>
-                              
-                                  <!-- Main Image Swiper -->
-                                  <div dir="ltr" class="swiper tf-product-media-main">
-                                    <div class="swiper-wrapper">
-                                      <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
-                                        <a [href]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
-                                          target="_blank"
-                                          class="item"
-                                          data-pswp-width="770px"
-                                          data-pswp-height="1075px">
-                                          <img class="lazyload"
-                                            [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
-                                            [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.jpg'"
-                                            alt="">
-                                        </a>
-                                      </div>
+
+                                    <!-- Thumbnails -->
+                                    <div dir="ltr" class="swiper tf-product-media-thumbs">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
+                                                <div class="item" (click)="openImage(index)">
+                                                    <img class="lazyload" 
+                                                        [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                        [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                        alt="Product thumbnail"
+                                                        style="width: 100%; height: auto; object-fit: cover;">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
-                                    <!-- Navigation Buttons -->
-                                    <div class="swiper-button-next button-style-arrow thumbs-next" (click)="nextImage()"></div>
-                                    <div class="swiper-button-prev button-style-arrow thumbs-prev" (click)="prevImage()"></div>
-                                  </div>
                                 </div>
-                              </div>
-                              
+                            </div>
                         </div>
                         <div class="col-md-6">
                             <div class="tf-product-info-wrap position-relative">
@@ -242,8 +243,8 @@
                                 <div class="card-product">
                                     <div class="card-product-wrapper" style="aspect-ratio: 0;">
                                         <a routerLink="/details/{{product.Id}}" class="product-img">
-                                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  alt="image-product">
-                                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.jpg"  alt="image-product">
+                                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  alt="image-product">
+                                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  alt="image-product">
                                         </a>
                                         <div class="list-product-btn">
                                             <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">

@@ -84,7 +84,32 @@ export class CommonserviceService {
       new Product('1321s', '1321s', 'Chairs', '1321s', 3, 'Луксозен ръчно изработен стол с ергономичен дизайн. Осигурява комфорт и стил за всяко пространство.'),
       new Product('1327s', '1327s', 'Chairs', '1327s', 4, 'Луксозен ръчно изработен стол с ергономичен дизайн. Осигурява комфорт и стил за всяко пространство.'),
       new Product('1329s', '1329s', 'Chairs', '1329s', 4, 'Луксозен ръчно изработен стол с ергономичен дизайн. Осигурява комфорт и стил за всяко пространство.'),
-      new Product('1329b', '1329b', 'Chairs', '1329b', 4, 'Луксозен ръчно изработен стол с ергономичен дизайн. Осигурява комфорт и стил за всяко пространство.')
+      new Product('1329b', '1329b', 'Chairs', '1329b', 4, 'Луксозен ръчно изработен стол с ергономичен дизайн. Осигурява комфорт и стил за всяко пространство.'),
+      new Product('412', 'Product 412', 'Sofas', '412', 3, 'Description for Product 412'),
+      new Product('413', 'Product 413', 'Sofas', '413', 2, 'Description for Product 413'),
+      new Product('414', 'Product 414', 'Sofas', '414', 3, 'Description for Product 414'),
+      new Product('415', 'Product 415', 'Sofas', '415', 3, 'Description for Product 415'),
+      new Product('416', 'Product 416', 'Sofas', '416', 3, 'Description for Product 416'),
+      new Product('417', 'Product 417', 'Sofas', '417', 2, 'Description for Product 417'),
+      new Product('418', 'Product 418', 'Sofas', '418', 2, 'Description for Product 418'),
+      new Product('419', 'Product 419', 'Sofas', '419', 3, 'Description for Product 419'),
+      new Product('420', 'Product 420', 'Sofas', '420', 1, 'Description for Product 420'),
+      new Product('421', 'Product 421', 'Sofas', '421', 3, 'Description for Product 421'),
+      new Product('422', 'Product 422', 'Sofas', '422', 7, 'Description for Product 422'),
+      new Product('423', 'Product 423', 'Sofas', '423', 5, 'Description for Product 423'),
+      new Product('424', 'Product 424', 'Sofas', '424', 4, 'Description for Product 424'),
+      new Product('425', 'Product 425', 'Sofas', '425', 3, 'Description for Product 425'),
+      new Product('426', 'Product 426', 'Sofas', '426', 5, 'Description for Product 426'),
+      new Product('427', 'Product 427', 'Sofas', '427', 5, 'Description for Product 427'),
+      new Product('428', 'Product 428', 'Sofas', '428', 8, 'Description for Product 428'),
+      new Product('429', 'Product 429', 'Sofas', '429', 3, 'Description for Product 429'),
+      new Product('430', 'Product 430', 'Sofas', '430', 4, 'Description for Product 430'),
+      new Product('431', 'Product 431', 'Sofas', '431', 3, 'Description for Product 431'),
+      new Product('432', 'Product 432', 'Sofas', '432', 6, 'Description for Product 432'),
+      new Product('433', 'Product 433', 'Sofas', '433', 7, 'Description for Product 433'),
+      new Product('434', 'Product 434', 'Sofas', '434', 5, 'Description for Product 434'),
+      new Product('435', 'Product 435', 'Sofas', '435', 5, 'Description for Product 435'),
+      new Product('436', 'Product 436', 'Sofas', '436', 6, 'Description for Product 436')
   ];
 
     return products
