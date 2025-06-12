@@ -1,0 +1,50 @@
+<section class="luxury-wishlist">
+    <div class="container">
+        <div class="section-header text-center">
+            <h1 class="mb-4">Любими продукти</h1>
+        </div>
+
+        <div class="wishlist-content">
+            <div *ngIf="wishlistItems.length === 0" class="empty-wishlist text-center">
+                <i class="fas fa-heart mb-3"></i>
+                <h3>Вашият списък с любими е празен</h3>
+                <p>Добавете продукти, които харесвате, за да ги намерите по-лесно по-късно.</p>
+                <a routerLink="/catalog" class="btn-primary mt-3">Разгледайте продукти</a>
+            </div>
+
+            <div *ngIf="wishlistItems.length > 0" class="wishlist-items">
+                <div class="wishlist-actions text-end mb-4">
+                    <button class="btn btn-outline-danger" (click)="clearWishlist()">
+                        <i class="fas fa-trash-alt me-2"></i>
+                        Изчисти всички
+                    </button>
+                </div>
+
+                <div class="products-grid">
+                    <div class="product-card" *ngFor="let product of wishlistItems">
+                        <div class="product-image">
+                            <a [routerLink]="['/details', product.Id]">
+                                <img [src]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1.webp'" 
+                                     [alt]="product.Name"
+                                     loading="lazy">
+                            </a>
+                            <button class="remove-btn" (click)="removeFromWishlist(product)" title="Премахни от любими">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        
+                        <div class="product-info">
+                            <h3 class="product-title">
+                                <a [routerLink]="['/details', product.Id]">{{product.Name}}</a>
+                            </h3>
+                            <p class="product-description">{{product.Description}}</p>
+                            <a [routerLink]="['/details', product.Id]" class="view-details">
+                                Виж детайли
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section> 

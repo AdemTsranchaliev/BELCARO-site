@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { environment } from '../environments/environment';
+import { WishlistService } from './wishlist.service';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent implements OnInit {
+export class AppComponent {
+  title = 'belcaro-site';
 
+  constructor(public wishlistService: WishlistService) {}
 
   ngOnInit(): void {
     if (environment.production) {
@@ -24,7 +27,4 @@ export class AppComponent implements OnInit {
       (closeButton as HTMLElement).click(); // Simulate a click on the close button
     }
   }
-
-
-  title = 'belcaro-site';
 }

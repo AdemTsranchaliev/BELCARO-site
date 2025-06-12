@@ -1,1 +1,15 @@
+.item-link.active {
+    color: #dc3545 !important;
+}
 
+.menu-link-text.active {
+    color: #dc3545 !important;
+}
+
+.mb-menu-link.active {
+    color: #dc3545 !important;
+}
+
+.sub-nav-link.active {
+    color: #dc3545 !important;
+}

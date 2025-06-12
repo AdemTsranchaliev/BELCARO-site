@@ -64,7 +64,7 @@
             <div class="products-wrapper" [class.list-view]="viewMode === 'list'">
                 <div class="product-card" *ngFor="let product of paginatedProducts" [class.list-mode]="viewMode === 'list'">
                     <div class="product-image">
-                        <a routerLink="/details/{{product.Id}}">
+                        <a [routerLink]="['/details', product.Id]">
                             <img [src]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1.webp'" 
                                  [alt]="product.Name"
                                  loading="lazy">
@@ -73,7 +73,7 @@
                             <button class="action-btn" (click)="quickView(product)" title="Бърз преглед">
                                 <i class="fas fa-eye"></i>
                             </button>
-                            <button class="action-btn" (click)="addToFavorites(product)" title="Добави в любими">
+                            <button class="action-btn" [class.active]="isInWishlist(product)" (click)="addToFavorites(product)" title="Добави в любими">
                                 <i class="fas fa-heart"></i>
                             </button>
                         </div>
@@ -81,7 +81,7 @@
                     
                     <div class="product-info">
                         <h3 class="product-title">
-                            <a routerLink="/details/{{product.Id}}">{{product.Name}}</a>
+                            <a [routerLink]="['/details', product.Id]">{{product.Name}}</a>
                         </h3>
                         <p class="product-description" *ngIf="viewMode === 'list'">{{product.Description}}</p>
                     </div>
@@ -90,19 +90,29 @@
 
             <!-- Pagination -->
             <div class="pagination" *ngIf="totalPages > 1">
-                <button [disabled]="currentPage === 1" (click)="goToPage(currentPage - 1)" class="page-btn">
+                <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
                     <i class="fas fa-chevron-left"></i>
                 </button>
-                <ng-container *ngFor="let page of getPageNumbers()">
-                    <span *ngIf="page === -1" class="ellipsis">...</span>
-                    <button *ngIf="page !== -1" 
-                            [class.active]="page === currentPage"
-                            (click)="goToPage(page)" 
-                            class="page-btn">
-                        {{page}}
-                    </button>
-                </ng-container>
-                <button [disabled]="currentPage === totalPages" (click)="goToPage(currentPage + 1)" class="page-btn">
+                
+                <button class="page-btn" [class.active]="currentPage === 1" (click)="setPage(1)">1</button>
+                
+                <span class="ellipsis" *ngIf="currentPage > 3">...</span>
+                
+                <button class="page-btn" *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]"
+                        [class.active]="page === currentPage"
+                        (click)="setPage(page)"
+                        [style.display]="page > 1 && page < totalPages ? 'block' : 'none'">
+                    {{page}}
+                </button>
+                
+                <span class="ellipsis" *ngIf="currentPage < totalPages - 2">...</span>
+                
+                <button class="page-btn" [class.active]="currentPage === totalPages" (click)="setPage(totalPages)"
+                        *ngIf="totalPages > 1">
+                    {{totalPages}}
+                </button>
+                
+                <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
                     <i class="fas fa-chevron-right"></i>
                 </button>
             </div>
@@ -131,9 +141,9 @@
                     <a [routerLink]="['/details', selectedProduct.Id]" class="view-details">
                         Виж детайли
                     </a>
-                    <button class="add-to-favorites" (click)="addToFavorites(selectedProduct)">
+                    <button class="add-to-favorites" [class.active]="isInWishlist(selectedProduct)" (click)="addToFavorites(selectedProduct)">
                         <i class="fas fa-heart"></i>
-                        Добави в любими
+                        {{isInWishlist(selectedProduct) ? 'Премахни от любими' : 'Добави в любими'}}
                     </button>
                 </div>
             </div>

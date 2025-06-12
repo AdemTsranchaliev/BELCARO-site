@@ -91,14 +91,14 @@
                                     </div>-->
                                     <div class="tf-product-info-buy-button">
                                         <form class="">
-                                            <a href="javascript:void(0);" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart"><span>Добави в любими</span></a>
-                                            <a href="javascript:void(0);" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action">
+                                            <button type="button" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart" (click)="addToFavorites(productDetails)" [class.active]="isInWishlist(productDetails)">
+                                                <span>{{ isInWishlist(productDetails) ? 'Премахни от любими' : 'Добави в любими' }}</span>
+                                            </button>
+                                            <button type="button" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action" [class.active]="isInWishlist(productDetails)" (click)="addToFavorites(productDetails)">
                                                 <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
+                                                <span class="tooltip">{{ isInWishlist(productDetails) ? 'Премахни от любими' : 'Добави в любими' }}</span>
                                                 <span class="icon icon-delete"></span>
-                                            </a>
-
-
+                                            </button>
                                         </form>
                                     </div>
 
@@ -239,28 +239,27 @@
                 <div class="hover-sw-nav hover-sw-2">
                     <div dir="ltr" class="swiper tf-sw-product-sell wrap-sw-over" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="15" data-pagination="2" data-pagination-md="3" data-pagination-lg="3">
                         <div class="swiper-wrapper">
-                            <div class="swiper-slide" lazy="true"  *ngFor="let product of relatedProducts">
+                            <div class="swiper-slide" lazy="true" *ngFor="let product of relatedProducts">
                                 <div class="card-product">
                                     <div class="card-product-wrapper" style="aspect-ratio: 0;">
-                                        <a routerLink="/details/{{product.Id}}" class="product-img">
-                                            <img class="lazyload img-product" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  alt="image-product">
-                                            <img class="lazyload img-hover" data-src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  src="assets/images/products/{{ product.Image.toLowerCase() }}.1.webp"  alt="image-product">
+                                        <a [routerLink]="['/details', product.Id]" class="product-img">
+                                            <img class="lazyload img-product" [attr.data-src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" [src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" alt="image-product">
+                                            <img class="lazyload img-hover" [attr.data-src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" [src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" alt="image-product">
                                         </a>
                                         <div class="list-product-btn">
-                                            <a href="javascript:void(0);" class="box-icon bg_white wishlist btn-icon-action">
+                                            <button type="button" class="box-icon bg_white wishlist btn-icon-action" [class.active]="isInWishlist(product)" (click)="addToFavorites(product)">
                                                 <span class="icon icon-heart"></span>
-                                                <span class="tooltip">Add to Wishlist</span>
+                                                <span class="tooltip">{{ isInWishlist(product) ? 'Премахни от любими' : 'Добави в любими' }}</span>
                                                 <span class="icon icon-delete"></span>
-                                            </a>
-                                            <a routerLink="/details/{{product.Id}}" data-bs-toggle="modal" class="box-icon bg_white quickview tf-btn-loading">
+                                            </button>
+                                            <a [routerLink]="['/details', product.Id]" class="box-icon bg_white quickview tf-btn-loading">
                                                 <span class="icon icon-view"></span>
-                                                <span class="tooltip">Quick View</span>
+                                                <span class="tooltip">Бърз преглед</span>
                                             </a>
                                         </div>
                                     </div>
                                     <div class="card-product-info">
-                                        <a routerLink="/details/{{product.Id}}" class="title link">{{product.Name}}</a>
-
+                                        <a [routerLink]="['/details', product.Id]" class="title link">{{product.Name}}</a>
                                     </div>
                                 </div>
                             </div>

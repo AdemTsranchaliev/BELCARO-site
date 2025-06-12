@@ -1,7 +1,8 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { RouterModule, Routes } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HomeComponent } from './home/home.component';
 import { CatalogComponent } from './catalog/catalog.component';
@@ -11,6 +12,19 @@ import { ServicesComponent } from './services/services.component';
 import { ProductDetailsComponent } from './product-details/product-details.component';
 import { CommonserviceService } from './commonservice.service';
 import { ProjectsComponent } from './projects/projects.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
+
+const routes: Routes = [
+  { path: '', component: HomeComponent },
+  { path: 'catalog', component: CatalogComponent },
+  { path: 'catalog/:category', component: CatalogComponent },
+  { path: 'details/:id', component: ProductDetailsComponent },
+  { path: 'wishlist', component: WishlistComponent },
+  { path: 'projects', component: ProjectsComponent },
+  { path: 'contact', component: ContactComponent },
+  { path: 'about', component: AboutComponent },
+  { path: '**', redirectTo: '' }
+];
 
 @NgModule({
   declarations: [
@@ -21,11 +35,13 @@ import { ProjectsComponent } from './projects/projects.component';
     AboutComponent,
     ServicesComponent,
     ProductDetailsComponent,
-    ProjectsComponent
+    ProjectsComponent,
+    WishlistComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    RouterModule.forRoot(routes),
+    FormsModule
   ],
   providers: [CommonserviceService],
   bootstrap: [AppComponent]

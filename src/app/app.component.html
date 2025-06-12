@@ -17,42 +17,50 @@
                 <nav class="box-navigation text-center">
                     <ul class="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                         <li class="menu-item">
-                            <a routerLink="#" class="item-link">Начало</a>
-                            
+                            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="item-link">Начало</a>
                         </li>                                                            
                         <li class="menu-item position-relative">
-                            <a routerLink="catalog" class="item-link">Продукти<i class="icon icon-arrow-down"></i></a>
+                            <a routerLink="/catalog" routerLinkActive="active" class="item-link">Продукти<i class="icon icon-arrow-down"></i></a>
                             <div class="sub-menu submenu-default">
                                 <ul class="menu-list">
                                     <li>
-                                        <a routerLink="catalog/sofas" class="menu-link-text link text_black-2">Дивани</a>
+                                        <a routerLink="/catalog/sofas" routerLinkActive="active" class="menu-link-text link text_black-2">Дивани</a>
                                     </li>
                                     <li>
-                                        <a routerLink="catalog/armchair" class="menu-link-text link text_black-2">Фотьойли</a>
+                                        <a routerLink="/catalog/armchair" routerLinkActive="active" class="menu-link-text link text_black-2">Фотьойли</a>
                                     </li>
                                     <li>
-                                        <a routerLink="catalog/Beds" class="menu-link-text link text_black-2">Спални</a>
+                                        <a routerLink="/catalog/Beds" routerLinkActive="active" class="menu-link-text link text_black-2">Спални</a>
                                     </li>
                                     <li>
-                                        <a routerLink="catalog/Tables" class="menu-link-text link text_black-2">Маси</a>
+                                        <a routerLink="/catalog/Tables" routerLinkActive="active" class="menu-link-text link text_black-2">Маси</a>
                                     </li>
                                     <li>
-                                        <a routerLink="catalog/Chairs" class="menu-link-text link text_black-2">Столове</a>
+                                        <a routerLink="/catalog/Chairs" routerLinkActive="active" class="menu-link-text link text_black-2">Столове</a>
                                     </li>
                                 </ul>
                             </div>
                         </li>
                         <li class="menu-item position-relative">
-                            <a routerLink="projects" class="item-link">Проекти</a>
+                            <a routerLink="/projects" routerLinkActive="active" class="item-link">Проекти</a>
                         </li>
-                        <li class="menu-item"><a routerLink="contact" class="item-link">Контакти</a></li>
-                        <li class="menu-item"><a routerLink="about" class="item-link">За нас</a></li>
+                        <li class="menu-item">
+                            <a routerLink="/contact" routerLinkActive="active" class="item-link">Контакти</a>
+                        </li>
+                        <li class="menu-item">
+                            <a routerLink="/about" routerLinkActive="active" class="item-link">За нас</a>
+                        </li>
                     </ul>
                 </nav>
             </div>
             <div class="col-xl-3 col-md-4 col-3">
                 <ul class="nav-icon d-flex justify-content-end align-items-center gap-20">
-                    <li class="nav-wishlist"><a routerLink="wishlist" class="nav-icon-item"><i class="icon icon-heart"></i><span class="count-box">0</span></a></li>
+                    <li class="nav-wishlist">
+                        <a routerLink="wishlist" class="nav-icon-item">
+                            <i class="icon icon-heart"></i>
+                            <span class="count-box">{{wishlistService.getWishlistCount()}}</span>
+                        </a>
+                    </li>
                 </ul>
             </div>
         </div>
@@ -73,7 +81,7 @@
                             </div>
                             <ul>
                                 <li>
-                                    <p>Адрес: 1532 София, Казичене, ул. „Фармапарк 19<br> </p>
+                                    <p>Адрес: 1532 София, Казичене, ул. "Фармапарк 19<br> </p>
                                 </li>
                                 <li>
                                     <p>Имейл: <a href="mailto:info@belcaro.com">info@belcaro.com</a></p>
@@ -180,35 +188,35 @@
         <div class="mb-body">
             <ul class="nav-ul-mb" id="wrapper-menu-navigation">
                 <li class="nav-mb-item">
-                    <a routerLink="" class="mb-menu-link" data-bs-dismiss="offcanvas">
+                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="mb-menu-link" data-bs-dismiss="offcanvas">
                         <span>Начало</span>
                     </a>
                 </li>
                 <li class="nav-mb-item">
-                    <a routerLink="catalog" class="mb-menu-link" data-bs-dismiss="offcanvas">
+                    <a routerLink="/catalog" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
                         <span>Продукти</span>
                         <span class="btn-open-sub"></span>
                     </a>
                     <ul class="sub-nav-menu" id="sub-menu-navigation">
-                        <li><a routerLink="catalog/sofas" class="sub-nav-link " data-bs-dismiss="offcanvas">Дивани</a></li>
-                        <li><a routerLink="catalog/Chairs" class="sub-nav-link" data-bs-dismiss="offcanvas">Столове</a></li>
-                        <li><a routerLink="catalog/armchair" class="sub-nav-link" data-bs-dismiss="offcanvas">Фотьойли</a></li>
-                        <li><a routerLink="catalog/Beds" class="sub-nav-link" data-bs-dismiss="offcanvas">Спални</a></li>
-                        <li><a routerLink="catalog/table" class="sub-nav-link" data-bs-dismiss="offcanvas">Маси</a></li>
+                        <li><a routerLink="/catalog/sofas" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Дивани</a></li>
+                        <li><a routerLink="/catalog/Chairs" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Столове</a></li>
+                        <li><a routerLink="/catalog/armchair" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Фотьойли</a></li>
+                        <li><a routerLink="/catalog/Beds" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Спални</a></li>
+                        <li><a routerLink="/catalog/Tables" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Маси</a></li>
                     </ul>
                 </li>
                 <li class="nav-mb-item">
-                    <a routerLink="projects" class="mb-menu-link" data-bs-dismiss="offcanvas">
+                    <a routerLink="/projects" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
                         <span>Проекти</span>
                     </a>
                 </li>
                 <li class="nav-mb-item">
-                    <a routerLink="contact" class="mb-menu-link" data-bs-dismiss="offcanvas">
+                    <a routerLink="/contact" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
                         <span>Контакти</span>
                     </a>
                 </li>
                 <li class="nav-mb-item">
-                    <a routerLink="about" class="mb-menu-link" data-bs-dismiss="offcanvas">
+                    <a routerLink="/about" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
                         <span>За нас</span>
                     </a>
                 </li>

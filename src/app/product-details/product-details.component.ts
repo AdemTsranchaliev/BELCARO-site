@@ -10,6 +10,7 @@ import Swiper from "swiper";
 import { Product } from "../product.model";
 import { CommonserviceService } from "../commonservice.service";
 import { filter } from "rxjs/operators";
+import { WishlistService } from '../wishlist.service';
 
 @Component({
   selector: "app-product-details",
@@ -47,7 +48,8 @@ export class ProductDetailsComponent
   constructor(
     private route: ActivatedRoute,
     private router: Router,
-    private service: CommonserviceService
+    private service: CommonserviceService,
+    private wishlistService: WishlistService
   ) {}
 
   ngOnInit(): void {
@@ -164,5 +166,17 @@ export class ProductDetailsComponent
 
   generateArray(count: number): number[] {
     return Array.from({ length: count }, (_, i) => i + 1);
+  }
+
+  addToFavorites(product: Product): void {
+    if (this.wishlistService.isInWishlist(product)) {
+      this.wishlistService.removeFromWishlist(product);
+    } else {
+      this.wishlistService.addToWishlist(product);
+    }
+  }
+
+  isInWishlist(product: Product): boolean {
+    return this.wishlistService.isInWishlist(product);
   }
 }

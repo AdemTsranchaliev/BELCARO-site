@@ -1,1 +1,24 @@
 /* You can add global styles to this file, and also import other style files */
+
+/* Wishlist Styles */
+.btn-add-to-cart.active {
+    background-color: #dc3545;
+    border-color: #dc3545;
+}
+
+.btn-icon-action.active .icon-heart {
+    color: #dc3545;
+}
+
+.btn-icon-action.active {
+    border-color: #dc3545;
+}
+
+.product-actions .action-btn.active {
+    background-color: #dc3545;
+    color: white;
+}
+
+.product-actions .action-btn.active i {
+    color: white;
+}
