@@ -8,18 +8,40 @@
 
     <meta name="author" content="themesflat.com">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="description" content="Belcaro - Your trusted partner for quality products">
 
-   <!-- font -->
-   <link rel="stylesheet" href="assets/fonts/fonts.css">
-   <link rel="stylesheet" href="assets/fonts/font-icons.css">
-   <link rel="stylesheet" href="assets/css/bootstrap.min.css">
-   <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
-   <link rel="stylesheet" href="assets/css/animate.css">
-   <link rel="stylesheet"type="text/css" href="assets/css/styles.css"/>
-   <link rel="stylesheet" href="assets/css/photoswipe.css">
+    <!-- Preload critical assets -->
+    <link rel="preload" href="assets/fonts/fonts.css" as="style">
+    <link rel="preload" href="assets/css/styles.css" as="style">
+    <link rel="preload" href="assets/js/main.js" as="script">
 
-   <!-- Font Awesome -->
-   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <!-- Critical CSS inline -->
+    <style>
+        /* Add critical CSS here */
+        body { margin: 0; padding: 0; }
+        .loading { display: none; }
+    </style>
+
+    <!-- Defer non-critical CSS -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/fonts/font-icons.css" media="print" onload="this.media='all'">
+    <link rel="stylesheet" href="assets/css/styles.css" media="print" onload="this.media='all'">
+
+    <!-- PWA support -->
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#ffffff">
+    <link rel="icon" type="image/x-icon" href="favicon.ico">
+
+    <!-- font -->
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/fonts/font-icons.css">
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/swiper-bundle.min.css">
+    <link rel="stylesheet" href="assets/css/animate.css">
+    <link rel="stylesheet" href="assets/css/photoswipe.css">
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
     <!-- Favicon and Touch Icons  -->
     <link rel="shortcut icon" href="assets/images/logo/favicon.png">
@@ -61,5 +83,16 @@
   <script type="module" src="assets/js/zoom.js"></script>
 
   </div>
+
+  <!-- Preconnect to external domains -->
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+  
+  <!-- Add noscript fallback for CSS -->
+  <noscript>
+    <link rel="stylesheet" href="assets/fonts/fonts.css">
+    <link rel="stylesheet" href="assets/fonts/font-icons.css">
+    <link rel="stylesheet" href="assets/css/styles.css">
+  </noscript>
 </body>
 </html>

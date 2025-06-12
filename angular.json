@@ -28,41 +28,77 @@
             "assets": [
               "src/favicon.ico",
               "src/assets",
-              "src/web.config"
+              "src/web.config",
+              "src/manifest.json"
             ],
             "styles": [
-  "node_modules/bootstrap/dist/css/bootstrap.min.css",
-  "node_modules/swiper/swiper-bundle.min.css",
-  "node_modules/animate.css/animate.min.css",
-  "src/assets/fonts/fonts.css",
-  "src/assets/fonts/font-icons.css",
-  "src/assets/css/styles.css"
-],
-"scripts": [
-  "node_modules/jquery/dist/jquery.min.js",
-  "node_modules/swiper/swiper-bundle.min.js",
-  "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
-  "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
-  "node_modules/lazysizes/lazysizes.min.js",
-  "node_modules/wow.js/dist/wow.min.js",
-  "src/assets/js/carousel.js",
-  "src/assets/js/count-down.js",
-  "src/assets/js/multiple-modal.js",
-  "src/assets/js/main.js"
-]
+              "node_modules/bootstrap/dist/css/bootstrap.min.css",
+              "node_modules/swiper/swiper-bundle.min.css",
+              "node_modules/animate.css/animate.min.css",
+              "src/assets/fonts/fonts.css",
+              "src/assets/fonts/font-icons.css",
+              "src/assets/css/styles.css"
+            ],
+            "scripts": [
+              "node_modules/jquery/dist/jquery.min.js",
+              "node_modules/swiper/swiper-bundle.min.js",
+              "node_modules/bootstrap/dist/js/bootstrap.bundle.min.js",
+              "node_modules/bootstrap-select/dist/js/bootstrap-select.min.js",
+              "node_modules/lazysizes/lazysizes.min.js",
+              "node_modules/wow.js/dist/wow.min.js",
+              "src/assets/js/carousel.js",
+              "src/assets/js/count-down.js",
+              "src/assets/js/multiple-modal.js",
+              "src/assets/js/main.js"
+            ],
+            "serviceWorker": true,
+            "ngswConfigPath": "ngsw-config.json",
+            "optimization": true,
+            "outputHashing": "all",
+            "sourceMap": false,
+            "namedChunks": false,
+            "extractLicenses": true,
+            "vendorChunk": false,
+            "buildOptimizer": true,
+            "budgets": [
+              {
+                "type": "initial",
+                "maximumWarning": "2mb",
+                "maximumError": "5mb"
+              },
+              {
+                "type": "anyComponentStyle",
+                "maximumWarning": "6kb",
+                "maximumError": "10kb"
+              }
+            ]
           },
           "configurations": {
             "production": {
+              "optimization": {
+                "scripts": true,
+                "styles": {
+                  "minify": true,
+                  "inlineCritical": true
+                },
+                "fonts": true
+              },
+              "outputHashing": "all",
+              "sourceMap": false,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "buildOptimizer": true,
               "budgets": [
                 {
                   "type": "initial",
-                  "maximumWarning": "10mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "2mb",
+                  "maximumError": "5mb"
                 },
                 {
                   "type": "anyComponentStyle",
-                  "maximumWarning": "10mb",
-                  "maximumError": "10mb"
+                  "maximumWarning": "6kb",
+                  "maximumError": "10kb"
                 }
               ],
               "fileReplacements": [
@@ -70,8 +106,7 @@
                   "replace": "src/environments/environment.ts",
                   "with": "src/environments/environment.prod.ts"
                 }
-              ],
-              "outputHashing": "all"
+              ]
             },
             "development": {
               "buildOptimizer": false,
