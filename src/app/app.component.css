@@ -13,3 +13,15 @@
 .sub-nav-link.active {
     color: #dc3545 !important;
 }
+
+.offcanvas-backdrop {
+  transition: opacity 0.3s ease-out;
+}
+
+.offcanvas-backdrop.show {
+  opacity: 0.5;
+}
+
+.offcanvas-backdrop.fade {
+  opacity: 0;
+}
