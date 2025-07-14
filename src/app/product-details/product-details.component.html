@@ -34,7 +34,7 @@
                                     <div dir="ltr" class="swiper tf-product-media-main">
                                         <div class="swiper-wrapper">
                                             <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
-                                                <a [href]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                <a
                                                     target="_blank"
                                                     class="item"
                                                     data-pswp-width="770px"
@@ -48,8 +48,8 @@
                                             </div>
                                         </div>
                                         <!-- Navigation Buttons -->
-                                        <div class="swiper-button-next button-style-arrow thumbs-next"></div>
-                                        <div class="swiper-button-prev button-style-arrow thumbs-prev"></div>
+                                        <div (click)="nextImage()" class="swiper-button-next button-style-arrow thumbs-next"></div>
+                                        <div (click)="prevImage()" class="swiper-button-prev button-style-arrow thumbs-prev"></div>
                                     </div>
 
                                     <!-- Thumbnails -->
