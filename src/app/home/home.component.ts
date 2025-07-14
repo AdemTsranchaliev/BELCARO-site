@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit, OnDestroy {
   private scriptUrls = [
     'assets/js/jquery.min.js',
     'assets/js/bootstrap.min.js',
-    'assets/js/swiper-bundle.min.js',
     'assets/js/carousel.js',
     'assets/js/bootstrap-select.min.js',
     'assets/js/lazysize.min.js',
@@ -20,7 +19,6 @@ export class HomeComponent implements OnInit, OnDestroy {
     'assets/js/wow.min.js',
     'assets/js/multiple-modal.js',
     'assets/js/nouislider.min.js',
-    'assets/js/shop.js',
     'assets/js/main.js'
   ];
 
