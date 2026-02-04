@@ -1,11 +1,10 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './home/home.component';
-import { CatalogComponent } from './catalog/catalog.component';
 import { ContactComponent } from './contact/contact.component';
-import { ProductDetailsComponent } from './product-details/product-details.component';
 import { AboutComponent } from './about/about.component';
 import { ProjectsComponent } from './projects/projects.component';
+import { WishlistComponent } from './wishlist/wishlist.component';
 
 const routes: Routes = [
   {
@@ -13,24 +12,24 @@ const routes: Routes = [
     component: HomeComponent,
   },
   {
-    path: "catalog/:category",
-    component: CatalogComponent,
-  },
-  {
     path: "catalog",
-    component: CatalogComponent,
+    loadChildren: () => import("./catalog/catalog.module").then(m => m.CatalogModule),
   },
   {
     path: "contact",
     component: ContactComponent,
   },
   {
-    path: "details/:id",
-    component: ProductDetailsComponent,
+    path: "details",
+    loadChildren: () => import("./product-details/product-details.module").then(m => m.ProductDetailsModule),
   },
   {
     path: "projects",
     component: ProjectsComponent,
+  },
+  {
+    path: "wishlist",
+    component: WishlistComponent,
   },
   {
     path: "about",

@@ -9,7 +9,8 @@ import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import Swiper from "swiper";
 import { Product } from "../product.model";
 import { CommonserviceService } from "../commonservice.service";
-import { filter } from "rxjs/operators";
+import { Subject, combineLatest } from "rxjs";
+import { filter, takeUntil } from "rxjs/operators";
 import { WishlistService } from '../wishlist.service';
 
 @Component({
@@ -44,6 +45,7 @@ export class ProductDetailsComponent
   ];
 
   private scriptElements: HTMLScriptElement[] = [];
+  private destroy$ = new Subject<void>();
 
   constructor(
     private route: ActivatedRoute,
@@ -55,23 +57,26 @@ export class ProductDetailsComponent
   ngOnInit(): void {
     this.router.events
       .pipe(filter((event) => event instanceof NavigationEnd))
+      .pipe(takeUntil(this.destroy$))
       .subscribe(() => window.scroll(0, 0));
 
     this.loadScripts();
-    this.products = this.service.GetProducts();
-    this.relatedProducts = this.getRandomProducts(this.products, 4);
+    combineLatest([this.service.GetProducts(), this.route.paramMap])
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(([products, params]) => {
+        this.products = products;
+        this.relatedProducts = this.getRandomProducts(this.products, 4);
 
-    this.route.paramMap.subscribe((params) => {
-      const cat = params.get("id");
-      if (cat) {
-        const prod = this.products.find(
-          (product) => product.Id?.toLowerCase() === cat?.toLowerCase()
-        );
-        if (prod) {
-          this.productDetails = prod;
+        const cat = params.get("id");
+        if (cat) {
+          const prod = this.products.find(
+            (product) => product.Id?.toLowerCase() === cat?.toLowerCase()
+          );
+          if (prod) {
+            this.productDetails = prod;
+          }
         }
-      }
-    });
+      });
   }
 
   ngAfterViewInit(): void {
@@ -122,6 +127,8 @@ export class ProductDetailsComponent
   }
 
   ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
     this.removeScripts();
   }
 

@@ -1,4 +1,28 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { shareReplay } from 'rxjs/operators';
+import { Product } from './product.model';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class CommonserviceService {
+  private products$?: Observable<Product[]>;
+
+  constructor(private http: HttpClient) { }
+
+  public GetProducts(): Observable<Product[]> {
+    if (!this.products$) {
+      this.products$ = this.http
+        .get<Product[]>('assets/data/products.json')
+        .pipe(shareReplay(1));
+    }
+
+    return this.products$;
+  }
+}
+/*
 import { Product } from './product.model';
 
 @Injectable({
@@ -6,12 +30,19 @@ import { Product } from './product.model';
 })
 export class CommonserviceService {
 
-  constructor() { }
+  private products$?: Observable<Product[]>;
 
+  constructor(private http: HttpClient) { }
 
-  public GetProducts(){
-    const products: Product[] = [
-      new Product('412', 'Пуф 502', 'Armchair', '412', 3, 'Ръчно изработен фотьойл с ергономичен дизайн и първокласни материали. Комбинира стил и комфорт за изискани пространства.'),
+  public GetProducts(): Observable<Product[]> {
+    if (!this.products$) {
+      this.products$ = this.http
+        .get<Product[]>('assets/data/products.json')
+        .pipe(shareReplay({ bufferSize: 1, refCount: false }));
+    }
+
+    return this.products$;
+  }
       new Product('413', 'Пуф 500', 'Armchair', '413', 2, 'Ръчно изработен фотьойл с ергономичен дизайн и първокласни материали. Комбинира стил и комфорт за изискани пространства.'),
       new Product('414', 'Пуф 501', 'Armchair', '414', 3, 'Ръчно изработен фотьойл с ергономичен дизайн и първокласни материали. Комбинира стил и комфорт за изискани пространства.'),
       new Product('415', '513T', 'Chairs', '415', 3, 'Луксозен ръчно изработен стол с ергономичен дизайн. Осигурява комфорт и стил за всяко пространство.'),
@@ -115,3 +146,4 @@ export class CommonserviceService {
     return products
   }
 }
+*/

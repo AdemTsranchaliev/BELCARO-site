@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product.model';
 import { CommonserviceService } from '../commonservice.service';
 import { WishlistService } from '../wishlist.service';
-import { Subject } from 'rxjs';
+import { Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
 @Component({
@@ -59,17 +59,14 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
-    this.products = this.service.GetProducts();
-  
-    this.route.paramMap
+    combineLatest([this.service.GetProducts(), this.route.paramMap])
       .pipe(takeUntil(this.destroy$))
-      .subscribe(pm => {
+      .subscribe(([products, pm]) => {
+        this.products = products;
         this.category = (pm.get('category') ?? '').trim();
         window.scroll(0, 0);
   
         this.filterProducts();      // updates filteredProducts
-        this.updatePagination();    // recalculates pages and sets page 1
-  
         this.cdr.markForCheck();    // <-- tell OnPush to refresh
       });
   }
