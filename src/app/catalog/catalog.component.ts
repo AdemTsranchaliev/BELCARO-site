@@ -1,20 +1,24 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Product } from '../product.model';
 import { CommonserviceService } from '../commonservice.service';
 import { WishlistService } from '../wishlist.service';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-catalog',
   templateUrl: './catalog.component.html',
-  styleUrls: ['./catalog.component.css']
+  styleUrls: ['./catalog.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CatalogComponent implements OnInit {
+export class CatalogComponent implements OnInit, AfterViewInit {
   // Products
   public products: Product[] = [];
   public filteredProducts: Product[] = [];
   public paginatedProducts: Product[] = [];
   public category: string = "";
+  private destroy$ = new Subject<void>();
 
   // Pagination
   public currentPage: number = 1;
@@ -46,45 +50,56 @@ export class CatalogComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private service: CommonserviceService,
-    private wishlistService: WishlistService
-  ) { }
+    private wishlistService: WishlistService,
+    private cdr: ChangeDetectorRef
+  ) {}
+  
+  ngAfterViewInit(): void {
+    window.scroll(0, 0);
+  }
 
   ngOnInit(): void {
     this.products = this.service.GetProducts();
-    this.route.params.subscribe(params => {
-      if (params['category']) {
-        this.category = params['category'];
-        this.filterProducts();
-      } else {
-        this.filteredProducts = this.products;
-        this.updatePagination();
-      }
-    });
+  
+    this.route.paramMap
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(pm => {
+        this.category = (pm.get('category') ?? '').trim();
+        window.scroll(0, 0);
+  
+        this.filterProducts();      // updates filteredProducts
+        this.updatePagination();    // recalculates pages and sets page 1
+  
+        this.cdr.markForCheck();    // <-- tell OnPush to refresh
+      });
+  }
+  
+  ngOnDestroy(): void {
+    // 👇 notify all observables to unsubscribe
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 
   filterProducts(): void {
     this.filteredProducts = this.products.filter(product => {
-      // Category filter from URL
       if (this.category) {
         const categoryMatch = product.Category.toLowerCase() === this.category.toLowerCase();
         if (!categoryMatch) return false;
       }
-
-      // Active filters
       if (this.activeFilters.length > 0) {
         const categoryMatch = this.activeFilters.includes(product.Category);
         if (!categoryMatch) return false;
       }
-
-      // Price filter
       if (product.Price && (product.Price < this.priceRange.min || product.Price > this.priceRange.max)) {
         return false;
       }
-
       return true;
     });
+  
     this.updatePagination();
+    this.cdr.markForCheck(); // <-- ensure UI reflects new slice
   }
+  
 
   updatePagination(): void {
     this.totalPages = Math.ceil(this.filteredProducts.length / this.pageSize);
@@ -92,13 +107,15 @@ export class CatalogComponent implements OnInit {
   }
 
   setPage(page: number): void {
-    if (page < 1 || page > this.totalPages) {
-      return;
-    }
+    if (page < 1 || page > this.totalPages) return;
+  
     this.currentPage = page;
     const startIndex = (page - 1) * this.pageSize;
     const endIndex = startIndex + this.pageSize;
     this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
+  
+    this.cdr.markForCheck(); // <-- refresh after slicing
+    window.scroll(0, 300);
   }
 
   setViewMode(mode: 'grid' | 'list'): void {
@@ -111,6 +128,10 @@ export class CatalogComponent implements OnInit {
 
   isFilterActive(category: string): boolean {
     return this.activeFilters.includes(category);
+  }
+
+  trackByProductId(index: number, product: Product): string {
+    return product.Id;
   }
 
   toggleCategoryFilter(category: string): void {

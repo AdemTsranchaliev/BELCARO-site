@@ -3,29 +3,33 @@
         <div class="heading text-center">Контакти</div>
     </div>
 </div>
+
 <!-- map -->
 <section class="flat-spacing-9">
     <div class="container">
         <div class="tf-grid-layout gap-0 lg-col-2">
             <div class="w-100">
-                <iframe width="905" height="569" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas" src="https://maps.google.com/maps?width=905&amp;height=569&amp;hl=en&amp;q=belcaro%20sofia%20Peshtera+()&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe> <a href='https://www.easybooking.eu/produkte/julia-hotelsoftware'></a> <script type='text/javascript' src='https://embedmaps.com/google-maps-authorization/script.js?id=176bbf59282fd80f7968e57c3458eb790abe8d16'></script>
+                <iframe width="905" height="569" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" id="gmap_canvas"
+                    src="https://maps.google.com/maps?width=905&amp;height=569&amp;hl=en&amp;q=belcaro%20sofia%20Peshtera+()&amp;t=&amp;z=15&amp;ie=UTF8&amp;iwloc=B&amp;output=embed"></iframe>
             </div>
             <div class="tf-content-left has-mt">
                 <div class="sticky-top">
                     <h5 class="mb_20">Посетете нашия магазин</h5>
                     <div class="mb_20">
-                        <p class="mb_15"><strong>Адрес</strong></p>
-                        <p>Адрес: 1532 София, Казичене, ул. „Фармапарк 19<br> </p>
+                        <p class="mb_15"><strong>Адреси</strong></p>
+                        <p>Магазин: София, бул. Ботевградско шосе 268<br> </p>
+                        <p>Шоурум: София, Казичане,  ул. Царски парк 4<br> </p>
                     </div>
                     <div class="mb_20">
                         <p class="mb_15"><strong>Телефон</strong></p>
                         <p>
-                            <a href="tel:+359899908588">(+359) 899 908 588</a>
+                            <a href="tel:+359899908588">(+359) 899 908588</a><br>
+                            <a href="tel:+359899906946">(+359) 899 906946</a>
                         </p>
                     </div>
                     <div class="mb_20">
                         <p class="mb_15"><strong>Имейл</strong></p>
-                        <p><a href="mailto:office@belcaro.bg">office@belcaro.bg</a></p>
+                        <p><a href="mailto:belcarobulgaria@gmail.com">belcarobulgaria@gmail.com</a></p>
                     </div>
                     <div class="mb_36">
                         <p class="mb_15"><strong>Работно време</strong></p>
@@ -33,16 +37,12 @@
                     </div>
                     <div>
                         <ul class="tf-social-icon d-flex gap-20 style-default">
-                            <li><a href="#" class="box-icon link round social-facebook border-line-black"><i
+                            <li><a href="https://www.facebook.com/p/Belcaro-Bulgaria-61575156623983/" class="box-icon link round social-facebook border-line-black"><i
                                         class="icon fs-14 icon-fb"></i></a></li>
-                            <li><a href="#" class="box-icon link round social-twiter border-line-black"><i
-                                        class="icon fs-12 icon-Icon-x"></i></a></li>
-                            <li><a href="#" class="box-icon link round social-instagram border-line-black"><i
+                            <li><a href="https://www.instagram.com/belcaro.bulgaria/" class="box-icon link round social-instagram border-line-black"><i
                                         class="icon fs-14 icon-instagram"></i></a></li>
-                            <li><a href="#" class="box-icon link round social-tiktok border-line-black"><i
+                            <li><a href="https://www.tiktok.com/@belcaro.bg" class="box-icon link round social-tiktok border-line-black"><i
                                         class="icon fs-14 icon-tiktok"></i></a></li>
-                            <li><a href="#" class="box-icon link round social-pinterest border-line-black"><i
-                                        class="icon fs-14 icon-pinterest-1"></i></a></li>
                         </ul>
                     </div>
                 </div>
@@ -50,7 +50,7 @@
         </div>
     </div>
 </section>
-<!-- /map -->
+
 <!-- form -->
 <section class="bg_grey-7 flat-spacing-9">
     <div class="container">
@@ -58,23 +58,24 @@
             <span class="title">Пишете ни</span>
             <p class="sub-title text_black-2">При въпроси, препоръки, похвали или оплаквания може да ни пишете.</p>
         </div>
+
         <div>
-            <form class="mw-705 mx-auto text-center form-contact" id="contactform"
-                action="./contact/contact-process.php" method="post">
+            <form #contactForm="ngForm" class="mw-705 mx-auto text-center form-contact">
                 <div class="d-flex gap-15 mb_15">
                     <fieldset class="w-100">
-                        <input type="text" name="name" id="name" required placeholder="Име *" />
+                        <input type="text" name="name" id="name" [(ngModel)]="name" required placeholder="Име *" />
                     </fieldset>
                     <fieldset class="w-100">
-                        <input type="email" name="email" id="email" required placeholder="Имейл *" />
+                        <input type="email" name="email" id="email" [(ngModel)]="email" required placeholder="Имейл *" />
                     </fieldset>
                 </div>
                 <div class="mb_15">
-                    <textarea placeholder="Съощение...." name="message" id="message" required cols="30"
+                    <textarea placeholder="Съобщение..." name="message" id="message" [(ngModel)]="message" required cols="30"
                         rows="10"></textarea>
                 </div>
                 <div class="send-wrap">
-                    <button type="submit"
+                    <button type="button"
+                        (click)="sendEmail()"
                         class="tf-btn radius-3 btn-fill animate-hover-btn justify-content-center">Изпрати</button>
                 </div>
             </form>
