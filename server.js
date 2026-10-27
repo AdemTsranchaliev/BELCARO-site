@@ -23,6 +23,11 @@ app.use(
 
 // For all other routes, serve the index.html file
 app.get('*', (req, res) => {
+  if (path.extname(req.path)) {
+    res.status(404).end();
+    return;
+  }
+
   res.sendFile(path.join(distPath, 'index.html'));
 });
 

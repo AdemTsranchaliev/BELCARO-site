@@ -1,20 +1,20 @@
-<header id="header" class="header-default">
-    <div class="px_15 lg-px_40">
+<header id="header" class="header-default site-header-lux">
+    <div class="px_15 lg-px_40 site-header-lux-inner">
         <div class="row wrapper-header align-items-center">
             <div class="col-md-4 col-3 tf-lg-hidden">
-                <a href="#mobileMenu" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft">
+                <a href="#mobileMenu" class="site-header-lux-mob-toggle" data-bs-toggle="offcanvas" aria-controls="offcanvasLeft" aria-label="Отвори меню">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="16" viewBox="0 0 24 16" fill="none">
                         <path d="M2.00056 2.28571H16.8577C17.1608 2.28571 17.4515 2.16531 17.6658 1.95098C17.8802 1.73665 18.0006 1.44596 18.0006 1.14286C18.0006 0.839753 17.8802 0.549063 17.6658 0.334735C17.4515 0.120408 17.1608 0 16.8577 0H2.00056C1.69745 0 1.40676 0.120408 1.19244 0.334735C0.978109 0.549063 0.857702 0.839753 0.857702 1.14286C0.857702 1.44596 0.978109 1.73665 1.19244 1.95098C1.40676 2.16531 1.69745 2.28571 2.00056 2.28571ZM0.857702 8C0.857702 7.6969 0.978109 7.40621 1.19244 7.19188C1.40676 6.97755 1.69745 6.85714 2.00056 6.85714H22.572C22.8751 6.85714 23.1658 6.97755 23.3801 7.19188C23.5944 7.40621 23.7148 7.6969 23.7148 8C23.7148 8.30311 23.5944 8.59379 23.3801 8.80812C23.1658 9.02245 22.8751 9.14286 22.572 9.14286H2.00056C1.69745 9.14286 1.40676 9.02245 1.19244 8.80812C0.978109 8.59379 0.857702 8.30311 0.857702 8ZM0.857702 14.8571C0.857702 14.554 0.978109 14.2633 1.19244 14.049C1.40676 13.8347 1.69745 13.7143 2.00056 13.7143H12.2863C12.5894 13.7143 12.8801 13.8347 13.0944 14.049C13.3087 14.2633 13.4291 14.554 13.4291 14.8571C13.4291 15.1602 13.3087 15.4509 13.0944 15.6653C12.8801 15.8796 12.5894 16 12.2863 16H2.00056C1.69745 16 1.40676 15.8796 1.19244 15.6653C0.978109 15.4509 0.857702 15.1602 0.857702 14.8571Z" fill="currentColor"></path>
                     </svg>
                 </a>
             </div>
             <div class="col-xl-3 col-md-4 col-6">
-                <a href="" class="logo-header">
-                    <img src="assets/images/logo/logo.png" alt="logo" class="logo" style="height: 40px; width: 100%">
+                <a routerLink="/" class="logo-header">
+                    <img src="assets/images/logo/logo-clear.png" alt="Belcaro" class="logo site-logo" width="180" height="42">
                 </a>
             </div>
             <div class="col-xl-6 tf-md-hidden">
-                <nav class="box-navigation text-center">
+                <nav class="box-navigation text-center site-nav-lux" aria-label="Основна навигация">
                     <ul class="box-nav-ul d-flex align-items-center justify-content-center gap-30">
                         <li class="menu-item">
                             <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="item-link">Начало</a>
@@ -56,9 +56,9 @@
             <div class="col-xl-3 col-md-4 col-3">
                 <ul class="nav-icon d-flex justify-content-end align-items-center gap-20">
                     <li class="nav-wishlist">
-                        <a routerLink="wishlist" class="nav-icon-item">
+                        <a routerLink="/wishlist" class="nav-icon-item">
                             <i class="icon icon-heart"></i>
-                            <span class="count-box">{{wishlistService.getWishlistCount()}}</span>
+                            <span class="count-box" *ngIf="wishlistService.getWishlistCount()">{{wishlistService.getWishlistCount()}}</span>
                         </a>
                     </li>
                 </ul>
@@ -67,105 +67,70 @@
     </div>
 </header>
 <router-outlet></router-outlet>
-<footer id="footer" class="footer md-pb-70 has-border-full">
-    <div class="footer-wrap">
-        <div class="footer-body">
-            <div class="container">
-                <div class="row">
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <div class="footer-infor">
-                            <div class="footer-logo">
-                                <a href="">
-                                    <img src="assets/images/logo/logo.png" alt="" style="height: 100%;">
-                                </a>
-                            </div>
-                            <ul>
-                                <li>
-                                    <p>Адрес: 1532 София, Казичене, ул. "Фармапарк 19<br> </p>
-                                </li>
-                                <li>
-                                    <p>Имейл: <a href="mailto:belcarobulgaria@gmail.com">belcarobulgaria@gmail.com</a></p>
-                                </li>
-                                <li>
-                                    <p>Телефон: <a href="tel:+359899908588">(+359) 899 908588</a></p>
-                                    <p>Телефон: <a href="tel:+359899906946">(+359) 899 906946</a></p>
-                                </li>
-                            </ul>
-                            <a href="https://maps.app.goo.gl/SVwUG6rtmsxwdAMx9" class="tf-btn btn-line">ВИЖ ОПЪТВАНЕ<i class="icon icon-arrow1-top-left"></i></a>
+<footer id="footer" class="footer site-footer">
+    <div class="site-footer-inner">
+        <div class="site-footer-brand">
+            <a routerLink="/" class="site-footer-logo" aria-label="Belcaro — начало">
+                <img src="assets/images/logo/logo-clear.png" alt="">
+            </a>
+            <div class="site-footer-brand-copy">
+                <p class="site-footer-kicker">Ателие · София</p>
+                <p class="site-footer-title">Мебели за проекта.</p>
+            </div>
+            <nav class="site-footer-social" aria-label="Социални мрежи">
+                <a href="https://www.facebook.com/p/Belcaro-Bulgaria-61575156623983/" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M14.2 8.2V6.7c0-.6.4-.8.8-.8h1.5V3.8h-2.6C11.4 3.8 10.5 5.2 10.5 6.9v1.3H8.4v2.6h2.1V20h3.1v-9.2h2.3l.5-2.6h-2.2z"/></svg>
+                </a>
+                <a href="https://www.instagram.com/belcaro.bulgaria/" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M12 7.4A4.6 4.6 0 1 0 16.6 12 4.6 4.6 0 0 0 12 7.4zm0 7.6A3 3 0 1 1 15 12a3 3 0 0 1-3 3zm5.9-8.9a1.08 1.08 0 1 1-1.08-1.08A1.08 1.08 0 0 1 17.9 6.1zM12 4.6c1.5 0 1.7 0 2.3.1a3.7 3.7 0 0 1 2.4 1.1 3.7 3.7 0 0 1 1.1 2.4c.1.6.1.8.1 2.3s0 1.7-.1 2.3a3.7 3.7 0 0 1-1.1 2.4 3.7 3.7 0 0 1-2.4 1.1c-.6.1-.8.1-2.3.1s-1.7 0-2.3-.1a3.7 3.7 0 0 1-2.4-1.1 3.7 3.7 0 0 1-1.1-2.4c-.1-.6-.1-.8-.1-2.3s0-1.7.1-2.3a3.7 3.7 0 0 1 1.1-2.4 3.7 3.7 0 0 1 2.4-1.1c.6-.1.8-.1 2.3-.1m0-1.6c-1.6 0-1.8 0-2.4.1a5.3 5.3 0 0 0-3.5 1.5 5.3 5.3 0 0 0-1.5 3.5c-.1.6-.1.8-.1 2.4s0 1.8.1 2.4a5.3 5.3 0 0 0 1.5 3.5 5.3 5.3 0 0 0 3.5 1.5c.6.1.8.1 2.4.1s1.8 0 2.4-.1a5.3 5.3 0 0 0 3.5-1.5 5.3 5.3 0 0 0 1.5-3.5c.1-.6.1-.8.1-2.4s0-1.8-.1-2.4a5.3 5.3 0 0 0-1.5-3.5 5.3 5.3 0 0 0-3.5-1.5c-.6-.1-.8-.1-2.4-.1z"/></svg>
+                </a>
+                <a href="https://www.tiktok.com/@belcaro.bg" target="_blank" rel="noopener noreferrer" aria-label="TikTok">
+                    <svg viewBox="0 0 24 24" aria-hidden="true"><path fill="currentColor" d="M15.2 3.2c.5 2.5 1.9 4.2 4.3 4.6v2.7a7.2 7.2 0 0 1-4.2-1.4v6.6a5.7 5.7 0 1 1-5.7-5.7c.2 0 .5 0 .7.1v2.8a2.9 2.9 0 1 0 2 2.8V3.2h2.9z"/></svg>
+                </a>
+            </nav>
+        </div>
 
-                        </div>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 footer-col-block">
-                        <div class="footer-heading footer-heading-desktop">
-                            <h6>Помощ</h6>
-                        </div>
-                        <div class="footer-heading footer-heading-moblie">
-                            <h6>Помощ</h6>
-                        </div>
-                        <ul class="footer-menu-list tf-collapse-content">
-                            <li>
-                                <a href="policy" class="footer-menu_item">Политики за поверителност</a>
-                            </li>
-                            <li> 
-                                <a href="faq" class="footer-menu_item">Често задавани въпроси</a>
-                            </li>
-                            <li> 
-                                <a href="wishlist" class="footer-menu_item">Любими</a>
-                            </li>
-                            <li> 
-                                <a href="about" class="footer-menu_item">За нас</a>
-                            </li>
-                            <li> 
-                                <a href="contact" class="footer-menu_item">Контакти</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12 footer-col-block">
-                        <div class="footer-heading footer-heading-desktop">
-                            <h6>Продукти</h6>
-                        </div>
-                        <div class="footer-heading footer-heading-moblie">
-                            <h6>Продукти</h6>
-                        </div>
-                        <ul class="footer-menu-list tf-collapse-content">
-                            <li>
-                                <a routerLink="catalog/Sofas" class="footer-menu_item">Дивани</a>
-                            </li>
-                            <li> 
-                                <a routerLink="catalog/Chairs" class="footer-menu_item">Столове</a>
-                            </li>
-                            <li> 
-                                <a routerLink="catalog/armchair" class="footer-menu_item">Фотьойли</a>
-                            </li>
-                            <li> 
-                                <a routerLink="catalog/Beds" class="footer-menu_item">Спални</a>
-                            </li>
-                            <li> 
-                                <a routerLink="catalog/Tables" class="footer-menu_item">Маси</a>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="col-xl-3 col-md-6 col-12">
-                        <ul class="tf-social-icon d-flex gap-10">
-                            <li><a href="https://www.facebook.com/p/Belcaro-Bulgaria-61575156623983/" class="box-icon w_34 round social-facebook social-line"><i class="icon fs-14 icon-fb"></i></a></li>
-                            <li><a href="https://www.instagram.com/belcaro.bulgaria/" class="box-icon w_34 round social-instagram social-line"><i class="icon fs-14 icon-instagram"></i></a></li>
-                            <li><a href="https://www.tiktok.com/@belcaro.bg" class="box-icon w_34 round social-tiktok social-line"><i class="icon fs-14 icon-tiktok"></i></a></li>
-                        </ul>
-                    </div>
-                </div>
+        <div class="site-footer-grid">
+            <nav aria-label="Колекции">
+                <p class="site-footer-label">Колекции</p>
+                <ul>
+                    <li><a routerLink="/catalog/sofas">Дивани</a></li>
+                    <li><a routerLink="/catalog/armchair">Фотьойли</a></li>
+                    <li><a routerLink="/catalog/Beds">Спални</a></li>
+                    <li><a routerLink="/catalog/Tables">Маси</a></li>
+                    <li><a routerLink="/catalog/Chairs">Столове</a></li>
+                </ul>
+            </nav>
+            <nav aria-label="Ателие">
+                <p class="site-footer-label">Ателие</p>
+                <ul>
+                    <li><a routerLink="/about">За нас</a></li>
+                    <li><a routerLink="/projects">Проекти</a></li>
+                    <li><a routerLink="/contact">Контакти</a></li>
+                    <li><a routerLink="/wishlist">Любими</a></li>
+                </ul>
+            </nav>
+            <div>
+                <p class="site-footer-label">Шоурум</p>
+                <p class="site-footer-address">София, Казичене<br>ул. Царски парк 4</p>
+                <p class="site-footer-label site-footer-label--spaced">Магазин</p>
+                <p class="site-footer-address">София<br>бул. Ботевградско шосе 268</p>
+            </div>
+            <div>
+                <p class="site-footer-label">Връзка</p>
+                <ul class="site-footer-contact">
+                    <li><a href="tel:+359899908588">(+359) 899 908 588</a></li>
+                    <li><a href="tel:+359899906946">(+359) 899 906 946</a></li>
+                    <li><a href="mailto:belcarobulgaria@gmail.com">belcarobulgaria@gmail.com</a></li>
+                </ul>
+                <a class="site-footer-route" href="https://maps.app.goo.gl/SVwUG6rtmsxwdAMx9" target="_blank" rel="noopener noreferrer">Маршрут <span class="maison-arrow" aria-hidden="true"></span></a>
             </div>
         </div>
-        <div class="footer-bottom">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="footer-bottom-wrap d-flex gap-20 flex-wrap justify-content-between align-items-center">
-                            <div class="footer-menu_item">© 2024 Ecomus Store. All Rights Reserved</div>
-                         
-                        </div>
-                    </div>
-                </div>
-            </div>
+
+        <div class="site-footer-bar">
+            <p>© Belcaro. Всички права запазени.</p>
+            <a href="mailto:belcarobulgaria@gmail.com?subject=Belcaro%20%E2%80%94%20%D0%BF%D0%BE%D0%BB%D0%B8%D1%82%D0%B8%D0%BA%D0%B0%20%D0%B7%D0%B0%20%D0%BF%D0%BE%D0%B2%D0%B5%D1%80%D0%B8%D1%82%D0%B5%D0%BB%D0%BD%D0%BE%D1%81%D1%82">Политика за поверителност</a>
+            <a href="https://www.instagram.com/adem_tsranchaliev/" target="_blank" rel="noopener noreferrer">A. Tsranchaliev</a>
         </div>
     </div>
 </footer>
@@ -181,46 +146,31 @@
 <!-- /gotop -->
 
 <!-- mobile menu -->
-<div class="offcanvas offcanvas-start canvas-mb" id="mobileMenu">
-    <span class="icon-close icon-close-popup" data-bs-dismiss="offcanvas" aria-label="Close"></span>
-    <div class="mb-canvas-content">
-        <div class="mb-body">
-            <ul class="nav-ul-mb" id="wrapper-menu-navigation">
-                <li class="nav-mb-item">
-                    <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="mb-menu-link" data-bs-dismiss="offcanvas">
-                        <span>Начало</span>
-                    </a>
-                </li>
-                <li class="nav-mb-item">
-                    <a routerLink="/catalog" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
-                        <span>Продукти</span>
-                        <span class="btn-open-sub"></span>
-                    </a>
-                    <ul class="sub-nav-menu" id="sub-menu-navigation">
-                        <li><a routerLink="/catalog/sofas" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Дивани</a></li>
-                        <li><a routerLink="/catalog/Chairs" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Столове</a></li>
-                        <li><a routerLink="/catalog/armchair" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Фотьойли</a></li>
-                        <li><a routerLink="/catalog/Beds" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Спални</a></li>
-                        <li><a routerLink="/catalog/Tables" routerLinkActive="active" class="sub-nav-link" data-bs-dismiss="offcanvas">Маси</a></li>
-                    </ul>
-                </li>
-                <li class="nav-mb-item">
-                    <a routerLink="/projects" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
-                        <span>Проекти</span>
-                    </a>
-                </li>
-                <li class="nav-mb-item">
-                    <a routerLink="/contact" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
-                        <span>Контакти</span>
-                    </a>
-                </li>
-                <li class="nav-mb-item">
-                    <a routerLink="/about" routerLinkActive="active" class="mb-menu-link" data-bs-dismiss="offcanvas">
-                        <span>За нас</span>
-                    </a>
-                </li>
-            </ul>
+<div class="offcanvas offcanvas-start canvas-mb" id="mobileMenu" aria-labelledby="mobileMenuTitle">
+    <div class="mb-canvas-content nav-phone-panel">
+        <div class="nav-phone-bar">
+            <p class="nav-phone-kicker" id="mobileMenuTitle">Меню</p>
+            <button type="button" class="nav-phone-close" data-bs-dismiss="offcanvas" aria-label="Затвори">
+                <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 6 L18 18 M18 6 L6 18"></path></svg>
+            </button>
         </div>
+        <nav class="nav-phone" aria-label="Меню">
+            <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-phone-link" data-bs-dismiss="offcanvas">Начало</a>
+            <p class="nav-phone-label">Колекции</p>
+            <div class="nav-phone-subs">
+                <a routerLink="/catalog/sofas" routerLinkActive="active" data-bs-dismiss="offcanvas">Дивани</a>
+                <a routerLink="/catalog/armchair" routerLinkActive="active" data-bs-dismiss="offcanvas">Фотьойли</a>
+                <a routerLink="/catalog/Beds" routerLinkActive="active" data-bs-dismiss="offcanvas">Спални</a>
+                <a routerLink="/catalog/Tables" routerLinkActive="active" data-bs-dismiss="offcanvas">Маси</a>
+                <a routerLink="/catalog/Chairs" routerLinkActive="active" data-bs-dismiss="offcanvas">Столове</a>
+                <a routerLink="/catalog" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}" class="nav-phone-all" data-bs-dismiss="offcanvas">Целият каталог</a>
+            </div>
+            <a routerLink="/projects" routerLinkActive="active" class="nav-phone-link" data-bs-dismiss="offcanvas">Проекти</a>
+            <a routerLink="/contact" routerLinkActive="active" class="nav-phone-link" data-bs-dismiss="offcanvas">Контакти</a>
+            <a routerLink="/about" routerLinkActive="active" class="nav-phone-link" data-bs-dismiss="offcanvas">За нас</a>
+            <a routerLink="/wishlist" routerLinkActive="active" class="nav-phone-link" data-bs-dismiss="offcanvas">Любими</a>
+        </nav>
+        <p class="nav-phone-foot"><a href="tel:+359899908588">(+359) 899 908 588</a></p>
     </div>
 </div>
 

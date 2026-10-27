@@ -15,9 +15,18 @@ export class WishlistService {
   }
 
   private loadWishlist(): void {
-    const savedWishlist = localStorage.getItem(this.STORAGE_KEY);
-    if (savedWishlist) {
-      this.wishlistSubject.next(JSON.parse(savedWishlist));
+    try {
+      const savedWishlist = localStorage.getItem(this.STORAGE_KEY);
+      if (!savedWishlist) {
+        return;
+      }
+      const parsed = JSON.parse(savedWishlist);
+      if (!Array.isArray(parsed)) {
+        return;
+      }
+      this.wishlistSubject.next(parsed.filter((item) => item && item.Id));
+    } catch {
+      localStorage.removeItem(this.STORAGE_KEY);
     }
   }
 
@@ -36,12 +45,16 @@ export class WishlistService {
 
   removeFromWishlist(product: Product): void {
     const currentWishlist = this.wishlistSubject.value;
-    const newWishlist = currentWishlist.filter(item => item.Id !== product.Id);
+    const newWishlist = currentWishlist.filter(item => !this.sameId(item.Id, product.Id));
     this.saveWishlist(newWishlist);
   }
 
   isInWishlist(product: Product): boolean {
-    return this.wishlistSubject.value.some(item => item.Id === product.Id);
+    return this.wishlistSubject.value.some(item => this.sameId(item.Id, product.Id));
+  }
+
+  private sameId(left: string, right: string): boolean {
+    return (left || '').toLowerCase() === (right || '').toLowerCase();
   }
 
   getWishlistCount(): number {

@@ -1,8 +1,9 @@
 import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
-import { Product } from '../product.model';
+import { ActivatedRoute, Router } from '@angular/router';
+import { Product, categoryLabel } from '../product.model';
 import { CommonserviceService } from '../commonservice.service';
 import { WishlistService } from '../wishlist.service';
+import { SeoService } from '../seo.service';
 import { Subject, combineLatest } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
@@ -31,14 +32,15 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   // Filters
   public showFilters: boolean = false;
   public activeFilters: string[] = [];
-  public categories: string[] = [
-    'Дивани',
-    'Фотьойли',
-    'Мека мебел',
-    'Столове',
-    'Легла',
-    'Маси'
+  public categoryOptions: { id: string; label: string }[] = [
+    { id: 'Sofas', label: 'Дивани' },
+    { id: 'Armchair', label: 'Фотьойли' },
+    { id: 'Chairs', label: 'Столове' },
+    { id: 'Beds', label: 'Спални' },
+    { id: 'Tables', label: 'Маси' },
   ];
+
+  categoryLabel = categoryLabel;
   public priceRange = {
     min: 0,
     max: 10000,
@@ -49,8 +51,10 @@ export class CatalogComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private service: CommonserviceService,
     private wishlistService: WishlistService,
+    private seo: SeoService,
     private cdr: ChangeDetectorRef
   ) {}
   
@@ -65,6 +69,9 @@ export class CatalogComponent implements OnInit, AfterViewInit {
         this.products = products;
         this.category = (pm.get('category') ?? '').trim();
         window.scroll(0, 0);
+
+        const path = this.router.url.split('?')[0];
+        this.seo.applyCatalogPage(this.category, path);
   
         this.filterProducts();      // updates filteredProducts
         this.cdr.markForCheck();    // <-- tell OnPush to refresh
@@ -111,8 +118,12 @@ export class CatalogComponent implements OnInit, AfterViewInit {
     const endIndex = startIndex + this.pageSize;
     this.paginatedProducts = this.filteredProducts.slice(startIndex, endIndex);
   
-    this.cdr.markForCheck(); // <-- refresh after slicing
-    window.scroll(0, 300);
+    this.cdr.markForCheck();
+    window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+  }
+
+  get categoryTitle(): string {
+    return this.category ? categoryLabel(this.category) : 'Каталог';
   }
 
   setViewMode(mode: 'grid' | 'list'): void {

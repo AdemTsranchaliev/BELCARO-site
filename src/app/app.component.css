@@ -1,17 +1,9 @@
-.item-link.active {
-    color: #dc3545 !important;
-}
-
-.menu-link-text.active {
-    color: #dc3545 !important;
-}
-
-.mb-menu-link.active {
-    color: #dc3545 !important;
-}
-
+/* Активен елемент — в тон с lux палитрата (презапис в luxury-modern за десктоп) */
+.item-link.active,
+.menu-link-text.active,
+.mb-menu-link.active,
 .sub-nav-link.active {
-    color: #dc3545 !important;
+    color: #8b6914 !important;
 }
 
 .offcanvas-backdrop {

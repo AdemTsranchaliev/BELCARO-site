@@ -1,3 +1,16 @@
+const CATEGORY_LABELS: Record<string, string> = {
+    sofas: 'Дивани',
+    armchair: 'Фотьойли',
+    chairs: 'Столове',
+    beds: 'Спални',
+    tables: 'Маси',
+};
+
+export function categoryLabel(value: string): string {
+    const key = (value || '').trim().toLowerCase();
+    return CATEGORY_LABELS[key] || value;
+}
+
 export class Product {
     Id: string;
     Name: string;

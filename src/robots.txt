@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://belcaro.bg/sitemap.xml

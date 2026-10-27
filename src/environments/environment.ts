@@ -3,7 +3,10 @@
 // The list of file replacements can be found in `angular.json`.
 
 export const environment = {
-  production: false
+  production: false,
+  /** Production domain — заменете с реалния адрес преди deploy */
+  siteUrl: 'https://belcaro.bg',
+  siteName: 'Belcaro',
 };
 
 /*

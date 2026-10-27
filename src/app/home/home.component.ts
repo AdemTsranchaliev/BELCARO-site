@@ -1,6 +1,18 @@
-import { AfterViewInit, Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+
+interface MaisonLine {
+  text: string;
+  em?: boolean;
+}
+
+interface MaisonSlide {
+  image: string;
+  alt: string;
+  kicker: string;
+  lines: MaisonLine[];
+  lead: string;
+  rail: string;
+}
 
 @Component({
   selector: 'app-home',
@@ -8,57 +20,110 @@ import { filter } from 'rxjs/operators';
   styleUrls: ['./home.component.css']
 })
 export class HomeComponent implements OnInit, OnDestroy {
+  active = 0;
+  paused = false;
 
-  private scriptUrls = [
-    'assets/js/jquery.min.js',
-    'assets/js/bootstrap.min.js',
-    'assets/js/carousel.js',
-    'assets/js/bootstrap-select.min.js',
-    'assets/js/lazysize.min.js',
-    'assets/js/count-down.js',
-    'assets/js/wow.min.js',
-    'assets/js/multiple-modal.js',
-    'assets/js/nouislider.min.js',
-    'assets/js/main.js'
+  readonly slides: MaisonSlide[] = [
+    {
+      image: 'assets/images/slider/furniture_slide3.jpg',
+      alt: 'Дневна с мек диван, тъмни пана и месингово осветление',
+      kicker: 'Belcaro · София',
+      lines: [
+        { text: 'Мебели' },
+        { text: 'за проекта.', em: true }
+      ],
+      lead: 'Работим с дизайнери, за които детайлът е част от архитектурата на дома.',
+      rail: 'Дневна'
+    },
+    {
+      image: 'assets/images/collections/furniture_cate1.jpg',
+      alt: 'Архитектурен диван в просторна дневна с бетон и светлина',
+      kicker: 'Колекция',
+      lines: [
+        { text: 'Силует' },
+        { text: 'и материя.', em: true }
+      ],
+      lead: 'Пропорция, тъкан и шев се решават заедно — не поотделно.',
+      rail: 'Силует'
+    },
+    {
+      image: 'assets/images/slider/furniture-banner-collection.jpg',
+      alt: 'Спалня с висока тапицирана табла и меко осветление',
+      kicker: 'По поръчка',
+      lines: [
+        { text: 'По мярка' },
+        { text: 'на интериора.', em: true }
+      ],
+      lead: 'Размер и конфигурация по проекта. От срещата в шоурума до монтажа.',
+      rail: 'Ателие'
+    }
   ];
 
-  private scriptElements: HTMLScriptElement[] = [];
+  private timer: ReturnType<typeof setInterval> | null = null;
+  private reduced = false;
 
-  ngOnInit() {
-
+  ngOnInit(): void {
+    document.body.classList.add('maison-home');
     window.scroll(0, 0);
-    this.loadScripts();
-    this.router.events
-      .pipe(filter((event) => event instanceof NavigationEnd))
-      .subscribe(() => {
-        window.scroll(0, 0);
-
-      });
+    this.reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    this.arm();
   }
 
-  ngOnDestroy() {
-    this.removeScripts();
+  ngOnDestroy(): void {
+    this.disarm();
+    document.body.classList.remove('maison-home');
   }
 
-  private loadScripts() {
-    this.scriptUrls.forEach(url => {
-      const script = document.createElement('script');
-      script.src = url;
-      script.async = true;
-      document.body.appendChild(script);
-      this.scriptElements.push(script);
-    });
+  @HostListener('document:visibilitychange')
+  onVisibility(): void {
+    if (document.hidden) {
+      this.disarm();
+      return;
+    }
+    this.arm();
   }
 
-  private removeScripts() {
-    this.scriptElements.forEach(script => {
-      if (script.parentNode) {
-        script.parentNode.removeChild(script);
-      }
-    });
-    this.scriptElements = [];
+  go(index: number): void {
+    const total = this.slides.length;
+    this.active = (index + total) % total;
+    this.arm();
   }
 
-  constructor(private router: Router) { }
+  next(): void {
+    this.go(this.active + 1);
+  }
 
+  prev(): void {
+    this.go(this.active - 1);
+  }
+
+  pause(): void {
+    if (!window.matchMedia('(hover: hover)').matches) {
+      return;
+    }
+    this.paused = true;
+    this.disarm();
+  }
+
+  resume(): void {
+    this.paused = false;
+    this.arm();
+  }
+
+  private arm(): void {
+    this.disarm();
+    if (this.reduced || this.paused) {
+      return;
+    }
+    this.timer = setInterval(() => {
+      this.active = (this.active + 1) % this.slides.length;
+    }, 7200);
+  }
+
+  private disarm(): void {
+    if (this.timer) {
+      clearInterval(this.timer);
+      this.timer = null;
+    }
+  }
 }

@@ -1,159 +1,171 @@
-<!-- Luxury Catalog Header -->
-<div class="luxury-catalog-header">
-    <div class="container">
-        <h1 class="category-title">{{category}}</h1>
-        <p class="category-description">Разгледайте нашата последна колекция мебели и открийте вдъхновение за интериорен стил!</p>
-    </div>
-</div>
+<main class="catalog-shop">
+    <header class="catalog-shop-head">
+        <div class="container">
+            <p class="catalog-shop-kicker">{{ category ? 'Каталог' : 'Ателие' }}</p>
+            <h1 class="catalog-shop-title">{{ categoryTitle }}</h1>
+        </div>
+    </header>
 
-<!-- Catalog Section -->
-<section class="luxury-catalog">
-    <div class="container">
-        <!-- Filters and Controls -->
-        <div class="catalog-header">
-            <div class="filters-toggle" (click)="toggleFilters()">
-                <i class="fas fa-filter"></i>
-                <span>Филтри</span>
-            </div>
+    <div class="catalog-shop-backdrop" *ngIf="showFilters" (click)="toggleFilters()" aria-hidden="true"></div>
 
-            <div class="view-controls">
-                <button [class.active]="viewMode === 'grid'" (click)="setViewMode('grid')" title="Grid View">
-                    <i class="fas fa-th-large"></i>
+    <aside
+        class="catalog-shop-drawer"
+        [class.catalog-shop-drawer--open]="showFilters"
+        aria-label="Филтри по категория">
+        <div class="catalog-shop-drawer-head">
+            <h2 class="catalog-shop-drawer-title">Филтри</h2>
+            <button type="button" class="catalog-shop-drawer-x" (click)="toggleFilters()" aria-label="Затвори">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+        </div>
+        <div class="catalog-shop-drawer-body">
+            <p class="catalog-shop-drawer-label">Категории</p>
+            <label class="catalog-shop-opt" *ngFor="let cat of categoryOptions">
+                <input type="checkbox" [checked]="isFilterActive(cat.id)" (change)="toggleCategoryFilter(cat.id)">
+                <span>{{ cat.label }}</span>
+            </label>
+        </div>
+        <div class="catalog-shop-drawer-foot">
+            <button type="button" class="catalog-shop-linkbtn" (click)="clearFilters()">Изчисти</button>
+            <button type="button" class="catalog-shop-primary" (click)="toggleFilters()">Готово</button>
+        </div>
+    </aside>
+
+    <div class="container catalog-shop-inner">
+        <div class="catalog-shop-toolbar">
+            <button type="button" class="catalog-shop-filter-btn" (click)="toggleFilters()">
+                <i class="fas fa-sliders-h" aria-hidden="true"></i>
+                Филтри
+            </button>
+            <p class="catalog-shop-meta">
+                <strong>{{ filteredProducts.length }}</strong>
+                <span>{{ filteredProducts.length === 1 ? 'резултат' : 'резултата' }}</span>
+            </p>
+            <div class="catalog-shop-views" role="group" aria-label="Изглед">
+                <button
+                    type="button"
+                    class="catalog-shop-view"
+                    [class.catalog-shop-view--on]="viewMode === 'grid'"
+                    (click)="setViewMode('grid')"
+                    title="Мрежа">
+                    <i class="fas fa-th-large" aria-hidden="true"></i>
                 </button>
-                <button [class.active]="viewMode === 'list'" (click)="setViewMode('list')" title="List View">
-                    <i class="fas fa-list"></i>
+                <button
+                    type="button"
+                    class="catalog-shop-view"
+                    [class.catalog-shop-view--on]="viewMode === 'list'"
+                    (click)="setViewMode('list')"
+                    title="Списък">
+                    <i class="fas fa-list" aria-hidden="true"></i>
                 </button>
             </div>
         </div>
 
-        <div class="catalog-content">
-            <!-- Filters sidebar -->
-            <div class="filters-sidebar" [class.active]="showFilters">
-                <div class="filters-header">
-                    <h3>Филтри</h3>
-                    <button class="close-filters" (click)="toggleFilters()">
-                        <i class="fas fa-times"></i>
-                    </button>
-                </div>
-                
-                <div class="filters-content">
-                    <!-- Price Range -->
-
-
-                    <!-- Categories -->
-                    <div class="filter-group">
-                        <h4>Категории</h4>
-                        <div class="category-filters">
-                            <label *ngFor="let cat of categories">
-                                <input type="checkbox" 
-                                       [checked]="isFilterActive(cat)"
-                                       (change)="toggleCategoryFilter(cat)">
-                                {{cat}}
-                            </label>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="filters-footer">
-                    <button class="apply-filters" (click)="applyFilters()">Приложи</button>
-                    <button class="clear-filters" (click)="clearFilters()">Изчисти</button>
-                </div>
-            </div>
-
-            <!-- Products grid -->
-            <div class="products-wrapper" [class.list-view]="viewMode === 'list'">
-                <div class="product-card" *ngFor="let product of paginatedProducts; trackBy: trackByProductId" [class.list-mode]="viewMode === 'list'">
-                    <div class="product-image">
-                        <a [routerLink]="['/details', product.Id]">
+        <div
+            class="catalog-shop-grid"
+            [class.catalog-shop-grid--list]="viewMode === 'list'"
+            *ngIf="paginatedProducts.length > 0">
+            <article
+                class="catalog-shop-card"
+                [class.catalog-shop-card--list]="viewMode === 'list'"
+                *ngFor="let product of paginatedProducts; trackBy: trackByProductId">
+                <div class="catalog-shop-card-visual">
+                    <div class="catalog-shop-media">
+                        <a class="catalog-shop-media-link" [routerLink]="['/details', product.Id]">
                             <img
-  [src]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1.webp'"
-  [alt]="product.Name"
-  loading="lazy"
-  decoding="async"
-/>
+                                [src]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-640.webp'"
+                                [attr.srcset]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-320.webp 320w, ' + 'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-640.webp 640w'"
+                                sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+                                [alt]="product.Name"
+                                loading="lazy"
+                                decoding="async">
                         </a>
-                        <div class="product-actions">
-                            <button class="action-btn" (click)="quickView(product)" title="Бърз преглед">
-                                <i class="fas fa-eye"></i>
-                            </button>
-                            <button class="action-btn" [class.active]="isInWishlist(product)" (click)="addToFavorites(product)" title="Добави в любими">
-                                <i class="fas fa-heart"></i>
-                            </button>
-                        </div>
+                        <button
+                            type="button"
+                            class="catalog-shop-wish"
+                            [class.catalog-shop-wish--on]="isInWishlist(product)"
+                            (click)="addToFavorites(product)"
+                            [attr.aria-label]="isInWishlist(product) ? 'Премахни от любими' : 'Любими'">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="catalog-shop-quick" (click)="quickView(product)">Бърз преглед</button>
                     </div>
-                    
-                    <div class="product-info">
-                        <h3 class="product-title">
-                            <a [routerLink]="['/details', product.Id]">{{product.Name}}</a>
-                        </h3>
-                        <p class="product-description" *ngIf="viewMode === 'list'">{{product.Description}}</p>
+                    <div class="catalog-shop-cap">
+                        <p class="catalog-shop-eyebrow" *ngIf="product.Category">{{ categoryLabel(product.Category) }}</p>
+                        <h2 class="catalog-shop-name">
+                            <a [routerLink]="['/details', product.Id]">{{ product.Name }}</a>
+                        </h2>
+                        <p class="catalog-shop-desc" *ngIf="viewMode === 'list'">{{ product.Description }}</p>
+                    </div>
+                </div>
+            </article>
+        </div>
+
+        <p *ngIf="filteredProducts.length === 0" class="catalog-shop-empty">
+            Няма продукти по избраните критерии.
+        </p>
+
+        <nav class="catalog-shop-pages" *ngIf="totalPages > 1" aria-label="Страниране">
+            <button type="button" class="catalog-shop-page" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
+                <i class="fas fa-chevron-left" aria-hidden="true"></i>
+            </button>
+            <button type="button" class="catalog-shop-page" [class.catalog-shop-page--current]="currentPage === 1" (click)="setPage(1)">1</button>
+            <span class="catalog-shop-dots" *ngIf="currentPage > 3">…</span>
+            <button
+                type="button"
+                class="catalog-shop-page"
+                *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]"
+                [class.catalog-shop-page--current]="page === currentPage"
+                (click)="setPage(page)"
+                [style.display]="page > 1 && page < totalPages ? 'inline-flex' : 'none'">
+                {{ page }}
+            </button>
+            <span class="catalog-shop-dots" *ngIf="currentPage < totalPages - 2">…</span>
+            <button
+                type="button"
+                class="catalog-shop-page"
+                [class.catalog-shop-page--current]="currentPage === totalPages"
+                (click)="setPage(totalPages)"
+                *ngIf="totalPages > 1">
+                {{ totalPages }}
+            </button>
+            <button type="button" class="catalog-shop-page" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
+                <i class="fas fa-chevron-right" aria-hidden="true"></i>
+            </button>
+        </nav>
+    </div>
+
+    <div class="catalog-shop-modal" *ngIf="selectedProduct" (click)="closeQuickView()">
+        <div class="catalog-shop-dialog" (click)="$event.stopPropagation()">
+            <button type="button" class="catalog-shop-modal-x" (click)="closeQuickView()" aria-label="Затвори">
+                <i class="fas fa-times" aria-hidden="true"></i>
+            </button>
+            <div class="catalog-shop-modal-grid">
+                <div class="catalog-shop-modal-img">
+                    <img
+                        [src]="'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1-1000.webp'"
+                        [attr.srcset]="'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1-600.webp 600w, ' + 'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1-1000.webp 1000w'"
+                        sizes="(max-width: 768px) 90vw, 600px"
+                        [alt]="selectedProduct.Name"
+                        loading="lazy"
+                        decoding="async">
+                </div>
+                <div class="catalog-shop-modal-copy">
+                    <h2 class="catalog-shop-modal-h">{{ selectedProduct.Name }}</h2>
+                    <p class="catalog-shop-modal-p">{{ selectedProduct.Description }}</p>
+                    <div class="catalog-shop-modal-btns">
+                        <a [routerLink]="['/details', selectedProduct.Id]" class="catalog-shop-btn catalog-shop-btn--fill">Виж детайли</a>
+                        <button
+                            type="button"
+                            class="catalog-shop-btn catalog-shop-btn--line"
+                            [class.catalog-shop-btn--wish]="isInWishlist(selectedProduct)"
+                            (click)="addToFavorites(selectedProduct)">
+                            <i class="fas fa-heart" aria-hidden="true"></i>
+                            {{ isInWishlist(selectedProduct) ? 'В любими' : 'Любими' }}
+                        </button>
                     </div>
                 </div>
             </div>
-
-            <!-- Pagination -->
-            <div class="pagination" *ngIf="totalPages > 1">
-                <button class="page-btn" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
-                    <i class="fas fa-chevron-left"></i>
-                </button>
-                
-                <button class="page-btn" [class.active]="currentPage === 1" (click)="setPage(1)">1</button>
-                
-                <span class="ellipsis" *ngIf="currentPage > 3">...</span>
-                
-                <button class="page-btn" *ngFor="let page of [currentPage - 1, currentPage, currentPage + 1]"
-                        [class.active]="page === currentPage"
-                        (click)="setPage(page)"
-                        [style.display]="page > 1 && page < totalPages ? 'block' : 'none'">
-                    {{page}}
-                </button>
-                
-                <span class="ellipsis" *ngIf="currentPage < totalPages - 2">...</span>
-                
-                <button class="page-btn" [class.active]="currentPage === totalPages" (click)="setPage(totalPages)"
-                        *ngIf="totalPages > 1">
-                    {{totalPages}}
-                </button>
-                
-                <button class="page-btn" [disabled]="currentPage === totalPages" (click)="setPage(currentPage + 1)">
-                    <i class="fas fa-chevron-right"></i>
-                </button>
-            </div>
         </div>
     </div>
-</section>
-
-<!-- Quick View Modal -->
-<div class="quick-view-modal" *ngIf="selectedProduct" (click)="closeQuickView()">
-    <div class="modal-content" (click)="$event.stopPropagation()">
-        <button class="close-modal" (click)="closeQuickView()">
-            <i class="fas fa-times"></i>
-        </button>
-        
-        <div class="modal-body">
-            <div class="product-gallery">
-                <img
-  [src]="'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1.webp'"
-  [alt]="selectedProduct.Name"
-  loading="lazy"
-  decoding="async"
-/>
-            </div>
-            
-            <div class="product-details">
-                <h2>{{selectedProduct.Name}}</h2>
-                <p class="description">{{selectedProduct.Description}}</p>
-                
-                <div class="actions">
-                    <a [routerLink]="['/details', selectedProduct.Id]" class="view-details">
-                        Виж детайли
-                    </a>
-                    <button class="add-to-favorites" [class.active]="isInWishlist(selectedProduct)" (click)="addToFavorites(selectedProduct)">
-                        <i class="fas fa-heart"></i>
-                        {{isInWishlist(selectedProduct) ? 'Премахни от любими' : 'Добави в любими'}}
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+</main>

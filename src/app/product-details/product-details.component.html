@@ -1,273 +1,143 @@
-        <!-- breadcrumb -->
-        <div class="tf-breadcrumb">
-            <div class="container">
-                <div class="tf-breadcrumb-wrap d-flex justify-content-between flex-wrap align-items-center">
-                    <div class="tf-breadcrumb-list">
-                        <a href="" class="text">Начало</a>
-                        <i class="icon icon-arrow-right"></i>
-                        <a href="catalog" class="text">Продукти</a>
+<main class="pd-show pd-show--quiet">
+    <section class="pd-show__split">
+        <div class="container">
+            <nav class="pd-show__crumb" aria-label="Навигация">
+                <a routerLink="/catalog">Каталог</a>
+                <span class="pd-show__crumb-sep" aria-hidden="true"></span>
+                <a *ngIf="productDetails.Category" [routerLink]="['/catalog', productDetails.Category]">{{ categoryLabel(productDetails.Category) }}</a>
+                <span class="pd-show__crumb-sep" *ngIf="productDetails.Category" aria-hidden="true"></span>
+                <span>{{ productDetails.Name }}</span>
+            </nav>
+            <div class="row align-items-center pd-show__grid">
+                <div class="col-lg-7">
+                    <div class="pd-show__visual">
+                        <div class="tf-product-media-wrap sticky-top pd-show__gallery">
+                            <div class="thumbs-slider">
+                                <div dir="ltr" class="swiper tf-product-media-main">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
+                                            <a
+                                                target="_blank"
+                                                class="item pd-show__gallery-link"
+                                                data-pswp-width="770px"
+                                                data-pswp-height="1075px">
+                                                <img
+                                                    class="lazyload"
+                                                    [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                    [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                    [alt]="productDetails.Name + ' — снимка ' + (index + 1)"
+                                                    style="width: 100%; height: auto; object-fit: contain;">
+                                            </a>
+                                        </div>
+                                    </div>
+                                    <p class="pd-show__frame" *ngIf="productDetails.ImageCount > 1">
+                                        <span>{{ frameNo(currentImage + 1) }}</span>
+                                        <span class="pd-show__frame-line" aria-hidden="true"></span>
+                                        <span>{{ frameNo(productDetails.ImageCount) }}</span>
+                                    </p>
+                                    <div (click)="nextImage()" class="swiper-button-next button-style-arrow thumbs-next" role="button" aria-label="Следваща снимка"></div>
+                                    <div (click)="prevImage()" class="swiper-button-prev button-style-arrow thumbs-prev" role="button" aria-label="Предишна снимка"></div>
+                                </div>
+
+                                <div dir="ltr" class="swiper tf-product-media-thumbs pd-show__thumbs">
+                                    <div class="swiper-wrapper">
+                                        <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
+                                            <div class="item" (click)="openImage(index)" role="button" tabindex="0">
+                                                <img
+                                                    class="lazyload"
+                                                    [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                    [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
+                                                    [alt]="'Миниатюра ' + (index + 1)"
+                                                    style="width: 100%; height: auto; object-fit: cover;">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="tf-breadcrumb-prev-next">
-                        <a href="#" class="tf-breadcrumb-prev hover-tooltip center">
-                            <i class="icon icon-arrow-left"></i>
-                        </a>
-                        <a href="#" class="tf-breadcrumb-back hover-tooltip center">
-                            <i class="icon icon-shop"></i>
-                        </a>
-                        <a href="#" class="tf-breadcrumb-next hover-tooltip center">
-                            <i class="icon icon-arrow-right"></i>
-                        </a>
+                </div>
+
+                <div class="col-lg-5">
+                    <div class="pd-show__aside tf-product-info-wrap position-relative">
+                        <div class="tf-zoom-main"></div>
+                        <div class="tf-product-info-list other-image-zoom pd-show__aside-inner">
+                            <header class="pd-show__intro">
+                                <p class="pd-show__type" *ngIf="productDetails.Category">{{ categoryLabel(productDetails.Category) }}</p>
+                                <h1 class="pd-show__name">{{ productDetails.Name }}</h1>
+                            </header>
+
+                            <div class="pd-show__lead">
+                                <p>{{ productDetails.Description }}</p>
+                            </div>
+
+                            <div class="pd-show__cta">
+                                <button
+                                    type="button"
+                                    class="pd-show__btn pd-show__btn--primary"
+                                    (click)="addToFavorites(productDetails)"
+                                    [class.active]="isInWishlist(productDetails)">
+                                    {{ isInWishlist(productDetails) ? 'В любими' : 'Запази в любими' }}
+                                </button>
+                                <a routerLink="/contact" class="pd-show__visit">
+                                    Запази посещение
+                                    <span class="pd-show__arrow" aria-hidden="true"></span>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!-- /breadcrumb -->
-        <!-- default -->
-        <section class="flat-spacing-4 pt_0">
-            <div class="tf-main-product">
-                <div class="container">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <div class="tf-product-media-wrap sticky-top">
-                                <div class="thumbs-slider">
-                                    <!-- Main Image Swiper -->
-                                    <div dir="ltr" class="swiper tf-product-media-main">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
-                                                <a
-                                                    target="_blank"
-                                                    class="item"
-                                                    data-pswp-width="770px"
-                                                    data-pswp-height="1075px">
-                                                    <img class="lazyload"
-                                                        [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
-                                                        [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
-                                                        alt="Product image"
-                                                        style="width: 100%; height: auto; object-fit: contain;">
-                                                </a>
-                                            </div>
-                                        </div>
-                                        <!-- Navigation Buttons -->
-                                        <div (click)="nextImage()" class="swiper-button-next button-style-arrow thumbs-next"></div>
-                                        <div (click)="prevImage()" class="swiper-button-prev button-style-arrow thumbs-prev"></div>
-                                    </div>
+    </section>
 
-                                    <!-- Thumbnails -->
-                                    <div dir="ltr" class="swiper tf-product-media-thumbs">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide" *ngFor="let i of generateArray(productDetails.ImageCount); let index = index">
-                                                <div class="item" (click)="openImage(index)">
-                                                    <img class="lazyload" 
-                                                        [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
-                                                        [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
-                                                        alt="Product thumbnail"
-                                                        style="width: 100%; height: auto; object-fit: cover;">
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="tf-product-info-wrap position-relative">
-                                <div class="tf-zoom-main"></div>
-                                <div class="tf-product-info-list other-image-zoom">
-                                    <div class="tf-product-info-title">
-                                        <h5>{{ productDetails.Name }}</h5>
-                                    </div>
-                                    
-                                    <div class="tf-product-info-liveview">
-                                        <p class="fw-6">{{productDetails.Description}}</p>
-                                    </div>
-                                   
-                                   <!-- <div class="tf-product-info-variant-picker">
-                                        <div class="variant-picker-item">
-                                            <div class="variant-picker-label">
-                                                Цвят: <span class="fw-6 variant-picker-label-value value-currentColor">Черен(Примерен)</span>
-                                            </div>
-
-                                        </div>
-                                    </div>-->
-                                    <div class="tf-product-info-buy-button">
-                                        <form class="">
-                                            <button type="button" class="tf-btn btn-fill justify-content-center fw-6 fs-16 flex-grow-1 animate-hover-btn btn-add-to-cart" (click)="addToFavorites(productDetails)" [class.active]="isInWishlist(productDetails)">
-                                                <span>{{ isInWishlist(productDetails) ? 'Премахни от любими' : 'Добави в любими' }}</span>
-                                            </button>
-                                            <button type="button" class="tf-product-btn-wishlist hover-tooltip box-icon bg_white wishlist btn-icon-action" [class.active]="isInWishlist(productDetails)" (click)="addToFavorites(productDetails)">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">{{ isInWishlist(productDetails) ? 'Премахни от любими' : 'Добави в любими' }}</span>
-                                                <span class="icon icon-delete"></span>
-                                            </button>
-                                        </form>
-                                    </div>
-
-                                    <div class="tf-product-info-delivery-return">
-                                        <div class="row">
-                                            <div class="col-xl-6 col-12">
-                                                <div class="tf-product-delivery">
-                                                    <div class="icon">
-                                                        <i class="icon-person"></i>
-                                                    </div>
-                                                    <p><span class="fw-7">Изработка на мебели по поръчка </span><br> Поръчайте мебели, съобразени с вашите изисквания.</p>
-                                                </div>
-                                            </div>
-                                            <div class="col-xl-6 col-12">
-                                                <div class="tf-product-delivery mb-0">
-                                                    <div class="icon">
-                                                        <i class="icon-return-order"></i>
-                                                    </div>
-                                                    <p><span class="fw-7">Как работим</span><br>Разгледайте нашето портфолио за вдъхновение и идеи за дизайн.</p>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tf-product-info-trust-seal">
-                                        <div class="tf-product-trust-mess">
-                                            <i class="icon-safe"></i>
-                                            <p class="fw-6">Гаранция за качество</p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+    <section class="pd-show__facts" aria-label="Изработка">
+        <div class="container">
+            <div class="pd-show__facts-grid">
+                <article>
+                    <h2>Материя</h2>
+                    <p>Кожа и плат се избират за конкретния модел, не от готова палитра.</p>
+                </article>
+                <article>
+                    <h2>Мярка</h2>
+                    <p>Размерите се уточняват в ателието, според помещението.</p>
+                </article>
+                <article>
+                    <h2>Шоурум</h2>
+                    <p>Казичене, ул. Царски парк 4. Моделът може да се види на живо.</p>
+                </article>
             </div>
+        </div>
+    </section>
 
-        </section>
-        <!-- /default -->
-        <!-- tabs -->
-        <section class="flat-spacing-17 pt_0">
-            <div class="container">
-                <div class="row">
-                    <div class="col-12">
-                        <div class="widget-tabs style-has-border">
-                            <ul class="widget-menu-tab">
-                                <li class="item-title active">
-                                    <span class="inner">Описание</span>
-                                </li>
-                              <!---  <li class="item-title">
-                                    <span class="inner">Допълнителна информация </span>
-                                </li>-->
-                            </ul>
-                            <div class="widget-content-tab">
-                                <div class="widget-content-inner active">
-                                    <div class="">
-                                        <p class="mb_30">
-                                            {{productDetails.Description}}
-                                        </p>
-                                        <!---  <div class="tf-product-des-demo">
-                                            <div class="right">
-                                                <h3 class="fs-16 fw-5">Предимства</h3>
-                                                <ul>
-                                                  <li>Предимства</li>
-                                                </ul>
-                                                <h3 class="fs-16 fw-5">Материали</h3>
-                                                <ul class="mb-0">
-                                                  <li>Въртешност...</li>
-                                                  <li>....</li>
-                                                </ul>
-                                            </div>
-                                            <div class="left">
-                                                <h3 class="fs-16 fw-5">Поддръжка</h3>
-                                                <div class="d-flex gap-10 mb_15 align-items-center">
-                                                    <div class="icon">
-                                                        <i class="icon-machine"></i>
-                                                    </div>
-                                                  <span>Machine wash max. 30ºC. Short spin.</span>
-                                                </div>
-                                                <div class="d-flex gap-10 mb_15 align-items-center">
-                                                    <div class="icon">
-                                                        <i class="icon-iron"></i>
-                                                    </div>
-                                                    <span>Iron maximum 110ºC.</span>
-                                                </div>
-                                                <div class="d-flex gap-10 mb_15 align-items-center">
-                                                    <div class="icon">
-                                                        <i class="icon-bleach"></i>
-                                                    </div>
-                                                    <span>Do not bleach/bleach.</span>
-                                                </div>
-                                                <div class="d-flex gap-10 mb_15 align-items-center">
-                                                    <div class="icon">
-                                                        <i class="icon-dry-clean"></i>
-                                                    </div>
-                                                    <span>Do not dry clean.</span>
-                                                </div>
-                                                <div class="d-flex gap-10 align-items-center">
-                                                    <div class="icon">
-                                                        <i class="icon-tumble-dry"></i>
-                                                    </div>
-                                                    <span>Tumble dry, medium hear.</span>
-                                                </div>
-                                              </div>
-                                        </div> -->
-                                    </div>
-                                </div>
-                                <div class="widget-content-inner">
-                                    <table class="tf-pr-attrs">
-                                        <tbody>
-                                            <tr class="tf-attr-pa-color">
-                                                <th class="tf-attr-label">Цвят</th>
-                                                <td class="tf-attr-value">
-                                                    <p>Черен, Бял, Зелен...</p>
-                                                </td>
-                                            </tr>
-                                            <tr class="tf-attr-pa-size">
-                                                <th class="tf-attr-label">Размери</th>
-                                                <td class="tf-attr-value">
-                                                    <p>....</p>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+    <section class="pd-show__related">
+        <div class="container">
+            <header class="pd-show__related-head">
+                <div>
+                    <p class="pd-show__type">{{ productDetails.Category ? categoryLabel(productDetails.Category) : 'Каталог' }}</p>
+                    <h2 class="pd-show__related-heading">Още модели</h2>
                 </div>
-            </div>
-        </section>
-        <!-- /tabs -->
-        <!-- product -->
-        <section class="flat-spacing-1 pt_0">
-            <div class="container">
-                <div class="flat-title">
-                    <span class="title">Подобни продукти</span>
-                </div>
-                <div class="hover-sw-nav hover-sw-2">
-                    <div dir="ltr" class="swiper tf-sw-product-sell wrap-sw-over" data-preview="4" data-tablet="3" data-mobile="2" data-space-lg="30" data-space-md="15" data-pagination="2" data-pagination-md="3" data-pagination-lg="3">
-                        <div class="swiper-wrapper">
-                            <div class="swiper-slide" lazy="true" *ngFor="let product of relatedProducts">
-                                <div class="card-product">
-                                    <div class="card-product-wrapper" style="aspect-ratio: 0;">
-                                        <a [routerLink]="['/details', product.Id]" class="product-img">
-                                            <img class="lazyload img-product" [attr.data-src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" [src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" alt="image-product">
-                                            <img class="lazyload img-hover" [attr.data-src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" [src]="'assets/images/products/' + product.Image.toLowerCase() + '.1.webp'" alt="image-product">
-                                        </a>
-                                        <div class="list-product-btn">
-                                            <button type="button" class="box-icon bg_white wishlist btn-icon-action" [class.active]="isInWishlist(product)" (click)="addToFavorites(product)">
-                                                <span class="icon icon-heart"></span>
-                                                <span class="tooltip">{{ isInWishlist(product) ? 'Премахни от любими' : 'Добави в любими' }}</span>
-                                                <span class="icon icon-delete"></span>
-                                            </button>
-                                            <a [routerLink]="['/details', product.Id]" class="box-icon bg_white quickview tf-btn-loading">
-                                                <span class="icon icon-view"></span>
-                                                <span class="tooltip">Бърз преглед</span>
-                                            </a>
-                                        </div>
-                                    </div>
-                                    <div class="card-product-info">
-                                        <a [routerLink]="['/details', product.Id]" class="title link">{{product.Name}}</a>
-                                    </div>
-                                </div>
-                            </div>
-               
-                        </div>
-                    </div>
+                <a [routerLink]="productDetails.Category ? ['/catalog', productDetails.Category] : '/catalog'" class="pd-show__visit">
+                    Към колекцията
+                    <span class="pd-show__arrow" aria-hidden="true"></span>
+                </a>
+            </header>
 
-                </div>
+            <div class="pd-show__pieces" *ngIf="relatedProducts.length">
+                <a class="pd-show__piece" *ngFor="let product of relatedProducts" [routerLink]="['/details', product.Id]">
+                    <span class="pd-show__piece-media">
+                        <img
+                            [src]="'assets/images/products/' + product.Image.toLowerCase() + '.1-1000.webp'"
+                            [attr.srcset]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-640.webp 640w, assets/images/products/' + product.Image.toLowerCase() + '.1-1000.webp 1000w'"
+                            sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
+                            [alt]="product.Name"
+                            loading="lazy"
+                            decoding="async">
+                    </span>
+                    <span class="pd-show__piece-cat" *ngIf="product.Category">{{ categoryLabel(product.Category) }}</span>
+                    <span class="pd-show__piece-name">{{ product.Name }}</span>
+                </a>
             </div>
-        </section>
-        <!-- /product -->
+        </div>
+    </section>
+</main>

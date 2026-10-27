@@ -1,7 +1,8 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
-import { shareReplay } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
+import { catchError, map, shareReplay } from 'rxjs/operators';
 import { Product } from './product.model';
 
 @Injectable({
@@ -10,16 +11,55 @@ import { Product } from './product.model';
 export class CommonserviceService {
   private products$?: Observable<Product[]>;
 
-  constructor(private http: HttpClient) { }
+  constructor(
+    private http: HttpClient,
+    @Inject(DOCUMENT) private document: Document
+  ) { }
 
   public GetProducts(): Observable<Product[]> {
     if (!this.products$) {
+      const productsUrl = this.getProductsUrl();
       this.products$ = this.http
-        .get<Product[]>('assets/data/products.json')
-        .pipe(shareReplay(1));
+        .get(productsUrl, { responseType: 'text' })
+        .pipe(
+          map((payload) => {
+            if (this.isHtmlResponse(payload)) {
+              console.error('products.json returned HTML. Check deployment base path or asset hosting.', {
+                url: productsUrl
+              });
+              return [];
+            }
+            try {
+              return JSON.parse(payload) as Product[];
+            } catch (error) {
+              console.error('Failed to parse products.json', error);
+              return [];
+            }
+          }),
+          catchError((error) => {
+            console.error('Failed to load products.json', {
+              url: productsUrl,
+              error
+            });
+            return of([] as Product[]);
+          }),
+          shareReplay(1)
+        );
     }
 
     return this.products$;
+  }
+
+  private isHtmlResponse(payload: string): boolean {
+    return payload.trim().startsWith('<');
+  }
+
+  private getProductsUrl(): string {
+    if (typeof window === 'undefined' || !this.document?.baseURI) {
+      return 'assets/data/products.json';
+    }
+
+    return new URL('assets/data/products.json', this.document.baseURI).toString();
   }
 }
 /*

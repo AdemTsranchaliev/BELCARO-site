@@ -1,3 +1,5 @@
 export const environment = {
-  production: true
+  production: true,
+  siteUrl: 'https://belcaro.bg',
+  siteName: 'Belcaro',
 };

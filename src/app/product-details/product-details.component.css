@@ -1,30 +1,36 @@
-/* Swiper container styles */
 .thumbs-slider {
     position: relative;
     width: 100%;
     max-width: 100%;
 }
 
-/* Main swiper styles */
 .tf-product-media-main {
     width: 100%;
-    margin-bottom: 10px;
+    margin: 0 0 14px;
+}
+
+.tf-product-media-main .swiper-slide {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .tf-product-media-main .swiper-slide img {
     width: 100%;
     height: auto;
-    max-height: 500px;
+    max-height: min(72vh, 760px);
     object-fit: contain;
 }
 
-/* Thumbnail swiper styles */
 .tf-product-media-thumbs {
+    width: 100%;
     height: auto;
 }
 
 .tf-product-media-thumbs .swiper-slide {
-    opacity: 0.4;
+    width: 18%;
+    height: auto;
+    opacity: 0.45;
     cursor: pointer;
     transition: opacity 0.3s ease;
 }
@@ -33,68 +39,18 @@
     opacity: 1;
 }
 
-/* Mobile-specific styles */
-@media (max-width: 767px) {
-    .tf-product-media-thumbs {
-        width: 100%;
-        height: auto;
-        margin-top: 10px;
-    }
+.tf-product-media-thumbs .swiper-slide img {
+    width: 100%;
+    height: 72px;
+    object-fit: contain;
+}
 
-    .tf-product-media-thumbs .swiper-wrapper {
-        display: flex;
-        flex-direction: row;
-    }
-
-    .tf-product-media-thumbs .swiper-slide {
-        width: 25%;
-        height: auto;
+@media (max-width: 575.98px) {
+    .tf-product-media-main .swiper-slide img {
+        max-height: 42vh;
     }
 
     .tf-product-media-thumbs .swiper-slide img {
-        width: 100%;
-        height: auto;
-        aspect-ratio: 1;
-        object-fit: cover;
-    }
-
-    .thumbs-slider {
-        display: flex;
-        flex-direction: column;
-    }
-
-    /* Navigation buttons for mobile */
-    .swiper-button-next,
-    .swiper-button-prev {
-        width: 30px;
-        height: 30px;
-        background-color: rgba(255, 255, 255, 0.8);
-        border-radius: 50%;
-    }
-
-    .swiper-button-next::after,
-    .swiper-button-prev::after {
-        font-size: 16px;
-    }
-}
-
-/* Desktop-specific styles */
-@media (min-width: 768px) {
-    .tf-product-media-thumbs {
-        width: 100px;
-        height: 400px;
-        position: absolute;
-        left: 0;
-        top: 0;
-    }
-
-    .tf-product-media-main {
-        margin-left: 110px;
-        width: calc(100% - 110px);
-    }
-
-    .tf-product-media-thumbs .swiper-slide {
-        height: auto;
-        margin-bottom: 10px;
+        height: 64px;
     }
 }

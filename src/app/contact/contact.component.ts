@@ -14,6 +14,11 @@ export class ContactComponent {
 
   constructor() { }
 
+  onSubmitMessage(ev: Event): void {
+    ev.preventDefault();
+    this.sendEmail();
+  }
+
   sendEmail() {
     if (!this.name || !this.email || !this.message) {
       alert('Моля, попълнете всички полета!');

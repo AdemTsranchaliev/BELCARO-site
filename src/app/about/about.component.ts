@@ -17,7 +17,6 @@ export class AboutComponent implements OnInit, OnDestroy {
     'assets/js/wow.min.js',
     'assets/js/multiple-modal.js',
     'assets/js/nouislider.min.js',
-    'assets/js/shop.js',
     'assets/js/main.js'
   ];
 

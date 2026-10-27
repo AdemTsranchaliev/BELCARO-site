@@ -1,17 +1,18 @@
 import {
   AfterViewInit,
+  ChangeDetectorRef,
   Component,
   OnDestroy,
   OnInit,
-  ChangeDetectorRef,
 } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import Swiper from "swiper";
-import { Product } from "../product.model";
+import { Product, categoryLabel } from "../product.model";
 import { CommonserviceService } from "../commonservice.service";
 import { Subject, combineLatest } from "rxjs";
 import { filter, takeUntil } from "rxjs/operators";
 import { WishlistService } from '../wishlist.service';
+import { SeoService } from '../seo.service';
 
 @Component({
   selector: "app-product-details",
@@ -25,6 +26,7 @@ export class ProductDetailsComponent
   public products: Product[] = [];
   public relatedProducts: Product[] = [];
   public productDetails: Product = new Product("", "", "", "", 0, "");
+  categoryLabel = categoryLabel;
 
   private readonly scriptUrls = [
     "assets/js/jquery.min.js",
@@ -37,7 +39,6 @@ export class ProductDetailsComponent
     "assets/js/wow.min.js",
     "assets/js/multiple-modal.js",
     "assets/js/nouislider.min.js",
-    "assets/js/shop.js",
     "assets/js/main.js",
     "assets/js/drift.min.js",
     "assets/js/model-viewer.min.js",
@@ -51,7 +52,9 @@ export class ProductDetailsComponent
     private route: ActivatedRoute,
     private router: Router,
     private service: CommonserviceService,
-    private wishlistService: WishlistService
+    private wishlistService: WishlistService,
+    private seo: SeoService,
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
@@ -65,16 +68,35 @@ export class ProductDetailsComponent
       .pipe(takeUntil(this.destroy$))
       .subscribe(([products, params]) => {
         this.products = products;
-        this.relatedProducts = this.getRandomProducts(this.products, 4);
 
         const cat = params.get("id");
+        const path = this.router.url.split("?")[0];
         if (cat) {
           const prod = this.products.find(
             (product) => product.Id?.toLowerCase() === cat?.toLowerCase()
           );
           if (prod) {
             this.productDetails = prod;
+            this.relatedProducts = this.relatedFor(this.products, prod);
+            this.seo.applyProductPage(prod, path);
+          } else {
+            this.relatedProducts = [];
+            this.seo.apply({
+              title: "Продуктът не е намерен",
+              description:
+                "Търсеният артикул липсва в каталога Belcaro. Разгледайте актуалните продукти.",
+              canonicalPath: path,
+              noIndex: true,
+            });
           }
+        } else {
+          this.relatedProducts = [];
+          this.seo.apply({
+            title: "Продукт",
+            description:
+              "Детайли за продукт от каталога Belcaro — премиум мека мебел и интериор.",
+            canonicalPath: path,
+          });
         }
       });
   }
@@ -83,17 +105,17 @@ export class ProductDetailsComponent
     window.scroll(0, 0);
 
     const thumbsSwiper = new Swiper(".tf-product-media-thumbs", {
-      direction: window.innerWidth >= 768 ? 'vertical' : 'horizontal',
-      spaceBetween: 10,
-      slidesPerView: window.innerWidth >= 768 ? 'auto' : 4,
+      direction: "horizontal",
+      spaceBetween: 12,
+      slidesPerView: 4,
       freeMode: true,
       watchSlidesProgress: true,
       breakpoints: {
         768: {
-          direction: 'vertical',
-          slidesPerView: 'auto'
-        }
-      }
+          slidesPerView: 5,
+          spaceBetween: 14,
+        },
+      },
     });
 
     this.mainSwiper = new Swiper(".tf-product-media-main", {
@@ -112,11 +134,9 @@ export class ProductDetailsComponent
       }
     });
 
-    // Handle window resize
-    window.addEventListener('resize', () => {
-      const isDesktop = window.innerWidth >= 768;
-      thumbsSwiper.params.direction = isDesktop ? 'vertical' : 'horizontal';
-      thumbsSwiper.update();
+    this.mainSwiper.on("slideChange", () => {
+      this.currentImage = this.mainSwiper?.activeIndex ?? 0;
+      this.cdr.markForCheck();
     });
 
     setTimeout(() => {
@@ -133,9 +153,13 @@ export class ProductDetailsComponent
   }
 
   private loadScripts(): void {
+    const moduleScripts = new Set(["assets/js/model-viewer.min.js", "assets/js/zoom.js"]);
     this.scriptUrls.forEach((url) => {
       const script = document.createElement("script");
       script.src = url;
+      if (moduleScripts.has(url)) {
+        script.type = "module";
+      }
       script.async = true;
       document.body.appendChild(script);
       this.scriptElements.push(script);
@@ -149,8 +173,17 @@ export class ProductDetailsComponent
     this.scriptElements = [];
   }
 
-  getRandomProducts(products: Product[], count: number): Product[] {
-    return [...products].sort(() => 0.5 - Math.random()).slice(0, count);
+  private relatedFor(products: Product[], current: Product): Product[] {
+    const id = current.Id?.toLowerCase();
+    const category = current.Category?.toLowerCase();
+    const others = products.filter((product) => product.Id?.toLowerCase() !== id);
+    const same = category
+      ? others.filter((product) => product.Category?.toLowerCase() === category)
+      : [];
+    const rest = others.filter(
+      (product) => product.Category?.toLowerCase() !== category
+    );
+    return [...same, ...rest].slice(0, 3);
   }
 
   public nextImage(): void {
@@ -175,6 +208,10 @@ export class ProductDetailsComponent
     return Array.from({ length: count }, (_, i) => i + 1);
   }
 
+  frameNo(value: number): string {
+    return value < 10 ? `0${value}` : `${value}`;
+  }
+
   addToFavorites(product: Product): void {
     if (this.wishlistService.isInWishlist(product)) {
       this.wishlistService.removeFromWishlist(product);
@@ -186,4 +223,5 @@ export class ProductDetailsComponent
   isInWishlist(product: Product): boolean {
     return this.wishlistService.isInWishlist(product);
   }
+
 }
