@@ -69,6 +69,12 @@ body.preload-wrapper .h6,
 
 /* --- Header / навигация — модерен „quiet luxury“ --- */
 body.preload-wrapper #header.site-header-lux.header-default {
+  position: sticky;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  width: 100%;
   background: rgba(246, 243, 238, 0.94);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
@@ -77,21 +83,32 @@ body.preload-wrapper #header.site-header-lux.header-default {
 }
 
 body.preload-wrapper #header.site-header-lux .wrapper-header {
-  min-height: 82px;
+  min-height: 72px;
+  margin-left: 0;
+  margin-right: 0;
+}
+
+body.preload-wrapper #header.site-header-lux .wrapper-header > [class*="col-"] {
+  padding-left: 0;
+  padding-right: 0;
 }
 
 body.preload-wrapper #header.site-header-lux .site-header-lux-inner {
-  max-width: 1440px;
+  width: min(1440px, calc(100% - 48px));
+  max-width: none;
   margin-left: auto;
   margin-right: auto;
+  padding-left: 0 !important;
+  padding-right: 0 !important;
 }
 
 body.preload-wrapper #header.site-header-lux .logo-header .site-logo {
   display: block;
-  height: 44px;
+  height: 28px;
   width: auto;
   max-width: min(200px, 42vw);
   object-fit: contain;
+  mix-blend-mode: normal;
   transition: opacity 0.25s ease;
 }
 
@@ -122,9 +139,9 @@ body.preload-wrapper #header.site-header-lux .box-nav-ul {
 }
 
 body.preload-wrapper #header.site-header-lux .box-nav-ul .item-link {
-  letter-spacing: 0.17em;
   font-size: 11px !important;
-  font-weight: 600;
+  font-weight: 500;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   color: var(--lux-ink) !important;
   padding-left: 4px !important;
@@ -3551,60 +3568,6 @@ body.preload-wrapper .pd-show__piece:focus-visible {
    Начална страница — Maison (пълноекранна редакционна витрина)
    ========================================================================== */
 
-body.maison-home.preload-wrapper {
-  padding-top: 96px;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux .site-header-lux-inner {
-  width: min(1440px, calc(100% - 48px));
-  max-width: none;
-  margin-left: auto;
-  margin-right: auto;
-  padding-left: 0 !important;
-  padding-right: 0 !important;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux .wrapper-header {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux .wrapper-header > [class*="col-"] {
-  padding-left: 0;
-  padding-right: 0;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux .box-nav-ul .item-link {
-  font-weight: 500;
-  letter-spacing: 0.16em;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux .site-header-lux-mob-toggle {
-  margin-left: -10px;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux .logo-header .site-logo {
-  mix-blend-mode: normal;
-  height: 28px;
-  width: auto;
-}
-
-body.maison-home.preload-wrapper #header.site-header-lux.header-default {
-  position: fixed;
-  top: 0 !important;
-  left: 0;
-  right: 0;
-  z-index: 1000;
-  width: 100%;
-  background: rgba(246, 243, 238, 0.94);
-  -webkit-backdrop-filter: blur(16px);
-  backdrop-filter: blur(16px);
-  border-bottom: 1px solid rgba(26, 22, 18, 0.1);
-  box-shadow:
-    0 1px 0 rgba(255, 255, 255, 0.75) inset,
-    0 12px 32px rgba(28, 25, 23, 0.05);
-}
-
 .maison-collections,
 .maison-signature,
 .maison-atelier,
@@ -4448,16 +4411,12 @@ header.maison-head {
 }
 
 @media (max-width: 767px) {
-  body.maison-home.preload-wrapper {
-    padding-top: 84px;
-  }
-
   .maison {
     --m-gutter: 20px;
   }
 
   .maison-wrap,
-  body.maison-home.preload-wrapper #header.site-header-lux .site-header-lux-inner {
+  body.preload-wrapper #header.site-header-lux .site-header-lux-inner {
     width: calc(100% - 40px);
   }
 
@@ -4833,9 +4792,5 @@ header.maison-head {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-  }
-
-  body.maison-home.preload-wrapper {
-    padding-top: 64px;
   }
 }
