@@ -30,7 +30,16 @@ export class CommonserviceService {
               return [];
             }
             try {
-              return JSON.parse(payload) as Product[];
+              const parsed = JSON.parse(payload) as Product[];
+              const seen = new Set<string>();
+              return parsed.filter((product) => {
+                const id = (product.Id || '').trim();
+                if (!id || seen.has(id)) {
+                  return false;
+                }
+                seen.add(id);
+                return true;
+              });
             } catch (error) {
               console.error('Failed to parse products.json', error);
               return [];

@@ -1,4 +1,6 @@
 User-agent: *
 Allow: /
+Disallow: /wishlist
 
+Host: belcaro.bg
 Sitemap: https://belcaro.bg/sitemap.xml

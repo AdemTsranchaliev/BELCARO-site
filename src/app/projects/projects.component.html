@@ -3,10 +3,10 @@
         <div class="projects-lux-intro-bg" aria-hidden="true"></div>
         <div class="container position-relative">
             <div class="projects-lux-intro-head">
-                <p class="projects-lux-kicker">Избрани интериори</p>
-                <h1 class="projects-lux-title">Проекти</h1>
+                <p class="projects-lux-kicker">{{ 'projects.kicker' | t }}</p>
+                <h1 class="projects-lux-title">{{ 'projects.title' | t }}</h1>
                 <p class="projects-lux-lead">
-                    Реализации с мека мебел и обзавеждане по поръчка — част от нашия каталог заедно с решения по индивидуален проект и монтаж.
+                    {{ 'projects.lead' | t }}
                 </p>
             </div>
         </div>
@@ -15,7 +15,7 @@
     <section class="projects-lux-toolbar">
         <div class="container">
             <div class="projects-lux-filters-wrap">
-            <div class="projects-lux-filters" role="tablist" aria-label="Филтър по тип проект">
+            <div class="projects-lux-filters" role="tablist" [attr.aria-label]="'projects.filterAria' | t">
                 <button
                     *ngFor="let opt of filterOptions"
                     type="button"
@@ -24,12 +24,12 @@
                     (click)="setFilter(opt.id)"
                     role="tab"
                     [attr.aria-selected]="filter === opt.id">
-                    {{ opt.label }}
+                    {{ opt.labelKey | t }}
                 </button>
             </div>
             <p class="projects-lux-count" aria-live="polite">
                 <span class="projects-lux-count-num">{{ filteredProjects.length }}</span>
-                <span class="projects-lux-count-label">{{ filteredProjects.length === 1 ? 'проект' : 'проекта' }}</span>
+                <span class="projects-lux-count-label">{{ (filteredProjects.length === 1 ? 'projects.count.one' : 'projects.count.many') | t }}</span>
             </p>
             </div>
         </div>
@@ -48,16 +48,16 @@
                             loading="lazy"
                             decoding="async"
                             [src]="project.image"
-                            [alt]="project.alt">
+                            [alt]="project.altKey | t">
                         <div class="projects-lux-card-shade" aria-hidden="true"></div>
-                        <div class="projects-lux-card-chip">{{ categoryLabel(project.category) }}</div>
+                        <div class="projects-lux-card-chip">{{ ('projects.cat.' + project.category) | t }}</div>
                         <div class="projects-lux-card-overlay">
                             <div class="projects-lux-card-overlay-inner">
-                                <p class="projects-lux-card-loc">{{ project.location }}</p>
-                                <h2 class="projects-lux-card-title">{{ project.title }}</h2>
-                                <p class="projects-lux-card-desc">{{ project.description }}</p>
+                                <p class="projects-lux-card-loc">{{ project.locationKey | t }}</p>
+                                <h2 class="projects-lux-card-title">{{ project.titleKey | t }}</h2>
+                                <p class="projects-lux-card-desc">{{ project.descriptionKey | t }}</p>
                                 <a routerLink="/contact" class="projects-lux-card-link tf-btn btn-line animate-hover-btn">
-                                    <span>Запитване</span>
+                                    <span>{{ 'projects.enquiry' | t }}</span>
                                     <i class="icon icon-arrow1-top-left" aria-hidden="true"></i>
                                 </a>
                             </div>
@@ -67,7 +67,7 @@
             </div>
 
             <p *ngIf="filteredProjects.length === 0" class="projects-lux-empty">
-                Няма проекти в тази категория.
+                {{ 'projects.empty' | t }}
             </p>
         </div>
     </section>
@@ -77,14 +77,14 @@
         <div class="container position-relative">
             <div class="projects-lux-cta-inner">
                 <div class="projects-lux-cta-copy">
-                    <p class="projects-lux-cta-kicker">Следваща стъпка</p>
-                    <h2 class="projects-lux-cta-title">Вашият интериор</h2>
+                    <p class="projects-lux-cta-kicker">{{ 'projects.ctaKicker' | t }}</p>
+                    <h2 class="projects-lux-cta-title">{{ 'projects.ctaTitle' | t }}</h2>
                     <p class="projects-lux-cta-text">
-                        Разкажете ни за помещението — изготвяме оферта и визия съобразени с бюджета и сроковете.
+                        {{ 'projects.ctaText' | t }}
                     </p>
                 </div>
                 <a routerLink="/contact" class="projects-lux-cta-btn tf-btn btn-line animate-hover-btn">
-                    <span>Свържете се с нас</span>
+                    <span>{{ 'projects.ctaBtn' | t }}</span>
                     <i class="icon icon-arrow1-top-left" aria-hidden="true"></i>
                 </a>
             </div>

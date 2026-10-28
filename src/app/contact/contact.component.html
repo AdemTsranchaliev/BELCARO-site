@@ -1,36 +1,36 @@
 <main class="contact-page contact-page--minimal">
     <header class="contact-page__head">
         <div class="container">
-            <p class="contact-page__kicker">Връзка</p>
-            <h1 class="contact-page__title">Контакти</h1>
-            <p class="contact-page__subtitle">Магазин и шоурум в София.</p>
+            <p class="contact-page__kicker">{{ 'contact.kicker' | t }}</p>
+            <h1 class="contact-page__title">{{ 'contact.title' | t }}</h1>
+            <p class="contact-page__subtitle">{{ 'contact.subtitle' | t }}</p>
         </div>
     </header>
 
-    <section class="contact-page__visit" aria-label="Посещение">
+    <section class="contact-page__visit" [attr.aria-label]="'contact.visit' | t">
         <div class="container">
             <div class="contact-page__map-wrap">
                 <iframe
                     id="contact-map"
                     class="contact-page__map"
-                    title="Карта — шоурум Belcaro, Казичене"
+                    [title]="'contact.map' | t"
                     loading="lazy"
                     referrerpolicy="no-referrer-when-downgrade"
-                    src="https://maps.google.com/maps?q=%D1%83%D0%BB.%20%D0%A6%D0%B0%D1%80%D1%81%D0%BA%D0%B8%20%D0%BF%D0%B0%D1%80%D0%BA%204%2C%20%D0%9A%D0%B0%D0%B7%D0%B8%D1%87%D0%B5%D0%BD%D0%B5&amp;z=16&amp;output=embed&amp;hl=bg"></iframe>
+                    [src]="mapEmbed"></iframe>
             </div>
 
             <div class="contact-page__facts">
                 <article>
-                    <h2>Шоурум</h2>
-                    <p>София, Казичене<br>ул. Царски парк 4</p>
-                    <a class="contact-page__route" href="https://maps.app.goo.gl/SVwUG6rtmsxwdAMx9" target="_blank" rel="noopener noreferrer">Маршрут</a>
+                    <h2>{{ 'contact.showroom' | t }}</h2>
+                    <p>{{ 'contact.showroom.city' | t }}<br>{{ 'contact.showroom.street' | t }}</p>
+                    <a class="contact-page__route" href="https://maps.app.goo.gl/SVwUG6rtmsxwdAMx9" target="_blank" rel="noopener noreferrer">{{ 'contact.route' | t }}</a>
                 </article>
                 <article>
-                    <h2>Магазин</h2>
-                    <p>София<br>бул. Ботевградско шосе 268</p>
+                    <h2>{{ 'contact.store' | t }}</h2>
+                    <p>{{ 'contact.store.city' | t }}<br>{{ 'contact.store.street' | t }}</p>
                 </article>
                 <article>
-                    <h2>Връзка</h2>
+                    <h2>{{ 'contact.link' | t }}</h2>
                     <p>
                         <a href="tel:+359899908588">(+359) 899 908 588</a><br>
                         <a href="tel:+359899906946">(+359) 899 906 946</a><br>
@@ -38,9 +38,9 @@
                     </p>
                 </article>
                 <article>
-                    <h2>Часове</h2>
-                    <p>Делнични дни<br>09:00 – 18:00</p>
-                    <nav class="contact-page__social" aria-label="Социални мрежи">
+                    <h2>{{ 'contact.hours' | t }}</h2>
+                    <p>{{ 'contact.hours.days' | t }}<br>09:00 – 18:00</p>
+                    <nav class="contact-page__social" [attr.aria-label]="'contact.social' | t">
                         <a href="https://www.facebook.com/p/Belcaro-Bulgaria-61575156623983/" class="contact-page__social-link" target="_blank" rel="noopener noreferrer">Facebook</a>
                         <a href="https://www.instagram.com/belcaro.bulgaria/" class="contact-page__social-link" target="_blank" rel="noopener noreferrer">Instagram</a>
                         <a href="https://www.tiktok.com/@belcaro.bg" class="contact-page__social-link" target="_blank" rel="noopener noreferrer">TikTok</a>
@@ -53,15 +53,15 @@
     <section class="contact-page__form-wrap" aria-labelledby="contact-form-heading">
         <div class="container contact-page__form-layout">
             <header class="contact-page__form-head">
-                <p class="contact-page__kicker contact-page__kicker--form">Съобщение</p>
-                <h2 id="contact-form-heading" class="contact-page__form-title">Пишете ни</h2>
-                <p class="contact-page__form-lead">Ще отговорим при първа възможност.</p>
+                <p class="contact-page__kicker contact-page__kicker--form">{{ 'contact.formKicker' | t }}</p>
+                <h2 id="contact-form-heading" class="contact-page__form-title">{{ 'contact.formTitle' | t }}</h2>
+                <p class="contact-page__form-lead">{{ 'contact.formLead' | t }}</p>
             </header>
 
             <form #contactForm="ngForm" class="contact-page__form" (ngSubmit)="onSubmitMessage($event)" novalidate>
                 <div class="contact-page__fields-row">
                     <div class="contact-page__field">
-                        <label class="contact-page__label" for="contact-name">Име <span class="contact-page__req" aria-hidden="true">*</span></label>
+                        <label class="contact-page__label" for="contact-name">{{ 'contact.name' | t }} <span class="contact-page__req" aria-hidden="true">*</span></label>
                         <input
                             type="text"
                             name="name"
@@ -69,11 +69,11 @@
                             [(ngModel)]="name"
                             required
                             autocomplete="name"
-                            placeholder="Вашето име"
+                            [placeholder]="'contact.namePh' | t"
                             class="contact-page__input" />
                     </div>
                     <div class="contact-page__field">
-                        <label class="contact-page__label" for="contact-email">Имейл <span class="contact-page__req" aria-hidden="true">*</span></label>
+                        <label class="contact-page__label" for="contact-email">{{ 'contact.email' | t }} <span class="contact-page__req" aria-hidden="true">*</span></label>
                         <input
                             type="email"
                             name="email"
@@ -86,19 +86,19 @@
                     </div>
                 </div>
                 <div class="contact-page__field contact-page__field--full">
-                    <label class="contact-page__label" for="contact-message">Съобщение <span class="contact-page__req" aria-hidden="true">*</span></label>
+                    <label class="contact-page__label" for="contact-message">{{ 'contact.message' | t }} <span class="contact-page__req" aria-hidden="true">*</span></label>
                     <textarea
                         name="message"
                         id="contact-message"
                         [(ngModel)]="message"
                         required
                         rows="6"
-                        placeholder="Вашето съобщение…"
+                        [placeholder]="'contact.messagePh' | t"
                         class="contact-page__textarea"></textarea>
                 </div>
                 <div class="contact-page__actions">
                     <button type="submit" class="contact-page__submit">
-                        Изпрати съобщение
+                        {{ 'contact.send' | t }}
                     </button>
                 </div>
             </form>

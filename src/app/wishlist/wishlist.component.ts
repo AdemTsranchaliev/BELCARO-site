@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { Product, categoryLabel } from '../product.model';
+import { Product } from '../product.model';
+import { I18nService } from '../i18n.service';
 import { WishlistService } from '../wishlist.service';
 
 @Component({
@@ -11,11 +12,13 @@ import { WishlistService } from '../wishlist.service';
 })
 export class WishlistComponent implements OnInit, OnDestroy {
   wishlistItems: Product[] = [];
-  categoryLabel = categoryLabel;
 
   private readonly destroy$ = new Subject<void>();
 
-  constructor(private wishlistService: WishlistService) {}
+  constructor(
+    private wishlistService: WishlistService,
+    private i18n: I18nService
+  ) {}
 
   ngOnInit(): void {
     this.wishlistService.wishlist$
@@ -32,7 +35,9 @@ export class WishlistComponent implements OnInit, OnDestroy {
 
   get countLabel(): string {
     const count = this.wishlistItems.length;
-    return count === 1 ? '1 модел' : `${count} модела`;
+    return count === 1
+      ? this.i18n.t('wish.count.one')
+      : this.i18n.t('wish.count.many', { n: count });
   }
 
   removeFromWishlist(product: Product): void {

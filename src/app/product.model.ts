@@ -1,14 +1,33 @@
-const CATEGORY_LABELS: Record<string, string> = {
-    sofas: 'Дивани',
-    armchair: 'Фотьойли',
-    chairs: 'Столове',
-    beds: 'Спални',
-    tables: 'Маси',
+const CATEGORY_LABELS: Record<'bg' | 'en', Record<string, string>> = {
+    bg: {
+        sofas: 'Дивани',
+        armchair: 'Фотьойли',
+        chairs: 'Столове',
+        beds: 'Спални',
+        tables: 'Маси',
+    },
+    en: {
+        sofas: 'Sofas',
+        armchair: 'Armchairs',
+        chairs: 'Chairs',
+        beds: 'Beds',
+        tables: 'Tables',
+    },
 };
 
-export function categoryLabel(value: string): string {
-    const key = (value || '').trim().toLowerCase();
-    return CATEGORY_LABELS[key] || value;
+export const CATEGORY_SLUGS = ['sofas', 'armchair', 'chairs', 'beds', 'tables'] as const;
+
+export function categorySlug(value: string): string {
+    return (value || '').trim().toLowerCase();
+}
+
+export function isCategorySlug(value: string): boolean {
+    return (CATEGORY_SLUGS as readonly string[]).includes(categorySlug(value));
+}
+
+export function categoryLabel(value: string, lang: 'bg' | 'en' = 'bg'): string {
+    const key = categorySlug(value);
+    return CATEGORY_LABELS[lang][key] || CATEGORY_LABELS.bg[key] || value;
 }
 
 export class Product {

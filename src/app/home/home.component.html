@@ -3,23 +3,23 @@
         <div class="maison-hero-panel">
             <ng-container *ngFor="let slide of slides; let i = index">
                 <div class="maison-hero-copy" *ngIf="i === active">
-                    <p class="maison-hero-place">Шоурум · Казичене</p>
+                    <p class="maison-hero-place">{{ 'home.place' | t }}</p>
                     <h1 class="maison-hero-title">
-                        <span *ngFor="let line of slide.lines" [class.is-em]="line.em">{{ line.text }}</span>
+                        <span *ngFor="let line of slide.lines" [class.is-em]="line.em">{{ line.key | t }}</span>
                     </h1>
-                    <p class="maison-hero-lead">{{ slide.lead }}</p>
+                    <p class="maison-hero-lead">{{ slide.leadKey | t }}</p>
                     <div class="maison-hero-actions">
                         <a routerLink="/catalog" class="maison-btn maison-btn--solid">
-                            Колекцията
+                            {{ 'home.collection' | t }}
                             <span class="maison-arrow" aria-hidden="true"></span>
                         </a>
-                        <a routerLink="/contact" class="maison-textlink">Запази посещение <span class="maison-arrow" aria-hidden="true"></span></a>
+                        <a routerLink="/contact" class="maison-textlink">{{ 'home.bookVisit' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
                     </div>
                 </div>
             </ng-container>
 
             <div class="maison-hero-dock">
-                <div class="maison-hero-index" role="tablist" aria-label="Кадри">
+                <div class="maison-hero-index" role="tablist" [attr.aria-label]="'home.frames' | t">
                     <button
                         *ngFor="let slide of slides; let i = index"
                         type="button"
@@ -29,14 +29,14 @@
                         [attr.aria-selected]="i === active"
                         (click)="go(i)">
                         <span class="maison-hero-tab-num">0{{ i + 1 }}</span>
-                        <span class="maison-hero-tab-name">{{ slide.rail }}</span>
+                        <span class="maison-hero-tab-name">{{ slide.railKey | t }}</span>
                     </button>
                 </div>
                 <div class="maison-hero-arrows">
-                    <button type="button" class="maison-hero-arrow" (click)="prev()" aria-label="Предишен кадър">
+                    <button type="button" class="maison-hero-arrow" (click)="prev()" [attr.aria-label]="'home.prev' | t">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M15 5 L8 12 L15 19"></path></svg>
                     </button>
-                    <button type="button" class="maison-hero-arrow" (click)="next()" aria-label="Следващ кадър">
+                    <button type="button" class="maison-hero-arrow" (click)="next()" [attr.aria-label]="'home.next' | t">
                         <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 5 L16 12 L9 19"></path></svg>
                     </button>
                 </div>
@@ -48,7 +48,7 @@
                 *ngFor="let slide of slides; let i = index"
                 class="maison-hero-slide"
                 [class.is-active]="i === active">
-                <img [src]="slide.image" [alt]="slide.alt" decoding="async" [attr.fetchpriority]="i === 0 ? 'high' : 'auto'">
+                <img [src]="slide.image" [alt]="slide.altKey | t" decoding="async" [attr.fetchpriority]="i === 0 ? 'high' : 'auto'">
             </div>
         </div>
     </section>
@@ -57,18 +57,18 @@
         <div class="maison-wrap maison-credo-grid">
             <article class="maison-credo-item">
                 <span class="maison-credo-num">01</span>
-                <h2>Ателие</h2>
-                <p>Шев, капитонаж и дърво се довършват до една мярка — тази на дизайнера и на дома.</p>
+                <h2>{{ 'home.credo1.title' | t }}</h2>
+                <p>{{ 'home.credo1.text' | t }}</p>
             </article>
             <article class="maison-credo-item">
                 <span class="maison-credo-num">02</span>
-                <h2>Материя</h2>
-                <p>Кожи и тъкани се избират за конкретния проект, не за сезона.</p>
+                <h2>{{ 'home.credo2.title' | t }}</h2>
+                <p>{{ 'home.credo2.text' | t }}</p>
             </article>
             <article class="maison-credo-item">
                 <span class="maison-credo-num">03</span>
-                <h2>Проект</h2>
-                <p>Частни домове и обществени интериори. От първата среща до монтажа.</p>
+                <h2>{{ 'home.credo3.title' | t }}</h2>
+                <p>{{ 'home.credo3.text' | t }}</p>
             </article>
         </div>
     </section>
@@ -77,51 +77,51 @@
         <div class="maison-wrap">
             <header class="maison-head">
                 <div>
-                    <p class="maison-kicker">Каталог</p>
-                    <h2 id="maison-collections-title">Колекции</h2>
+                    <p class="maison-kicker">{{ 'home.catalogKicker' | t }}</p>
+                    <h2 id="maison-collections-title">{{ 'home.collections' | t }}</h2>
                 </div>
-                <a routerLink="/catalog" class="maison-textlink">Целият каталог <span class="maison-arrow" aria-hidden="true"></span></a>
+                <a routerLink="/catalog" class="maison-textlink">{{ 'home.fullCatalog' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
             </header>
 
             <div class="maison-mosaic">
                 <a routerLink="/catalog/sofas" class="maison-tile maison-tile--sofas">
-                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-02.jpg" alt="Широк светъл диван в минималистична дневна">
+                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-02.jpg" [alt]="'home.tile.sofas.alt' | t">
                     <span class="maison-tile-shade" aria-hidden="true"></span>
                     <span class="maison-tile-meta">
                         <span class="maison-tile-idx">01</span>
-                        <span class="maison-tile-name">Дивани</span>
+                        <span class="maison-tile-name">{{ 'home.tile.sofas' | t }}</span>
                     </span>
                 </a>
-                <a routerLink="/catalog/Beds" class="maison-tile maison-tile--beds">
-                    <img loading="lazy" decoding="async" src="assets/images/collections/furniture_cate5.jpg" alt="Ниско тапицирано легло в бетонна спалня">
+                <a routerLink="/catalog/beds" class="maison-tile maison-tile--beds">
+                    <img loading="lazy" decoding="async" src="assets/images/collections/furniture_cate5.jpg" [alt]="'home.tile.beds.alt' | t">
                     <span class="maison-tile-shade" aria-hidden="true"></span>
                     <span class="maison-tile-meta">
                         <span class="maison-tile-idx">02</span>
-                        <span class="maison-tile-name">Легла</span>
+                        <span class="maison-tile-name">{{ 'home.tile.beds' | t }}</span>
                     </span>
                 </a>
-                <a routerLink="/catalog/Chairs" class="maison-tile maison-tile--chairs">
-                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-01.jpg" alt="Дървен стол с черна седалка на тъмен фон">
+                <a routerLink="/catalog/chairs" class="maison-tile maison-tile--chairs">
+                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-01.jpg" [alt]="'home.tile.chairs.alt' | t">
                     <span class="maison-tile-shade" aria-hidden="true"></span>
                     <span class="maison-tile-meta">
                         <span class="maison-tile-idx">03</span>
-                        <span class="maison-tile-name">Столове</span>
+                        <span class="maison-tile-name">{{ 'home.tile.chairs' | t }}</span>
                     </span>
                 </a>
                 <a routerLink="/catalog/armchair" class="maison-tile maison-tile--armchairs">
-                    <img loading="lazy" decoding="async" src="assets/images/collections/furniture_cate2.jpg" alt="Нисък фотьойл с текстил и кожа до прозорец">
+                    <img loading="lazy" decoding="async" src="assets/images/collections/furniture_cate2.jpg" [alt]="'home.tile.armchairs.alt' | t">
                     <span class="maison-tile-shade" aria-hidden="true"></span>
                     <span class="maison-tile-meta">
                         <span class="maison-tile-idx">04</span>
-                        <span class="maison-tile-name">Фотьойли</span>
+                        <span class="maison-tile-name">{{ 'home.tile.armchairs' | t }}</span>
                     </span>
                 </a>
-                <a routerLink="/catalog/Tables" class="maison-tile maison-tile--tables">
-                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-03.jpg" alt="Две кръгли дървени маси с черен метален крак">
+                <a routerLink="/catalog/tables" class="maison-tile maison-tile--tables">
+                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-03.jpg" [alt]="'home.tile.tables.alt' | t">
                     <span class="maison-tile-shade" aria-hidden="true"></span>
                     <span class="maison-tile-meta">
                         <span class="maison-tile-idx">05</span>
-                        <span class="maison-tile-name">Маси</span>
+                        <span class="maison-tile-name">{{ 'home.tile.tables' | t }}</span>
                     </span>
                 </a>
             </div>
@@ -132,29 +132,29 @@
         <div class="maison-wrap">
             <header class="maison-head">
                 <div>
-                    <p class="maison-kicker">Проекти</p>
-                    <h2 id="maison-rooms-title">Реализации</h2>
+                    <p class="maison-kicker">{{ 'home.projectsKicker' | t }}</p>
+                    <h2 id="maison-rooms-title">{{ 'home.realisations' | t }}</h2>
                 </div>
-                <a routerLink="/projects" class="maison-textlink">Всички проекти <span class="maison-arrow" aria-hidden="true"></span></a>
+                <a routerLink="/projects" class="maison-textlink">{{ 'home.allProjects' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
             </header>
             <div class="maison-rooms-grid">
                 <a routerLink="/projects" class="maison-room">
                     <span class="maison-room-media">
-                        <img loading="lazy" decoding="async" src="assets/images/collections/pr2.jpg" alt="Трапезария с мека мебел и топло осветление">
+                        <img loading="lazy" decoding="async" src="assets/images/collections/pr2.jpg" [alt]="'home.room.dining.alt' | t">
                     </span>
-                    <span class="maison-room-name">Трапезария</span>
+                    <span class="maison-room-name">{{ 'home.room.dining' | t }}</span>
                 </a>
                 <a routerLink="/projects" class="maison-room">
                     <span class="maison-room-media">
-                        <img loading="lazy" decoding="async" src="assets/images/collections/pr4.jpg" alt="Кът за гости с тапицирани канапета">
+                        <img loading="lazy" decoding="async" src="assets/images/collections/pr4.jpg" [alt]="'home.room.guest.alt' | t">
                     </span>
-                    <span class="maison-room-name">Кът за гости</span>
+                    <span class="maison-room-name">{{ 'home.room.guest' | t }}</span>
                 </a>
                 <a routerLink="/projects" class="maison-room">
                     <span class="maison-room-media">
-                        <img loading="lazy" decoding="async" src="assets/images/collections/pr6.jpg" alt="Обзавеждане за ресторант">
+                        <img loading="lazy" decoding="async" src="assets/images/collections/pr6.jpg" [alt]="'home.room.venue.alt' | t">
                     </span>
-                    <span class="maison-room-name">Заведение</span>
+                    <span class="maison-room-name">{{ 'home.room.venue' | t }}</span>
                 </a>
             </div>
         </div>
@@ -164,13 +164,13 @@
         <div class="maison-wrap">
             <div class="maison-signature-feature">
                 <div class="maison-signature-copy">
-                    <p class="maison-kicker">Модел</p>
+                    <p class="maison-kicker">{{ 'home.modelKicker' | t }}</p>
                     <h2 id="maison-signature-title">Verona</h2>
-                    <p class="maison-signature-lead">Кожен честърфийлд с дълбока капитонация. Модел, който често стои в центъра на салона.</p>
-                    <a routerLink="/details/Verona" class="maison-btn maison-btn--line">Виж модела <span class="maison-arrow" aria-hidden="true"></span></a>
+                    <p class="maison-signature-lead">{{ 'home.verona.lead' | t }}</p>
+                    <a routerLink="/details/Verona" class="maison-btn maison-btn--line">{{ 'home.verona.cta' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
                 </div>
                 <a routerLink="/details/Verona" class="maison-signature-photo">
-                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-04.jpg" alt="Кожен диван Verona в библиотека с камина">
+                    <img loading="lazy" decoding="async" src="assets/images/collections/009furniture-banner-04.jpg" [alt]="'home.verona.alt' | t">
                 </a>
             </div>
 
@@ -180,9 +180,9 @@
                         <img loading="lazy" decoding="async" src="assets/images/products/galaxy.2-1000.webp" alt="">
                     </span>
                     <span class="maison-piece-copy">
-                        <span class="maison-piece-cat">Фотьойл</span>
+                        <span class="maison-piece-cat">{{ 'home.piece.armchair' | t }}</span>
                         <span class="maison-piece-name">Galaxy</span>
-                        <span class="maison-piece-note">Графична тапицерия и плътен силует.</span>
+                        <span class="maison-piece-note">{{ 'home.galaxy.note' | t }}</span>
                     </span>
                 </a>
                 <a routerLink="/details/Palacio" class="maison-piece">
@@ -190,9 +190,9 @@
                         <img loading="lazy" decoding="async" src="assets/images/products/palacio.1-1000.webp" alt="">
                     </span>
                     <span class="maison-piece-copy">
-                        <span class="maison-piece-cat">Фотьойл</span>
+                        <span class="maison-piece-cat">{{ 'home.piece.armchair' | t }}</span>
                         <span class="maison-piece-name">Palacio</span>
-                        <span class="maison-piece-note">Нисък кръгъл обем за тиха дневна.</span>
+                        <span class="maison-piece-note">{{ 'home.palacio.note' | t }}</span>
                     </span>
                 </a>
                 <a routerLink="/details/Clio" class="maison-piece">
@@ -200,9 +200,9 @@
                         <img loading="lazy" decoding="async" src="assets/images/products/clio.1-1000.webp" alt="">
                     </span>
                     <span class="maison-piece-copy">
-                        <span class="maison-piece-cat">Стол</span>
+                        <span class="maison-piece-cat">{{ 'home.piece.chair' | t }}</span>
                         <span class="maison-piece-name">Clio</span>
-                        <span class="maison-piece-note">Мека облегалка и изчистени крака.</span>
+                        <span class="maison-piece-note">{{ 'home.clio.note' | t }}</span>
                     </span>
                 </a>
             </div>
@@ -212,44 +212,73 @@
     <section class="maison-atelier" aria-labelledby="maison-atelier-title">
         <div class="maison-wrap maison-atelier-grid">
         <div class="maison-atelier-photo">
-            <img loading="lazy" decoding="async" src="assets/images/collections/furniture_cate3.jpg" alt="Диван в проектирана дневна с пано и естествена светлина">
+            <img loading="lazy" decoding="async" src="assets/images/collections/furniture_cate3.jpg" [alt]="'home.bespoke.alt' | t">
         </div>
         <div class="maison-atelier-copy">
-            <p class="maison-kicker">По поръчка</p>
-            <h2 id="maison-atelier-title">Заедно с проекта</h2>
-            <p class="maison-atelier-lead">Размерът, платът и конфигурацията се решават за конкретния интериор — с дизайнера, който го води.</p>
+            <p class="maison-kicker">{{ 'home.bespokeKicker' | t }}</p>
+            <h2 id="maison-atelier-title">{{ 'home.bespoke.title' | t }}</h2>
+            <p class="maison-atelier-lead">{{ 'home.bespoke.lead' | t }}</p>
             <ul class="maison-atelier-list">
-                <li>Консултация в шоурума</li>
-                <li>Мостри на кожи и тъкани</li>
-                <li>Индивидуални размери</li>
-                <li>Монтаж след утвърден проект</li>
+                <li>{{ 'home.bespoke.1' | t }}</li>
+                <li>{{ 'home.bespoke.2' | t }}</li>
+                <li>{{ 'home.bespoke.3' | t }}</li>
+                <li>{{ 'home.bespoke.4' | t }}</li>
             </ul>
             <div class="maison-hero-actions">
-                <a routerLink="/contact" class="maison-btn maison-btn--ink">Заяви консултация <span class="maison-arrow" aria-hidden="true"></span></a>
-                <a routerLink="/projects" class="maison-textlink">Реализации <span class="maison-arrow" aria-hidden="true"></span></a>
+                <a routerLink="/contact" class="maison-btn maison-btn--ink">{{ 'home.bespoke.cta' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
+                <a routerLink="/projects" class="maison-textlink">{{ 'home.bespoke.work' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
             </div>
         </div>
+        </div>
+    </section>
+
+    <section class="maison-ig" id="maison-ig" aria-labelledby="maison-ig-title">
+        <div class="maison-wrap">
+            <header class="maison-head">
+                <div>
+                    <p class="maison-kicker">{{ 'home.ig.kicker' | t }}</p>
+                    <h2 id="maison-ig-title">{{ 'home.ig.title' | t }}</h2>
+                </div>
+                <a class="maison-textlink" href="https://www.instagram.com/belcaro.bulgaria/" target="_blank" rel="noopener noreferrer">
+                    {{ 'home.ig.follow' | t }} <span class="maison-arrow" aria-hidden="true"></span>
+                </a>
+            </header>
+            <div class="maison-ig-row">
+                <a
+                    *ngFor="let post of instagram"
+                    class="maison-ig-card"
+                    [href]="post.href"
+                    target="_blank"
+                    rel="noopener noreferrer">
+                    <img [src]="post.image" [alt]="'home.ig.alt' | t:{ date: igDate(post.date) }" loading="lazy" decoding="async">
+                    <span class="maison-ig-shade" aria-hidden="true"></span>
+                    <span class="maison-ig-meta">
+                        <span>{{ igDate(post.date) }}</span>
+                        <span *ngIf="post.reel" class="maison-ig-reel">{{ 'home.ig.reel' | t }}</span>
+                    </span>
+                </a>
+            </div>
         </div>
     </section>
 
     <section class="maison-visit" aria-labelledby="maison-visit-title">
         <div class="maison-wrap maison-visit-grid">
             <div>
-                <p class="maison-kicker maison-kicker--gold">Шоурум</p>
-                <h2 id="maison-visit-title">Елате да седнете</h2>
-                <p class="maison-visit-lead">Консултация по уговорка. Платът, светлината и мащабът се виждат в шоурума, не на екран.</p>
+                <p class="maison-kicker maison-kicker--gold">{{ 'home.visit.kicker' | t }}</p>
+                <h2 id="maison-visit-title">{{ 'home.visit.title' | t }}</h2>
+                <p class="maison-visit-lead">{{ 'home.visit.lead' | t }}</p>
             </div>
             <div class="maison-visit-card">
-                <p class="maison-visit-label">Адреси</p>
-                <p>Шоурум: София, Казичене, ул. Царски парк 4</p>
-                <p>Магазин: бул. Ботевградско шосе 268</p>
-                <p class="maison-visit-label">Връзка</p>
+                <p class="maison-visit-label">{{ 'home.visit.addresses' | t }}</p>
+                <p>{{ 'home.visit.showroom' | t }}</p>
+                <p>{{ 'home.visit.store' | t }}</p>
+                <p class="maison-visit-label">{{ 'home.visit.contact' | t }}</p>
                 <p><a href="tel:+359899908588">(+359) 899 908 588</a></p>
                 <p><a href="tel:+359899906946">(+359) 899 906 946</a></p>
                 <p><a href="mailto:belcarobulgaria@gmail.com">belcarobulgaria@gmail.com</a></p>
                 <div class="maison-hero-actions">
-                    <a routerLink="/contact" class="maison-btn maison-btn--solid">Запази час <span class="maison-arrow" aria-hidden="true"></span></a>
-                    <a href="https://maps.app.goo.gl/SVwUG6rtmsxwdAMx9" class="maison-textlink" target="_blank" rel="noopener noreferrer">Маршрут <span class="maison-arrow" aria-hidden="true"></span></a>
+                    <a routerLink="/contact" class="maison-btn maison-btn--solid">{{ 'home.visit.book' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
+                    <a href="https://maps.app.goo.gl/SVwUG6rtmsxwdAMx9" class="maison-textlink" target="_blank" rel="noopener noreferrer">{{ 'home.visit.route' | t }} <span class="maison-arrow" aria-hidden="true"></span></a>
                 </div>
             </div>
         </div>

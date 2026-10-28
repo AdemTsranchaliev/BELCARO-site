@@ -1,12 +1,12 @@
 <main class="pd-show pd-show--quiet">
     <section class="pd-show__split">
         <div class="container">
-            <nav class="pd-show__crumb" aria-label="Навигация">
-                <a routerLink="/catalog">Каталог</a>
+            <nav class="pd-show__crumb" [attr.aria-label]="'pd.nav' | t">
+                <a routerLink="/catalog">{{ 'nav.catalog' | t }}</a>
                 <span class="pd-show__crumb-sep" aria-hidden="true"></span>
-                <a *ngIf="productDetails.Category" [routerLink]="['/catalog', productDetails.Category]">{{ categoryLabel(productDetails.Category) }}</a>
+                <a *ngIf="productDetails.Category" [routerLink]="['/catalog', categorySlug(productDetails.Category)]">{{ productDetails.Category | cat }}</a>
                 <span class="pd-show__crumb-sep" *ngIf="productDetails.Category" aria-hidden="true"></span>
-                <span>{{ productDetails.Name }}</span>
+                <span>{{ productDetails.Name | locName }}</span>
             </nav>
             <div class="row align-items-center pd-show__grid">
                 <div class="col-lg-7">
@@ -25,7 +25,7 @@
                                                     class="lazyload"
                                                     [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
                                                     [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
-                                                    [alt]="productDetails.Name + ' — снимка ' + (index + 1)"
+                                                    [alt]="(productDetails.Name | locName) + ' — ' + ('pd.photo' | t) + ' ' + (index + 1)"
                                                     style="width: 100%; height: auto; object-fit: contain;">
                                             </a>
                                         </div>
@@ -35,8 +35,8 @@
                                         <span class="pd-show__frame-line" aria-hidden="true"></span>
                                         <span>{{ frameNo(productDetails.ImageCount) }}</span>
                                     </p>
-                                    <div (click)="nextImage()" class="swiper-button-next button-style-arrow thumbs-next" role="button" aria-label="Следваща снимка"></div>
-                                    <div (click)="prevImage()" class="swiper-button-prev button-style-arrow thumbs-prev" role="button" aria-label="Предишна снимка"></div>
+                                    <div (click)="nextImage()" class="swiper-button-next button-style-arrow thumbs-next" role="button" [attr.aria-label]="'pd.next' | t"></div>
+                                    <div (click)="prevImage()" class="swiper-button-prev button-style-arrow thumbs-prev" role="button" [attr.aria-label]="'pd.prev' | t"></div>
                                 </div>
 
                                 <div dir="ltr" class="swiper tf-product-media-thumbs pd-show__thumbs">
@@ -47,7 +47,7 @@
                                                     class="lazyload"
                                                     [attr.data-src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
                                                     [src]="'assets/images/products/' + productDetails.Image.toLowerCase() + '.' + (index + 1) + '.webp'"
-                                                    [alt]="'Миниатюра ' + (index + 1)"
+                                                    [alt]="('pd.thumb' | t) + ' ' + (index + 1)"
                                                     style="width: 100%; height: auto; object-fit: cover;">
                                             </div>
                                         </div>
@@ -63,12 +63,12 @@
                         <div class="tf-zoom-main"></div>
                         <div class="tf-product-info-list other-image-zoom pd-show__aside-inner">
                             <header class="pd-show__intro">
-                                <p class="pd-show__type" *ngIf="productDetails.Category">{{ categoryLabel(productDetails.Category) }}</p>
-                                <h1 class="pd-show__name">{{ productDetails.Name }}</h1>
+                                <p class="pd-show__type" *ngIf="productDetails.Category">{{ productDetails.Category | cat }}</p>
+                                <h1 class="pd-show__name">{{ productDetails.Name | locName }}</h1>
                             </header>
 
                             <div class="pd-show__lead">
-                                <p>{{ productDetails.Description }}</p>
+                                <p>{{ productDetails.Description | locDesc }}</p>
                             </div>
 
                             <div class="pd-show__cta">
@@ -77,10 +77,10 @@
                                     class="pd-show__btn pd-show__btn--primary"
                                     (click)="addToFavorites(productDetails)"
                                     [class.active]="isInWishlist(productDetails)">
-                                    {{ isInWishlist(productDetails) ? 'В любими' : 'Запази в любими' }}
+                                    {{ isInWishlist(productDetails) ? ('pd.inWishlist' | t) : ('pd.save' | t) }}
                                 </button>
                                 <a routerLink="/contact" class="pd-show__visit">
-                                    Запази посещение
+                                    {{ 'pd.visit' | t }}
                                     <span class="pd-show__arrow" aria-hidden="true"></span>
                                 </a>
                             </div>
@@ -91,20 +91,20 @@
         </div>
     </section>
 
-    <section class="pd-show__facts" aria-label="Изработка">
+    <section class="pd-show__facts" [attr.aria-label]="'pd.craft' | t">
         <div class="container">
             <div class="pd-show__facts-grid">
                 <article>
-                    <h2>Материя</h2>
-                    <p>Кожа и плат се избират за конкретния модел, не от готова палитра.</p>
+                    <h2>{{ 'pd.material.title' | t }}</h2>
+                    <p>{{ 'pd.material.text' | t }}</p>
                 </article>
                 <article>
-                    <h2>Мярка</h2>
-                    <p>Размерите се уточняват в ателието, според помещението.</p>
+                    <h2>{{ 'pd.measure.title' | t }}</h2>
+                    <p>{{ 'pd.measure.text' | t }}</p>
                 </article>
                 <article>
-                    <h2>Шоурум</h2>
-                    <p>Казичене, ул. Царски парк 4. Моделът може да се види на живо.</p>
+                    <h2>{{ 'pd.showroom.title' | t }}</h2>
+                    <p>{{ 'pd.showroom.text' | t }}</p>
                 </article>
             </div>
         </div>
@@ -114,11 +114,11 @@
         <div class="container">
             <header class="pd-show__related-head">
                 <div>
-                    <p class="pd-show__type">{{ productDetails.Category ? categoryLabel(productDetails.Category) : 'Каталог' }}</p>
-                    <h2 class="pd-show__related-heading">Още модели</h2>
+                    <p class="pd-show__type">{{ productDetails.Category ? (productDetails.Category | cat) : ('nav.catalog' | t) }}</p>
+                    <h2 class="pd-show__related-heading">{{ 'pd.more' | t }}</h2>
                 </div>
-                <a [routerLink]="productDetails.Category ? ['/catalog', productDetails.Category] : '/catalog'" class="pd-show__visit">
-                    Към колекцията
+                <a [routerLink]="productDetails.Category ? ['/catalog', categorySlug(productDetails.Category)] : '/catalog'" class="pd-show__visit">
+                    {{ 'pd.toCollection' | t }}
                     <span class="pd-show__arrow" aria-hidden="true"></span>
                 </a>
             </header>
@@ -130,12 +130,12 @@
                             [src]="'assets/images/products/' + product.Image.toLowerCase() + '.1-1000.webp'"
                             [attr.srcset]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-640.webp 640w, assets/images/products/' + product.Image.toLowerCase() + '.1-1000.webp 1000w'"
                             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
-                            [alt]="product.Name"
+                            [alt]="product.Name | locName"
                             loading="lazy"
                             decoding="async">
                     </span>
-                    <span class="pd-show__piece-cat" *ngIf="product.Category">{{ categoryLabel(product.Category) }}</span>
-                    <span class="pd-show__piece-name">{{ product.Name }}</span>
+                    <span class="pd-show__piece-cat" *ngIf="product.Category">{{ product.Category | cat }}</span>
+                    <span class="pd-show__piece-name">{{ product.Name | locName }}</span>
                 </a>
             </div>
         </div>

@@ -1,17 +1,24 @@
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { I18nService } from '../i18n.service';
 
 interface MaisonLine {
-  text: string;
+  key: string;
   em?: boolean;
 }
 
 interface MaisonSlide {
   image: string;
-  alt: string;
-  kicker: string;
+  altKey: string;
   lines: MaisonLine[];
-  lead: string;
-  rail: string;
+  leadKey: string;
+  railKey: string;
+}
+
+interface InstagramPost {
+  image: string;
+  href: string;
+  date: string;
+  reel?: boolean;
 }
 
 @Component({
@@ -23,44 +30,52 @@ export class HomeComponent implements OnInit, OnDestroy {
   active = 0;
   paused = false;
 
+  readonly instagram: InstagramPost[] = [
+    { image: 'assets/images/instagram/01.webp', href: 'https://www.instagram.com/belcaro.bulgaria/p/DWg-wHTDgnz/', date: '2026-03-30' },
+    { image: 'assets/images/instagram/02.webp', href: 'https://www.instagram.com/belcaro.bulgaria/reel/DVMKDbljP71/', date: '2026-02-25', reel: true },
+    { image: 'assets/images/instagram/03.webp', href: 'https://www.instagram.com/belcaro.bulgaria/p/DVHGb1GDPLg/', date: '2026-02-23' },
+    { image: 'assets/images/instagram/04.webp', href: 'https://www.instagram.com/belcaro.bulgaria/p/DUxQVUGDPF9/', date: '2026-02-14' },
+    { image: 'assets/images/instagram/05.webp', href: 'https://www.instagram.com/belcaro.bulgaria/p/DUnmfTvjD0p/', date: '2026-02-11' },
+    { image: 'assets/images/instagram/06.webp', href: 'https://www.instagram.com/belcaro.bulgaria/p/DUbMc_sjKCH/', date: '2026-02-06' },
+  ];
+
   readonly slides: MaisonSlide[] = [
     {
       image: 'assets/images/slider/furniture_slide3.jpg',
-      alt: 'Дневна с мек диван, тъмни пана и месингово осветление',
-      kicker: 'Belcaro · София',
+      altKey: 'home.slide1.alt',
       lines: [
-        { text: 'Мебели' },
-        { text: 'за проекта.', em: true }
+        { key: 'home.slide1.line1' },
+        { key: 'home.slide1.line2', em: true }
       ],
-      lead: 'Работим с дизайнери, за които детайлът е част от архитектурата на дома.',
-      rail: 'Дневна'
+      leadKey: 'home.slide1.lead',
+      railKey: 'home.slide1.rail'
     },
     {
       image: 'assets/images/collections/furniture_cate1.jpg',
-      alt: 'Архитектурен диван в просторна дневна с бетон и светлина',
-      kicker: 'Колекция',
+      altKey: 'home.slide2.alt',
       lines: [
-        { text: 'Силует' },
-        { text: 'и материя.', em: true }
+        { key: 'home.slide2.line1' },
+        { key: 'home.slide2.line2', em: true }
       ],
-      lead: 'Пропорция, тъкан и шев се решават заедно — не поотделно.',
-      rail: 'Силует'
+      leadKey: 'home.slide2.lead',
+      railKey: 'home.slide2.rail'
     },
     {
       image: 'assets/images/slider/furniture-banner-collection.jpg',
-      alt: 'Спалня с висока тапицирана табла и меко осветление',
-      kicker: 'По поръчка',
+      altKey: 'home.slide3.alt',
       lines: [
-        { text: 'По мярка' },
-        { text: 'на интериора.', em: true }
+        { key: 'home.slide3.line1' },
+        { key: 'home.slide3.line2', em: true }
       ],
-      lead: 'Размер и конфигурация по проекта. От срещата в шоурума до монтажа.',
-      rail: 'Ателие'
+      leadKey: 'home.slide3.lead',
+      railKey: 'home.slide3.rail'
     }
   ];
 
   private timer: ReturnType<typeof setInterval> | null = null;
   private reduced = false;
+
+  constructor(public i18n: I18nService) {}
 
   ngOnInit(): void {
     document.body.classList.add('maison-home');
@@ -108,6 +123,14 @@ export class HomeComponent implements OnInit, OnDestroy {
   resume(): void {
     this.paused = false;
     this.arm();
+  }
+
+  igDate(iso: string): string {
+    const date = new Date(`${iso}T00:00:00`);
+    return date.toLocaleDateString(this.i18n.lang === 'en' ? 'en-GB' : 'bg-BG', {
+      day: 'numeric',
+      month: 'short',
+    });
   }
 
   private arm(): void {

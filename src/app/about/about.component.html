@@ -1,19 +1,19 @@
 <main class="about-page about-page--lux">
     <header class="about-page__head">
         <div class="container">
-            <p class="about-page__kicker">За нас</p>
-            <h1 class="about-page__title">Ние сме Belcaro</h1>
-            <p class="about-page__subtitle">Мека мебел · София</p>
+            <p class="about-page__kicker">{{ 'about.kicker' | t }}</p>
+            <h1 class="about-page__title">{{ 'about.title' | t }}</h1>
+            <p class="about-page__subtitle">{{ 'about.subtitle' | t }}</p>
         </div>
     </header>
 
-    <section class="about-page__lead" aria-label="Ателието">
+    <section class="about-page__lead" [attr.aria-label]="'about.aria' | t">
         <div class="container">
             <div class="about-page__hero">
                 <img
                     class="about-page__photo"
                     src="assets/images/slider/about-banner-01.jpg"
-                    alt="Belcaro — ателие и мебели"
+                    [alt]="'about.photoAlt' | t"
                     width="1000"
                     height="600"
                     loading="eager"
@@ -22,16 +22,16 @@
 
             <div class="about-page__facts">
                 <article>
-                    <h2>1995</h2>
-                    <p>Създадена, за да предлага мебели на българския пазар.</p>
+                    <h2>{{ 'about.fact1.title' | t }}</h2>
+                    <p>{{ 'about.fact1.text' | t }}</p>
                 </article>
                 <article>
-                    <h2>Ателие</h2>
-                    <p>Подбрани материали и обучен екип от дизайнери.</p>
+                    <h2>{{ 'about.fact2.title' | t }}</h2>
+                    <p>{{ 'about.fact2.text' | t }}</p>
                 </article>
                 <article>
-                    <h2>Домът</h2>
-                    <p>Функционална мебел, издръжлива и с внимание към детайла.</p>
+                    <h2>{{ 'about.fact3.title' | t }}</h2>
+                    <p>{{ 'about.fact3.text' | t }}</p>
                 </article>
             </div>
         </div>
@@ -40,30 +40,20 @@
     <section class="about-page__story" aria-labelledby="about-founded-heading">
         <div class="container about-page__band">
             <div class="about-page__copy">
-                <h2 id="about-founded-heading" class="about-page__section-title">Основана през 1995</h2>
+                <h2 id="about-founded-heading" class="about-page__section-title">{{ 'about.founded' | t }}</h2>
                 <div class="about-page__prose">
-                    <p>
-                        В Belcaro мебели дизайн нашите основи са прости: посвещаваме се на дизайна и производството на качествени, луксозни дивани на разумна цена.
-                    </p>
-                    <p>
-                        Използваме подбрани материали и работим с обучен екип от дизайнери, за да създаваме мека мебел, която наричаме „достойна за дома“ — функционална, издръжлива и с внимание към детайла.
-                    </p>
-                    <p>
-                        Фирма Белкаро е създадена през 1995 г. с мисията да предлага висококачествени мебели на българския пазар.
-                    </p>
-                    <p>
-                        С годините се утвърдихме в производството на луксозни дивани и мека мебел. Екипът ни работи с внимание към всеки детайл и стремеж към съвършенство.
-                    </p>
-                    <p>
-                        Доверете се на нашия опит и традиции в мебелното производство.
-                    </p>
+                    <p>{{ 'about.p1' | t }}</p>
+                    <p>{{ 'about.p2' | t }}</p>
+                    <p>{{ 'about.p3' | t }}</p>
+                    <p>{{ 'about.p4' | t }}</p>
+                    <p>{{ 'about.p5' | t }}</p>
                 </div>
             </div>
             <figure class="about-page__figure">
                 <img
                     class="about-page__photo"
                     src="assets/images/collections/collection-69.jpg"
-                    alt="Колекция Belcaro"
+                    [alt]="'about.collectionAlt' | t"
                     loading="lazy"
                     decoding="async"
                     width="1000"
@@ -75,14 +65,10 @@
     <section class="about-page__mission" aria-labelledby="about-mission-heading">
         <div class="container about-page__band">
             <div class="about-page__copy">
-                <h2 id="about-mission-heading" class="about-page__section-title">Нашата мисия</h2>
+                <h2 id="about-mission-heading" class="about-page__section-title">{{ 'about.mission' | t }}</h2>
                 <div class="about-page__prose">
-                    <p>
-                        Да създаваме мебели, които съчетават комфорт, стил и издръжливост, и да отговаряме на индивидуалните нужди на всеки клиент.
-                    </p>
-                    <p>
-                        Ползваме висококачествени материали и съвременни технологии. Вярваме, че домът трябва да бъде уютен и красив — работим с вдъхновение и отношение към дизайна.
-                    </p>
+                    <p>{{ 'about.m1' | t }}</p>
+                    <p>{{ 'about.m2' | t }}</p>
                 </div>
             </div>
             <div class="about-page__pair">
@@ -90,7 +76,7 @@
                     <img
                         class="about-page__photo"
                         src="assets/images/collections/collection-71.jpg"
-                        alt="Интериор Belcaro"
+                        [alt]="'about.interiorAlt' | t"
                         loading="lazy"
                         decoding="async"
                         width="1000"
@@ -100,7 +86,7 @@
                     <img
                         class="about-page__photo"
                         src="assets/images/collections/collection-70.jpg"
-                        alt="Детайл от колекция"
+                        [alt]="'about.detailAlt' | t"
                         loading="lazy"
                         decoding="async"
                         width="1000"
@@ -113,14 +99,14 @@
     <section class="about-page__eu" aria-labelledby="about-eu-heading">
         <div class="container about-page__band">
             <div class="about-page__copy">
-                <p class="about-page__kicker">Проект</p>
-                <h2 id="about-eu-heading" class="about-page__section-title">Европейско финансиране</h2>
+                <p class="about-page__kicker">{{ 'about.euKicker' | t }}</p>
+                <h2 id="about-eu-heading" class="about-page__section-title">{{ 'about.euTitle' | t }}</h2>
             </div>
             <figure class="about-page__eu-wrap">
                 <img
                     class="about-page__eu-img"
                     src="assets/images/euro.jpg"
-                    alt="Европейско финансиране"
+                    [alt]="'about.euAlt' | t"
                     loading="lazy"
                     decoding="async"
                     width="1184"

@@ -4,12 +4,12 @@ export type ProjectCategory = 'all' | 'residential' | 'commercial' | 'hospitalit
 
 export interface ProjectItem {
   id: string;
-  title: string;
-  location: string;
-  description: string;
+  titleKey: string;
+  locationKey: string;
+  descriptionKey: string;
   category: Exclude<ProjectCategory, 'all'>;
   image: string;
-  alt: string;
+  altKey: string;
 }
 
 @Component({
@@ -20,73 +20,67 @@ export interface ProjectItem {
 export class ProjectsComponent implements OnInit {
   filter: ProjectCategory = 'all';
 
-  readonly filterOptions: { id: ProjectCategory; label: string }[] = [
-    { id: 'all', label: 'Всички' },
-    { id: 'residential', label: 'Жилищни' },
-    { id: 'commercial', label: 'Офис и търговски' },
-    { id: 'hospitality', label: 'HoReCa' },
+  readonly filterOptions: { id: ProjectCategory; labelKey: string }[] = [
+    { id: 'all', labelKey: 'projects.filter.all' },
+    { id: 'residential', labelKey: 'projects.filter.residential' },
+    { id: 'commercial', labelKey: 'projects.filter.commercial' },
+    { id: 'hospitality', labelKey: 'projects.filter.hospitality' },
   ];
 
   readonly projects: ProjectItem[] = [
     {
       id: 'sofia-residence-living',
-      title: 'Градска резиденция',
-      location: 'София',
-      description:
-        'Цялостно обзавеждане на всекидневна и трапезария с акцент върху текстил и осветление.',
+      titleKey: 'projects.item.sofia.title',
+      locationKey: 'projects.item.sofia.location',
+      descriptionKey: 'projects.item.sofia.desc',
       category: 'residential',
       image: 'assets/images/collections/pr1.jpg',
-      alt: 'Интериор всекидневна неутрални тонове',
+      altKey: 'projects.item.sofia.alt',
     },
     {
       id: 'villa-soft-seating',
-      title: 'Вила — мека зона',
-      location: 'околностите на София',
-      description:
-        'Индивидуални размери на мека мебел и тапицирани панели по проект.',
+      titleKey: 'projects.item.villa.title',
+      locationKey: 'projects.item.villa.location',
+      descriptionKey: 'projects.item.villa.desc',
       category: 'residential',
       image: 'assets/images/collections/pr2.jpg',
-      alt: 'Мека мебел и панели в дом',
+      altKey: 'projects.item.villa.alt',
     },
     {
       id: 'office-hub',
-      title: 'Офис площадка',
-      location: 'София',
-      description:
-        'Работни места и зона за срещи — изчистени форми и издръжливи материали.',
+      titleKey: 'projects.item.office.title',
+      locationKey: 'projects.item.office.location',
+      descriptionKey: 'projects.item.office.desc',
       category: 'commercial',
       image: 'assets/images/collections/pr3.jpg',
-      alt: 'Офис интериор с маса и столове',
+      altKey: 'projects.item.office.alt',
     },
     {
       id: 'showroom-corner',
-      title: 'Изложбен кът',
-      location: 'Казичене',
-      description:
-        'Подбор на мостри и текстилни колекции за клиентски консултации.',
+      titleKey: 'projects.item.showroom.title',
+      locationKey: 'projects.item.showroom.location',
+      descriptionKey: 'projects.item.showroom.desc',
       category: 'commercial',
       image: 'assets/images/collections/pr4.jpg',
-      alt: 'Изложба на мебели маса и акценти',
+      altKey: 'projects.item.showroom.alt',
     },
     {
       id: 'apartment-dining',
-      title: 'Апартамент',
-      location: 'София',
-      description:
-        'Обзавеждане на трапезария и входно антре със спестена визия.',
+      titleKey: 'projects.item.apartment.title',
+      locationKey: 'projects.item.apartment.location',
+      descriptionKey: 'projects.item.apartment.desc',
       category: 'residential',
       image: 'assets/images/collections/pr5.jpg',
-      alt: 'Трапезарна зона апартамент',
+      altKey: 'projects.item.apartment.alt',
     },
     {
       id: 'restaurant-seating',
-      title: 'Ресторант',
-      location: 'България',
-      description:
-        'Тапицирани места за гости и устойчива употреба при интензивен поток.',
+      titleKey: 'projects.item.restaurant.title',
+      locationKey: 'projects.item.restaurant.location',
+      descriptionKey: 'projects.item.restaurant.desc',
       category: 'hospitality',
       image: 'assets/images/collections/pr6.jpg',
-      alt: 'Ресторантско обзавеждане столове и маси',
+      altKey: 'projects.item.restaurant.alt',
     },
   ];
 
@@ -109,12 +103,4 @@ export class ProjectsComponent implements OnInit {
     return item.id;
   }
 
-  categoryLabel(cat: ProjectItem['category']): string {
-    const labels: Record<ProjectItem['category'], string> = {
-      residential: 'Жилищен',
-      commercial: 'Търговски',
-      hospitality: 'HoReCa',
-    };
-    return labels[cat];
-  }
 }

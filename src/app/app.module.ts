@@ -12,6 +12,7 @@ import { ServicesComponent } from './services/services.component';
 import { CommonserviceService } from './commonservice.service';
 import { ProjectsComponent } from './projects/projects.component';
 import { WishlistComponent } from './wishlist/wishlist.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { WishlistComponent } from './wishlist/wishlist.component';
     BrowserModule,
     HttpClientModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    SharedModule
   ],
   providers: [CommonserviceService],
   bootstrap: [AppComponent]

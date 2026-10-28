@@ -1,7 +1,13 @@
 <main class="catalog-shop">
     <header class="catalog-shop-head">
         <div class="container">
-            <p class="catalog-shop-kicker">{{ category ? 'Каталог' : 'Ателие' }}</p>
+            <nav class="catalog-shop-kicker catalog-shop-crumb" [attr.aria-label]="'catalog.nav' | t">
+                <a routerLink="/">{{ 'nav.home' | t }}</a>
+                <span aria-hidden="true">/</span>
+                <a *ngIf="category" routerLink="/catalog">{{ 'nav.catalog' | t }}</a>
+                <span *ngIf="category" aria-hidden="true">/</span>
+                <span aria-current="page">{{ category ? categoryTitle : ('nav.catalog' | t) }}</span>
+            </nav>
             <h1 class="catalog-shop-title">{{ categoryTitle }}</h1>
         </div>
     </header>
@@ -11,23 +17,23 @@
     <aside
         class="catalog-shop-drawer"
         [class.catalog-shop-drawer--open]="showFilters"
-        aria-label="Филтри по категория">
+        [attr.aria-label]="'catalog.filtersAria' | t">
         <div class="catalog-shop-drawer-head">
-            <h2 class="catalog-shop-drawer-title">Филтри</h2>
-            <button type="button" class="catalog-shop-drawer-x" (click)="toggleFilters()" aria-label="Затвори">
+            <h2 class="catalog-shop-drawer-title">{{ 'catalog.filters' | t }}</h2>
+            <button type="button" class="catalog-shop-drawer-x" (click)="toggleFilters()" [attr.aria-label]="'catalog.close' | t">
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
         </div>
         <div class="catalog-shop-drawer-body">
-            <p class="catalog-shop-drawer-label">Категории</p>
-            <label class="catalog-shop-opt" *ngFor="let cat of categoryOptions">
-                <input type="checkbox" [checked]="isFilterActive(cat.id)" (change)="toggleCategoryFilter(cat.id)">
-                <span>{{ cat.label }}</span>
+            <p class="catalog-shop-drawer-label">{{ 'catalog.categories' | t }}</p>
+            <label class="catalog-shop-opt" *ngFor="let option of categoryOptions">
+                <input type="checkbox" [checked]="isFilterActive(option.id)" (change)="toggleCategoryFilter(option.id)">
+                <span>{{ option.id | cat }}</span>
             </label>
         </div>
         <div class="catalog-shop-drawer-foot">
-            <button type="button" class="catalog-shop-linkbtn" (click)="clearFilters()">Изчисти</button>
-            <button type="button" class="catalog-shop-primary" (click)="toggleFilters()">Готово</button>
+            <button type="button" class="catalog-shop-linkbtn" (click)="clearFilters()">{{ 'catalog.clear' | t }}</button>
+            <button type="button" class="catalog-shop-primary" (click)="toggleFilters()">{{ 'catalog.done' | t }}</button>
         </div>
     </aside>
 
@@ -35,19 +41,19 @@
         <div class="catalog-shop-toolbar">
             <button type="button" class="catalog-shop-filter-btn" (click)="toggleFilters()">
                 <i class="fas fa-sliders-h" aria-hidden="true"></i>
-                Филтри
+                {{ 'catalog.filters' | t }}
             </button>
             <p class="catalog-shop-meta">
                 <strong>{{ filteredProducts.length }}</strong>
-                <span>{{ filteredProducts.length === 1 ? 'резултат' : 'резултата' }}</span>
+                <span>{{ (filteredProducts.length === 1 ? 'catalog.result.one' : 'catalog.result.many') | t }}</span>
             </p>
-            <div class="catalog-shop-views" role="group" aria-label="Изглед">
+            <div class="catalog-shop-views" role="group" [attr.aria-label]="'catalog.view' | t">
                 <button
                     type="button"
                     class="catalog-shop-view"
                     [class.catalog-shop-view--on]="viewMode === 'grid'"
                     (click)="setViewMode('grid')"
-                    title="Мрежа">
+                    [title]="'catalog.grid' | t">
                     <i class="fas fa-th-large" aria-hidden="true"></i>
                 </button>
                 <button
@@ -55,7 +61,7 @@
                     class="catalog-shop-view"
                     [class.catalog-shop-view--on]="viewMode === 'list'"
                     (click)="setViewMode('list')"
-                    title="Списък">
+                    [title]="'catalog.list' | t">
                     <i class="fas fa-list" aria-hidden="true"></i>
                 </button>
             </div>
@@ -76,7 +82,7 @@
                                 [src]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-640.webp'"
                                 [attr.srcset]="'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-320.webp 320w, ' + 'assets/images/products-thumb/' + product.Image.toLowerCase() + '.1-640.webp 640w'"
                                 sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-                                [alt]="product.Name"
+                                [alt]="product.Name | locName"
                                 loading="lazy"
                                 decoding="async">
                         </a>
@@ -85,27 +91,27 @@
                             class="catalog-shop-wish"
                             [class.catalog-shop-wish--on]="isInWishlist(product)"
                             (click)="addToFavorites(product)"
-                            [attr.aria-label]="isInWishlist(product) ? 'Премахни от любими' : 'Любими'">
+                            [attr.aria-label]="isInWishlist(product) ? ('catalog.wishRemove' | t) : ('catalog.wishAdd' | t)">
                             <i class="fas fa-heart" aria-hidden="true"></i>
                         </button>
-                        <button type="button" class="catalog-shop-quick" (click)="quickView(product)">Бърз преглед</button>
+                        <button type="button" class="catalog-shop-quick" (click)="quickView(product)">{{ 'catalog.quick' | t }}</button>
                     </div>
                     <div class="catalog-shop-cap">
-                        <p class="catalog-shop-eyebrow" *ngIf="product.Category">{{ categoryLabel(product.Category) }}</p>
+                        <p class="catalog-shop-eyebrow" *ngIf="product.Category">{{ product.Category | cat }}</p>
                         <h2 class="catalog-shop-name">
-                            <a [routerLink]="['/details', product.Id]">{{ product.Name }}</a>
+                            <a [routerLink]="['/details', product.Id]">{{ product.Name | locName }}</a>
                         </h2>
-                        <p class="catalog-shop-desc" *ngIf="viewMode === 'list'">{{ product.Description }}</p>
+                        <p class="catalog-shop-desc" *ngIf="viewMode === 'list'">{{ product.Description | locDesc }}</p>
                     </div>
                 </div>
             </article>
         </div>
 
         <p *ngIf="filteredProducts.length === 0" class="catalog-shop-empty">
-            Няма продукти по избраните критерии.
+            {{ 'catalog.empty' | t }}
         </p>
 
-        <nav class="catalog-shop-pages" *ngIf="totalPages > 1" aria-label="Страниране">
+        <nav class="catalog-shop-pages" *ngIf="totalPages > 1" [attr.aria-label]="'catalog.pages' | t">
             <button type="button" class="catalog-shop-page" [disabled]="currentPage === 1" (click)="setPage(currentPage - 1)">
                 <i class="fas fa-chevron-left" aria-hidden="true"></i>
             </button>
@@ -133,11 +139,20 @@
                 <i class="fas fa-chevron-right" aria-hidden="true"></i>
             </button>
         </nav>
+
+        <nav class="catalog-shop-index" aria-labelledby="catalog-index-title" *ngIf="filteredProducts.length">
+            <h2 id="catalog-index-title">{{ 'catalog.models' | t }}</h2>
+            <ul>
+                <li *ngFor="let product of filteredProducts; trackBy: trackByProductId">
+                    <a [routerLink]="['/details', product.Id]">{{ product.Name | locName }}</a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
     <div class="catalog-shop-modal" *ngIf="selectedProduct" (click)="closeQuickView()">
         <div class="catalog-shop-dialog" (click)="$event.stopPropagation()">
-            <button type="button" class="catalog-shop-modal-x" (click)="closeQuickView()" aria-label="Затвори">
+            <button type="button" class="catalog-shop-modal-x" (click)="closeQuickView()" [attr.aria-label]="'catalog.close' | t">
                 <i class="fas fa-times" aria-hidden="true"></i>
             </button>
             <div class="catalog-shop-modal-grid">
@@ -146,22 +161,22 @@
                         [src]="'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1-1000.webp'"
                         [attr.srcset]="'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1-600.webp 600w, ' + 'assets/images/products/' + selectedProduct.Image.toLowerCase() + '.1-1000.webp 1000w'"
                         sizes="(max-width: 768px) 90vw, 600px"
-                        [alt]="selectedProduct.Name"
+                        [alt]="selectedProduct.Name | locName"
                         loading="lazy"
                         decoding="async">
                 </div>
                 <div class="catalog-shop-modal-copy">
-                    <h2 class="catalog-shop-modal-h">{{ selectedProduct.Name }}</h2>
-                    <p class="catalog-shop-modal-p">{{ selectedProduct.Description }}</p>
+                    <h2 class="catalog-shop-modal-h">{{ selectedProduct.Name | locName }}</h2>
+                    <p class="catalog-shop-modal-p">{{ selectedProduct.Description | locDesc }}</p>
                     <div class="catalog-shop-modal-btns">
-                        <a [routerLink]="['/details', selectedProduct.Id]" class="catalog-shop-btn catalog-shop-btn--fill">Виж детайли</a>
+                        <a [routerLink]="['/details', selectedProduct.Id]" class="catalog-shop-btn catalog-shop-btn--fill">{{ 'catalog.details' | t }}</a>
                         <button
                             type="button"
                             class="catalog-shop-btn catalog-shop-btn--line"
                             [class.catalog-shop-btn--wish]="isInWishlist(selectedProduct)"
                             (click)="addToFavorites(selectedProduct)">
                             <i class="fas fa-heart" aria-hidden="true"></i>
-                            {{ isInWishlist(selectedProduct) ? 'В любими' : 'Любими' }}
+                            {{ isInWishlist(selectedProduct) ? ('catalog.inWishlist' | t) : ('catalog.addWishlist' | t) }}
                         </button>
                     </div>
                 </div>

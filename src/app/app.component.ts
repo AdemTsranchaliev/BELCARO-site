@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRouteSnapshot, NavigationEnd, Router } from '@angular/router';
-import { filter } from 'rxjs/operators';
+import { Component, HostListener, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { filter, skip } from 'rxjs/operators';
 import { environment } from '../environments/environment';
+import { I18nService } from './i18n.service';
 import { SeoService } from './seo.service';
 import { WishlistService } from './wishlist.service';
 
@@ -13,9 +14,11 @@ import { WishlistService } from './wishlist.service';
 export class AppComponent implements OnInit {
   title = 'belcaro-site';
   isHome = true;
+  langOpen = false;
 
   constructor(
     public wishlistService: WishlistService,
+    public i18n: I18nService,
     private router: Router,
     private seo: SeoService
   ) {
@@ -23,35 +26,34 @@ export class AppComponent implements OnInit {
     this.isHome = path === '/' || path === '';
   }
 
-  ngOnInit(): void {
-    this.seo.injectOrganizationJsonLd();
+  @HostListener('document:click')
+  closeLang(): void {
+    this.langOpen = false;
+  }
 
+  toggleLang(event: Event): void {
+    event.stopPropagation();
+    this.langOpen = !this.langOpen;
+  }
+
+  chooseLang(lang: 'bg' | 'en', event: Event): void {
+    event.stopPropagation();
+    this.i18n.setLang(lang);
+    this.langOpen = false;
+  }
+
+  ngOnInit(): void {
     this.router.events
       .pipe(filter((e): e is NavigationEnd => e instanceof NavigationEnd))
       .subscribe(() => {
         window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
         document.documentElement.scrollTop = 0;
         document.body.scrollTop = 0;
-
-        const url = this.router.url.split('?')[0];
-        this.isHome = url === '/' || url === '';
-        if (url.startsWith('/catalog') || url.startsWith('/details')) {
-          return;
-        }
-        const seoData = this.mergeRouteSeo(this.router.routerState.snapshot.root);
-        if (seoData?.title && seoData.description) {
-          this.seo.apply({
-            title: seoData.title,
-            description: seoData.description,
-            keywords: seoData.keywords,
-            canonicalPath: url,
-          });
-        } else if (url === '/' || url === '') {
-          this.seo.applyDefaults('/');
-        } else {
-          this.seo.applyDefaults(url);
-        }
+        this.syncSeo();
       });
+
+    this.i18n.lang$.pipe(skip(1)).subscribe(() => this.syncSeo());
+    this.syncSeo();
 
     if (environment.production) {
       console.log('Running in production mode');
@@ -77,27 +79,56 @@ export class AppComponent implements OnInit {
     }
   }
 
-  private mergeRouteSeo(root: ActivatedRouteSnapshot): {
+  get privacyHref(): string {
+    const subject = this.i18n.lang === 'en'
+      ? 'Belcaro — privacy policy'
+      : 'Belcaro — политика за поверителност';
+    return `mailto:belcarobulgaria@gmail.com?subject=${encodeURIComponent(subject)}`;
+  }
+
+  private syncSeo(): void {
+    this.seo.injectOrganizationJsonLd();
+    const url = this.router.url.split('?')[0] || '/';
+    this.isHome = url === '/' || url === '';
+    if (url.startsWith('/catalog') || url.startsWith('/details')) {
+      return;
+    }
+    const page = this.pageSeo(url);
+    if (page) {
+      this.seo.apply({
+        title: page.title,
+        description: page.description,
+        keywords: page.keywords,
+        canonicalPath: url || '/',
+        noIndex: page.noIndex,
+      });
+      return;
+    }
+    this.seo.applyDefaults(url || '/');
+  }
+
+  private pageSeo(url: string): {
     title: string;
     description: string;
     keywords?: string;
+    noIndex?: boolean;
   } | null {
-    let merged: { title?: string; description?: string; keywords?: string } = {};
-    let snap: ActivatedRouteSnapshot | null = root;
-    while (snap) {
-      const seo = snap.data?.['seo'];
-      if (seo && typeof seo === 'object') {
-        merged = { ...merged, ...seo };
-      }
-      snap = snap.firstChild;
+    const keyByPath: Record<string, string> = {
+      '/': 'home',
+      '/contact': 'contact',
+      '/projects': 'projects',
+      '/about': 'about',
+      '/wishlist': 'wishlist',
+    };
+    const key = keyByPath[url];
+    if (!key) {
+      return null;
     }
-    if (merged.title && merged.description) {
-      return {
-        title: merged.title,
-        description: merged.description,
-        keywords: merged.keywords,
-      };
-    }
-    return null;
+    return {
+      title: this.i18n.t(`seo.${key}.title`),
+      description: this.i18n.t(`seo.${key}.description`),
+      keywords: key === 'wishlist' ? undefined : this.i18n.t(`seo.${key}.keywords`),
+      noIndex: key === 'wishlist',
+    };
   }
 }

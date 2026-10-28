@@ -2,8 +2,8 @@
     <header class="wish-page__head">
         <div class="container wish-page__head-row">
             <div>
-                <p class="wish-page__kicker">Каталог</p>
-                <h1 class="wish-page__title">Любими</h1>
+                <p class="wish-page__kicker">{{ 'wish.kicker' | t }}</p>
+                <h1 class="wish-page__title">{{ 'wish.title' | t }}</h1>
                 <p class="wish-page__lead" *ngIf="wishlistItems.length">{{ countLabel }}</p>
             </div>
             <button
@@ -11,7 +11,7 @@
                 type="button"
                 class="wish-page__clear"
                 (click)="clearWishlist()">
-                Изчисти
+                {{ 'wish.clear' | t }}
             </button>
         </div>
     </header>
@@ -19,8 +19,8 @@
     <section class="wish-page__body">
         <div class="container">
             <div *ngIf="wishlistItems.length === 0" class="wish-page__empty">
-                <p>Все още няма запазени модели.</p>
-                <a routerLink="/catalog" class="wish-page__go">Към каталога</a>
+                <p>{{ 'wish.empty' | t }}</p>
+                <a routerLink="/catalog" class="wish-page__go">{{ 'wish.go' | t }}</a>
             </div>
 
             <div class="wish-page__grid" *ngIf="wishlistItems.length">
@@ -30,16 +30,16 @@
                             [src]="imageSrc(product, '640')"
                             [attr.srcset]="imageSrc(product, '640') + ' 640w, ' + imageSrc(product, '1000') + ' 1000w'"
                             sizes="(max-width: 767px) 100vw, (max-width: 1199px) 50vw, 33vw"
-                            [alt]="product.Name"
+                            [alt]="product.Name | locName"
                             loading="lazy"
                             decoding="async">
                     </a>
-                    <p class="wish-page__cat" *ngIf="product.Category">{{ categoryLabel(product.Category) }}</p>
+                    <p class="wish-page__cat" *ngIf="product.Category">{{ product.Category | cat }}</p>
                     <h2 class="wish-page__name">
-                        <a [routerLink]="['/details', product.Id]">{{ product.Name }}</a>
+                        <a [routerLink]="['/details', product.Id]">{{ product.Name | locName }}</a>
                     </h2>
                     <button type="button" class="wish-page__remove" (click)="removeFromWishlist(product)">
-                        Премахни
+                        {{ 'wish.remove' | t }}
                     </button>
                 </article>
             </div>

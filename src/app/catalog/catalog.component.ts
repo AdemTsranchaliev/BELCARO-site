@@ -1,11 +1,12 @@
-import { Component, OnInit, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Product, categoryLabel } from '../product.model';
+import { Component, OnInit, OnDestroy, ChangeDetectionStrategy, AfterViewInit, ChangeDetectorRef } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { Product, categorySlug } from '../product.model';
 import { CommonserviceService } from '../commonservice.service';
 import { WishlistService } from '../wishlist.service';
 import { SeoService } from '../seo.service';
+import { I18nService } from '../i18n.service';
 import { Subject, combineLatest } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { skip, takeUntil } from 'rxjs/operators';
 
 @Component({
   selector: 'app-catalog',
@@ -13,7 +14,7 @@ import { takeUntil } from 'rxjs/operators';
   styleUrls: ['./catalog.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CatalogComponent implements OnInit, AfterViewInit {
+export class CatalogComponent implements OnInit, OnDestroy, AfterViewInit {
   // Products
   public products: Product[] = [];
   public filteredProducts: Product[] = [];
@@ -40,7 +41,6 @@ export class CatalogComponent implements OnInit, AfterViewInit {
     { id: 'Tables', label: 'Маси' },
   ];
 
-  categoryLabel = categoryLabel;
   public priceRange = {
     min: 0,
     max: 10000,
@@ -51,10 +51,10 @@ export class CatalogComponent implements OnInit, AfterViewInit {
 
   constructor(
     private route: ActivatedRoute,
-    private router: Router,
     private service: CommonserviceService,
     private wishlistService: WishlistService,
     private seo: SeoService,
+    private i18n: I18nService,
     private cdr: ChangeDetectorRef
   ) {}
   
@@ -63,18 +63,27 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   }
 
   ngOnInit(): void {
+    this.category = categorySlug(this.route.snapshot.paramMap.get('category') ?? '');
+    this.seo.applyCatalogPage(this.category, []);
+
     combineLatest([this.service.GetProducts(), this.route.paramMap])
       .pipe(takeUntil(this.destroy$))
       .subscribe(([products, pm]) => {
         this.products = products;
-        this.category = (pm.get('category') ?? '').trim();
+        this.category = categorySlug(pm.get('category') ?? '');
         window.scroll(0, 0);
 
-        const path = this.router.url.split('?')[0];
-        this.seo.applyCatalogPage(this.category, path);
+        this.seo.applyCatalogPage(this.category, this.products);
   
         this.filterProducts();      // updates filteredProducts
         this.cdr.markForCheck();    // <-- tell OnPush to refresh
+      });
+
+    this.i18n.lang$
+      .pipe(skip(1), takeUntil(this.destroy$))
+      .subscribe(() => {
+        this.seo.applyCatalogPage(this.category, this.products);
+        this.cdr.markForCheck();
       });
   }
   
@@ -123,7 +132,7 @@ export class CatalogComponent implements OnInit, AfterViewInit {
   }
 
   get categoryTitle(): string {
-    return this.category ? categoryLabel(this.category) : 'Каталог';
+    return this.category ? this.i18n.category(this.category) : this.i18n.t('nav.catalog');
   }
 
   setViewMode(mode: 'grid' | 'list'): void {

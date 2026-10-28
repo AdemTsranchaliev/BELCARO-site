@@ -4,7 +4,8 @@
   "scripts": {
     "ng": "ng",
     "start": "node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng serve",
-    "build": "node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng build",
+    "build": "node scripts/seo-build.js sitemap && node --openssl-legacy-provider ./node_modules/@angular/cli/bin/ng build && node scripts/seo-build.js prerender",
+    "seo": "node scripts/seo-build.js sitemap",
     "optimize:catalog-images": "node scripts/optimize-catalog-images.js",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",

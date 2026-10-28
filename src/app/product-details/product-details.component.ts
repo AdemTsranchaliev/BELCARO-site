@@ -7,12 +7,13 @@ import {
 } from "@angular/core";
 import { ActivatedRoute, NavigationEnd, Router } from "@angular/router";
 import Swiper from "swiper";
-import { Product, categoryLabel } from "../product.model";
+import { Product, categorySlug } from "../product.model";
 import { CommonserviceService } from "../commonservice.service";
 import { Subject, combineLatest } from "rxjs";
-import { filter, takeUntil } from "rxjs/operators";
+import { filter, skip, takeUntil } from "rxjs/operators";
 import { WishlistService } from '../wishlist.service';
 import { SeoService } from '../seo.service';
+import { I18nService } from '../i18n.service';
 
 @Component({
   selector: "app-product-details",
@@ -26,7 +27,8 @@ export class ProductDetailsComponent
   public products: Product[] = [];
   public relatedProducts: Product[] = [];
   public productDetails: Product = new Product("", "", "", "", 0, "");
-  categoryLabel = categoryLabel;
+  categorySlug = categorySlug;
+  private seoMode: 'product' | 'missing' | 'empty' | null = null;
 
   private readonly scriptUrls = [
     "assets/js/jquery.min.js",
@@ -54,6 +56,7 @@ export class ProductDetailsComponent
     private service: CommonserviceService,
     private wishlistService: WishlistService,
     private seo: SeoService,
+    private i18n: I18nService,
     private cdr: ChangeDetectorRef
   ) {}
 
@@ -70,7 +73,7 @@ export class ProductDetailsComponent
         this.products = products;
 
         const cat = params.get("id");
-        const path = this.router.url.split("?")[0];
+        const path = `/details/${cat || ""}`;
         if (cat) {
           const prod = this.products.find(
             (product) => product.Id?.toLowerCase() === cat?.toLowerCase()
@@ -78,27 +81,48 @@ export class ProductDetailsComponent
           if (prod) {
             this.productDetails = prod;
             this.relatedProducts = this.relatedFor(this.products, prod);
-            this.seo.applyProductPage(prod, path);
+            this.seoMode = 'product';
+            this.seo.applyProductPage(prod);
           } else {
             this.relatedProducts = [];
-            this.seo.apply({
-              title: "Продуктът не е намерен",
-              description:
-                "Търсеният артикул липсва в каталога Belcaro. Разгледайте актуалните продукти.",
-              canonicalPath: path,
-              noIndex: true,
-            });
+            this.seoMode = 'missing';
+            this.seo.apply(this.missingSeo(path));
           }
         } else {
           this.relatedProducts = [];
-          this.seo.apply({
-            title: "Продукт",
-            description:
-              "Детайли за продукт от каталога Belcaro — премиум мека мебел и интериор.",
-            canonicalPath: path,
-          });
+          this.seoMode = 'empty';
+          this.seo.apply(this.emptySeo());
         }
       });
+
+    this.i18n.lang$.pipe(skip(1), takeUntil(this.destroy$)).subscribe(() => {
+      if (this.seoMode === 'product' && this.productDetails.Id) {
+        this.seo.applyProductPage(this.productDetails);
+      } else if (this.seoMode === 'missing') {
+        const id = this.route.snapshot.paramMap.get('id') || '';
+        this.seo.apply(this.missingSeo(`/details/${id}`));
+      } else if (this.seoMode === 'empty') {
+        this.seo.apply(this.emptySeo());
+      }
+      this.cdr.markForCheck();
+    });
+  }
+
+  private missingSeo(path: string) {
+    return {
+      title: this.i18n.t('seo.missing.title'),
+      description: this.i18n.t('seo.missing.description'),
+      canonicalPath: path,
+      noIndex: true,
+    };
+  }
+
+  private emptySeo() {
+    return {
+      title: this.i18n.t('seo.product.title'),
+      description: this.i18n.t('seo.product.description'),
+      canonicalPath: '/catalog',
+    };
   }
 
   ngAfterViewInit(): void {
