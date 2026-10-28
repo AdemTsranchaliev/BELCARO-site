@@ -4563,10 +4563,28 @@ header.maison-head {
   border-left: 6px solid currentColor;
 }
 
-@media (max-width: 520px) {
+@media (max-width: 760px) {
+  .maison-ig {
+    padding: 48px 0 56px;
+  }
+
+  .maison-ig .maison-head h2 {
+    font-size: 2.15rem;
+  }
+
   .maison-ig-row {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 8px;
+  }
+
+  .maison-ig-shade {
+    background: linear-gradient(to top, rgba(20, 17, 15, 0.5), rgba(20, 17, 15, 0) 32%);
+  }
+
+  .maison-ig-meta {
+    padding: 24px 10px 10px;
+    font-size: 10px;
+    letter-spacing: 0.12em;
   }
 }
 
