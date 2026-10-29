@@ -462,13 +462,23 @@ function buildPages(products) {
   return pages;
 }
 
+function applyBaseHref(html) {
+  const base = process.env.BASE_HREF;
+  if (!base) return html;
+  const href = base.endsWith('/') ? base : `${base}/`;
+  if (/<base\s+href="[^"]*"\s*>/i.test(html)) {
+    return html.replace(/<base\s+href="[^"]*"\s*>/i, `<base href="${href}">`);
+  }
+  return html.replace('<head>', `<head>\n    <base href="${href}">`);
+}
+
 function prerender(products) {
   const indexPath = path.join(DIST, 'index.html');
   if (!fs.existsSync(indexPath)) {
     console.error('dist/belcaro-site/index.html is missing. Run the Angular build first.');
     process.exit(1);
   }
-  const shell = fs.readFileSync(indexPath, 'utf8').replace(
+  const shell = applyBaseHref(fs.readFileSync(indexPath, 'utf8')).replace(
     /<noscript><main>[\s\S]*?<\/main><\/noscript>/,
     ''
   );

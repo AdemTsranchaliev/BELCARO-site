@@ -31,9 +31,10 @@ jobs:
         run: npm ci
 
       - name: Build
-        run: npm run build -- --base-href /BELCARO-site/
+        run: npm run build
         env:
           NODE_OPTIONS: --openssl-legacy-provider
+          BASE_HREF: /BELCARO-site/
 
       - name: SPA fallback
         run: |
